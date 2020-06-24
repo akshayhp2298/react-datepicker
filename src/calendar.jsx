@@ -389,6 +389,7 @@ export default class Calendar extends React.Component {
   };
 
   renderPreviousButton = () => {
+    console.log("render previous button");
     if (this.props.renderCustomHeader) {
       return;
     }
@@ -407,7 +408,7 @@ export default class Calendar extends React.Component {
     }
 
     const classes = [
-      "react-datepicker__navigation",
+      "react-datepicker__navigation test-date-picker",
       "react-datepicker__navigation--previous"
     ];
 
