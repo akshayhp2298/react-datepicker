@@ -134,6 +134,7 @@ export function isValid(date) {
 // ** Date Formatting **
 
 export function formatDate(date, formatStr, locale) {
+  console.log(date, formatStr , locale, 'uuuu');
   if (locale === "en") {
     return format(date, formatStr, { awareOfUnicodeTokens: true });
   }
