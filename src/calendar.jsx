@@ -536,6 +536,7 @@ export default class Calendar extends React.Component {
     if (this.props.showMonthYearDropdown) {
       classes.push("react-datepicker__current-month--hasMonthYearDropdown");
     }
+    console.log(formatDate(date, this.props.dateFormat, this.props.locale), 'test', this.props);
     return (
       <div className={classes.join(" ")}>
         {formatDate(date, this.props.dateFormat, this.props.locale)}
