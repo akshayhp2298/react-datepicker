@@ -445,6 +445,7 @@ export default class Calendar extends React.Component {
         {isForYear
           ? this.props.previousYearButtonLabel
           : this.props.previousMonthButtonLabel}
+           {"<"}
       </button>
     );
   };
@@ -520,6 +521,7 @@ export default class Calendar extends React.Component {
         {isForYear
           ? this.props.nextYearButtonLabel
           : this.props.nextMonthButtonLabel}
+          {">"}
       </button>
     );
   };
