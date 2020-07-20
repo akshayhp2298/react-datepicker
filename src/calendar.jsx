@@ -619,13 +619,13 @@ export default class Calendar extends React.Component {
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
       >
-        <i> << </i>
-        <i> < </i>
+        <i> {"<< "} </i>
+        <i> {"< "}</i>
         {this.renderMonthDropdown(i !== 0)}
         {/* {this.renderMonthYearDropdown(i !== 0)} */}
         {this.renderYearDropdown(i !== 0)}
-        <i> > </i>
-        <i> >></i>
+        <i> {">"} </i>
+        <i> {">>"}</i>
       </div>
       <div className="react-datepicker__day-names">
         {this.header(monthDate)}
