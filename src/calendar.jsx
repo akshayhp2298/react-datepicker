@@ -9,6 +9,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import CalendarContainer from "./calendar_container";
+import LeftDoubleArrow  from './Icons/left_double_arrow'
+import RightDoubleArrow  from './Icons/right_double_arrow';
+import LeftArrow from './Icons/left-arrow';
+import RightArrow from './Icons/right-arrow';
 import {
   newDate,
   setMonth,
@@ -250,6 +254,7 @@ export default class Calendar extends React.Component {
   };
 
   increaseMonth = () => {
+    console.log('increaseMonth');
     this.setState(
       ({ date }) => ({
         date: addMonths(date, 1)
@@ -445,7 +450,6 @@ export default class Calendar extends React.Component {
         {isForYear
           ? this.props.previousYearButtonLabel
           : this.props.previousMonthButtonLabel}
-           {"<"}
       </button>
     );
   };
@@ -521,7 +525,6 @@ export default class Calendar extends React.Component {
         {isForYear
           ? this.props.nextYearButtonLabel
           : this.props.nextMonthButtonLabel}
-          {">"}
       </button>
     );
   };
@@ -615,18 +618,24 @@ export default class Calendar extends React.Component {
 
   renderDefaultHeader = ({ monthDate, i }) => (
     <div className="react-datepicker__header">
-      {this.renderCurrentMonth(monthDate)}
       <div
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
       >
-        <span className="date-arrows"> {" << "} </span>
-        <span className="date-arrows"> {" < "}</span>
+        <span className="react-datepicker__header__arrows left-double-arrow" >
+          <LeftDoubleArrow onClick={() => {
+            this.decreaseYear()}}/>
+        </span>
+        <span className="react-datepicker__header__arrows left-arrow" >
+          <LeftArrow onClick={() => {
+            this.decreaseMonth()}}/>
+        </span>
         {this.renderMonthDropdown(i !== 0)}
-        {/* {this.renderMonthYearDropdown(i !== 0)} */}
         {this.renderYearDropdown(i !== 0)}
-        <span className="date-arrows"> {" > "} </span>
-        <span className="date-arrows"> {" >> "}</span>
+        <span className="react-datepicker__header__arrows right-arrow" ><RightArrow onClick={() => {
+          this.increaseMonth()}}/></span>
+        <span className="react-datepicker__header__arrows right-double-arrow" ><RightDoubleArrow onClick={() => {
+          this.increaseYear()}}/></span>
       </div>
       <div className="react-datepicker__day-names">
         {this.header(monthDate)}
@@ -866,8 +875,6 @@ export default class Calendar extends React.Component {
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
         >
-          {this.renderPreviousButton()}
-          {this.renderNextButton()}
           {this.renderMonths()}
           {this.renderYears()}
           {this.renderTodayButton()}

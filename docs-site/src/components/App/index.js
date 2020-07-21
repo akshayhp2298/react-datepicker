@@ -31,6 +31,14 @@ const Example = () => {
         setIsOpen(false);
       }}
       onInputClick={() => setIsOpen(true)}
+      showPopperArrow={false}
+      inline
+      shouldCloseOnSelect={false}
+      calendarClassName="calClass"
+      className="norClass form-control"
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
     />
   );
 };
