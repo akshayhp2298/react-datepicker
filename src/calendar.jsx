@@ -9,8 +9,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import CalendarContainer from "./calendar_container";
-import LeftDoubleArrow  from './Icons/left_double_arrow'
-import RightDoubleArrow  from './Icons/right_double_arrow';
+import LeftDoubleArrow from './Icons/left_double_arrow'
+import RightDoubleArrow from './Icons/right_double_arrow';
 import LeftArrow from './Icons/left-arrow';
 import RightArrow from './Icons/right-arrow';
 import {
@@ -59,7 +59,7 @@ const isDropdownSelect = (element = {}) => {
 export default class Calendar extends React.Component {
   static get defaultProps() {
     return {
-      onDropdownFocus: () => {},
+      onDropdownFocus: () => { },
       monthsShown: 1,
       monthSelectedIn: 0,
       forceShowMonthNavigation: false,
@@ -254,7 +254,6 @@ export default class Calendar extends React.Component {
   };
 
   increaseMonth = () => {
-    console.log('increaseMonth');
     this.setState(
       ({ date }) => ({
         date: addMonths(date, 1)
@@ -394,7 +393,6 @@ export default class Calendar extends React.Component {
   };
 
   renderPreviousButton = () => {
-    console.log("render previous button");
     if (this.props.renderCustomHeader) {
       return;
     }
@@ -413,7 +411,7 @@ export default class Calendar extends React.Component {
     }
 
     const classes = [
-      "react-datepicker__navigation test-date-picker",
+      "react-datepicker__navigation ",
       "react-datepicker__navigation--previous"
     ];
 
@@ -624,18 +622,50 @@ export default class Calendar extends React.Component {
       >
         <span className="react-datepicker__header__arrows left-double-arrow" >
           <LeftDoubleArrow onClick={() => {
-            this.decreaseYear()}}/>
+
+            const prevYearButtonDisabled = yearDisabledBefore(
+              this.state.date,
+              this.props
+            );
+
+            if (!prevYearButtonDisabled) {
+              this.decreaseYear();
+            }
+
+          }} />
         </span>
         <span className="react-datepicker__header__arrows left-arrow" >
           <LeftArrow onClick={() => {
-            this.decreaseMonth()}}/>
+            const prevMonthButtonDisabled = monthDisabledBefore(
+              this.state.date,
+              this.props
+            );
+            if (!prevMonthButtonDisabled) {
+              this.decreaseMonth();
+            }
+          }} />
         </span>
         {this.renderMonthDropdown(i !== 0)}
         {this.renderYearDropdown(i !== 0)}
         <span className="react-datepicker__header__arrows right-arrow" ><RightArrow onClick={() => {
-          this.increaseMonth()}}/></span>
+          const nextMonthButtonDisabled = monthDisabledAfter(
+            this.state.date,
+            this.props
+          );
+          if (!nextMonthButtonDisabled) {
+            this.increaseMonth();
+          }
+        }} /></span>
         <span className="react-datepicker__header__arrows right-double-arrow" ><RightDoubleArrow onClick={() => {
-          this.increaseYear()}}/></span>
+
+          const nextYearButtonDisabled = yearDisabledAfter(
+            this.state.date,
+            this.props
+          );
+          if (!nextYearButtonDisabled) {
+            this.increaseYear();
+          }
+        }} /></span>
       </div>
       <div className="react-datepicker__day-names">
         {this.header(monthDate)}
