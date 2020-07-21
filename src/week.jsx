@@ -7,7 +7,7 @@ import * as utils from "./date_utils";
 export default class Week extends React.Component {
   static get defaultProps() {
     return {
-      shouldCloseOnSelect: true
+      shouldCloseOnSelect: true,
     };
   }
   static propTypes = {
@@ -49,7 +49,8 @@ export default class Week extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    calendarStartDay: PropTypes.number,
   };
 
   handleDayClick = (day, event) => {
@@ -81,7 +82,7 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale);
+    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale, this.props.calendarStartDay);
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {

@@ -54,7 +54,8 @@ export default class Month extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    calendarStartDay: PropTypes.number,
   };
 
   handleDayClick = (day, event) => {
@@ -120,7 +121,8 @@ export default class Month extends React.Component {
     var isFixedHeight = this.props.fixedHeight;
     let currentWeekStart = utils.getStartOfWeek(
       utils.getStartOfMonth(this.props.day),
-      this.props.locale
+      this.props.locale,
+      this.props.calendarStartDay,
     );
     let i = 0;
     let breakAfterNextPush = false;
@@ -162,6 +164,7 @@ export default class Month extends React.Component {
           handleOnKeyDown={this.props.handleOnKeyDown}
           isInputFocused={this.props.isInputFocused}
           containerRef={this.props.containerRef}
+          calendarStartDay={this.props.calendarStartDay}
         />
       );
 

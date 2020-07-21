@@ -68,7 +68,7 @@ export default class Calendar extends React.Component {
       nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next Month",
-      customTimeInput: null
+      customTimeInput: null,
     };
   }
 
@@ -176,7 +176,8 @@ export default class Calendar extends React.Component {
     isInputFocused: PropTypes.bool,
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
-    setPreSelection: PropTypes.func
+    setPreSelection: PropTypes.func,
+    calendarStartDay: PropTypes.number,
   };
 
   constructor(props) {
@@ -341,7 +342,7 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(date, this.props.locale);
+    const startOfWeek = getStartOfWeek(date, this.props.locale,this.props.calendarStartDay);
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -354,7 +355,6 @@ export default class Calendar extends React.Component {
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(startOfWeek, offset);
         const weekDayName = this.formatWeekday(day, this.props.locale);
-
         const weekDayClassName = this.props.weekDayClassName
           ? this.props.weekDayClassName(day)
           : undefined;
@@ -824,6 +824,7 @@ export default class Calendar extends React.Component {
             showQuarterYearPicker={this.props.showQuarterYearPicker}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.containerRef}
+            calendarStartDay={this.props.calendarStartDay}
           />
         </div>
       );

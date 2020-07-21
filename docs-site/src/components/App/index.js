@@ -26,7 +26,6 @@ const Example = () => {
     <DatePicker
       open={isOpen && isScrolled}
       selected={startDate}
-      minDate={startDate}
       onChange={date => {
         setStartDate(date);
         setIsOpen(false);
@@ -40,6 +39,7 @@ const Example = () => {
       showMonthDropdown
       showYearDropdown
       dropdownMode="select"
+      calendarStartDay={4}
     />
   );
 };
