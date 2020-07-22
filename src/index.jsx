@@ -843,7 +843,7 @@ export default class DatePicker extends React.Component {
         : typeof this.state.inputValue === "string"
         ? this.state.inputValue
         : safeDateFormat(this.props.selected, this.props);
-
+    console.log(inputValue);
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
         this.input = input;

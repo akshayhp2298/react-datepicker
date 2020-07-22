@@ -157,6 +157,7 @@ export function formatDate(date, formatStr, locale) {
 }
 
 export function safeDateFormat(date, { dateFormat, locale }) {
+  console.log('safe ', date , dateFormat);
   return (
     (date &&
       formatDate(
