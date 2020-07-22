@@ -162,7 +162,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
     (date &&
       formatDate(
         date,
-        Array.isArray(dateFormat) ? dateFormat[0] : dateFormat.replace('DD','dd'),
+        Array.isArray(dateFormat) ? dateFormat[0].toLowerCase() : dateFormat.toLowerCase(),
         (locale: locale)
       )) ||
     ""
