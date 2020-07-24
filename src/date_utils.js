@@ -111,7 +111,8 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       .join("");
 
     if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.slice(0, value.length).replace('DD','dd').replace('YYYY','yyyy'), new Date());
+      console.log(dateFormat, value , value.length, 'test');
+      parsedDate = parse(value, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), new Date());
     }
 
     if (!isValid(parsedDate)) {
