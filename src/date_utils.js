@@ -89,7 +89,6 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
     });
     return parsedDate;
   }
-  console.log(value, '111');
   parsedDate = parse(value, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), new Date(), { locale: localeObject });
 
   if (strictParsing) {
@@ -112,7 +111,6 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       .join("");
 
     if (value.length > 0) {
-      console.log(value, '222');
       parsedDate = parse(value, dateFormat.slice(0, value.length).replace('DD','dd').replace('YYYY','yyyy'), new Date());
     }
 
