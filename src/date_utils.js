@@ -77,11 +77,11 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
-      let tryParseDate = parse(value, df, new Date(), { locale: localeObject });
+      let tryParseDate = parse(value, df.toLowerCase(), new Date(), { locale: localeObject });
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate) &&
-          value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
+          value === format(tryParseDate, df.toLowerCase(), { awareOfUnicodeTokens: true });
       }
       if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
@@ -90,12 +90,12 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
     return parsedDate;
   }
 
-  parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
+  parsedDate = parse(value, dateFormat.toLowerCase(), new Date(), { locale: localeObject });
 
   if (strictParsing) {
     strictParsingValueMatch =
       isValid(parsedDate) &&
-      value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
+      value === format(parsedDate, dateFormat.toLowerCase(), { awareOfUnicodeTokens: true });
   } else if (!isValid(parsedDate)) {
     dateFormat = dateFormat
       .match(longFormattingTokensRegExp)
