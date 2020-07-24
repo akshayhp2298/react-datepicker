@@ -32,7 +32,8 @@ import {
   getMonth,
   registerLocale,
   setDefaultLocale,
-  getDefaultLocale
+  getDefaultLocale,
+  formatDate
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -842,7 +843,7 @@ export default class DatePicker extends React.Component {
         ? this.props.value
         : typeof this.state.inputValue === "string"
         ? this.state.inputValue
-        : safeDateFormat(this.props.selected, this.props);
+        : formatDate(this.props.selected, this.props.dateFormat, this.props.locale);
     console.log(inputValue);
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
