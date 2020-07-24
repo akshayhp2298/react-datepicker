@@ -77,11 +77,11 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
-      let tryParseDate = parse(value, df.toLowerCase(), new Date(), { locale: localeObject });
+      let tryParseDate = parse(value, df.replace('DD','dd').replace('YYYY','yyyy'), new Date(), { locale: localeObject });
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate) &&
-          value === format(tryParseDate, df.toLowerCase(), { awareOfUnicodeTokens: true });
+          value === format(tryParseDate, df.replace('DD','dd').replace('YYYY','yyyy'), { awareOfUnicodeTokens: true });
       }
       if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
@@ -90,12 +90,12 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
     return parsedDate;
   }
 
-  parsedDate = parse(value, dateFormat.toLowerCase(), new Date(), { locale: localeObject });
+  parsedDate = parse(value, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), new Date(), { locale: localeObject });
 
   if (strictParsing) {
     strictParsingValueMatch =
       isValid(parsedDate) &&
-      value === format(parsedDate, dateFormat.toLowerCase(), { awareOfUnicodeTokens: true });
+      value === format(parsedDate, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), { awareOfUnicodeTokens: true });
   } else if (!isValid(parsedDate)) {
     dateFormat = dateFormat
       .match(longFormattingTokensRegExp)
@@ -112,7 +112,7 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       .join("");
 
     if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.slice(0, value.length).toLowerCase(), new Date());
+      parsedDate = parse(value, dateFormat.slice(0, value.length).replace('DD','dd').replace('YYYY','yyyy'), new Date());
     }
 
     if (!isValid(parsedDate)) {
@@ -162,7 +162,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
     (date &&
       formatDate(
         date,
-        Array.isArray(dateFormat) ? dateFormat[0].toLowerCase() : dateFormat.toLowerCase(),
+        Array.isArray(dateFormat) ? dateFormat[0].replace('DD','dd').replace('YYYY','yyyy') : dateFormat.replace('DD','dd').replace('YYYY','yyyy'),
         (locale: locale)
       )) ||
     ""
