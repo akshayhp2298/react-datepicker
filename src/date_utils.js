@@ -162,7 +162,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
     (date &&
       formatDate(
         date,
-       'MM/dd/yyyy',
+        dateFormat.toLowerCase(),
         (locale: locale)
       )) ||
     ""
