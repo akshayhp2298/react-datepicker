@@ -879,14 +879,12 @@ export default class Calendar extends React.Component {
 
   renderInputTimeSection = () => {
     const time = new Date(this.props.selected);
-    const timeValid = isValid(time) && Boolean(this.props.selected);
-    const timeString = timeValid
-      ? `${addZero(time.getHours())}:${addZero(time.getMinutes())}`
-      : "";
+
     if (this.props.showTimeInput) {
       return (
         <InputTime
-          timeString={timeString}
+          timeString={time}
+          selected={this.props.selected}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}
           customTimeInput={this.props.customTimeInput}

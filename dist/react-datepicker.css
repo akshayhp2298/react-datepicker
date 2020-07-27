@@ -293,10 +293,6 @@
   text-align: left;
 }
 
-.react-datepicker__input-time-container .react-datepicker-time__caption {
-  display: inline-block;
-}
-
 .react-datepicker__input-time-container .react-datepicker-time__input-container {
   display: inline-block;
 }
