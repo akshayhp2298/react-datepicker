@@ -67,7 +67,7 @@ export default class inputTime extends React.Component {
           />
           <span className="hour-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
-              const setHour = addZero(hourValue + 1);
+              const setHour = addZero(parseInt(hourValue, 10) + 1);
               if (document.getElementById(`datepicker-hour-input-${id}`)) {
                 document.getElementById(`datepicker-hour-input-${id}`).value = setHour;
               }
@@ -77,7 +77,7 @@ export default class inputTime extends React.Component {
           </span>
           <span className="hour-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              const setHour = addZero(hourValue - 1);
+              const setHour = addZero(parseInt(hourValue, 10) - 1);
               if (document.getElementById(`datepicker-hour-input-${id}`)) {
                 document.getElementById(`datepicker-hour-input-${id}`).value = setHour;
               }
@@ -103,7 +103,7 @@ export default class inputTime extends React.Component {
             max="59" />
           <span className="mins-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
-              const setMins = addZero(minutesValue + 1);
+              const setMins = addZero(parseInt(minutesValue, 10) + 1);
               if (document.getElementById(`datepicker-mins-input-${id}`)) {
                 document.getElementById(`datepicker-mins-input-${id}`).value = setMins;
               }
@@ -113,7 +113,7 @@ export default class inputTime extends React.Component {
           </span>
           <span className="mins-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              const setMins = addZero(minutesValue -1);
+              const setMins = addZero(parseInt(minutesValue, 10) - 1);
               if (document.getElementById(`datepicker-mins-input-${id}`)) {
                 document.getElementById(`datepicker-mins-input-${id}`).value = setMins;
               }
