@@ -337,17 +337,6 @@ select,
 .numInputWrapper span {
   height: 26%;
 }
-input[type='number'] {
-  -moz-appearance: textfield;
-  position: relative;
-  /* margin: 0 0 1rem; */
-  background-image: url('../assets/date-select-bg.png') !important;
-  background-repeat: no-repeat !important;
-  background-position: right 8px top 11px !important;
-  text-align: left;
-  padding-left: 8px;
-  font-size: 14px;
-}
 .react-datepicker-time__caption {
   font-size: 14px;
   color: #253245;
