@@ -888,6 +888,7 @@ export default class Calendar extends React.Component {
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}
           customTimeInput={this.props.customTimeInput}
+          timeFormat={this.props.timeFormat}
         />
       );
     }

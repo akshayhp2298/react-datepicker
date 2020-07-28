@@ -8,6 +8,7 @@
       timeInputLabel="Time"
       dateFormat="MM/dd/yyyy h:mm aa"
       showTimeInput
+      timeFormat="24"
     />
   );
 };

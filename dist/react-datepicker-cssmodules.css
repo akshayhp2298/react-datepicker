@@ -299,11 +299,6 @@
 
 :global .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input {
   display: inline-block;
-  margin-left: 10px;
-}
-
-:global .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input {
-  width: 85px;
 }
 
 :global .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type="time"]::-webkit-inner-spin-button,
@@ -319,6 +314,16 @@
 :global .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__delimiter {
   margin-left: 5px;
   display: inline-block;
+}
+
+:global .react-datepicker-time-separator {
+  margin-right: 7px;
+}
+
+:global .numInputWrapper input::-webkit-outer-spin-button,
+:global .numInputWrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 :global .react-datepicker__time-container {
@@ -785,7 +790,6 @@
   border: 1px solid #a9b4c5 !important;
   border-radius: 2px;
   padding: 6px 10px;
-  height: 34px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -806,6 +810,10 @@
 :global .react-datepicker__navigation {
   border: 0.5rem solid transparent;
   display: none;
+}
+
+:global .react-datepicker-am-pm-switch {
+  display: inline-block;
 }
 
 :global .react-datepicker__navigation--previous {
@@ -830,8 +838,42 @@
   color: #fff !important;
 }
 
-:global .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input {
-  width: 115px !important;
+:global .numInputWrapper {
+  display: inline-block;
+  margin-right: 7px;
+  flex: initial !important;
+  width: 45px !important;
+  height: 32px !important;
+}
+
+:global .numInputWrapper .input-arrows {
+  position: absolute;
+  cursor: pointer;
+}
+
+:global .numInputWrapper .hour-arrow-up,
+:global .numInputWrapper .hour-arrow-down {
+  left: 50px;
+}
+
+:global .numInputWrapper .mins-arrow-down,
+:global .numInputWrapper .mins-arrow-up {
+  left: 112px;
+}
+
+:global .numInputWrapper .hour-arrow-up,
+:global .numInputWrapper .mins-arrow-up {
+  top: 88%;
+}
+
+:global .numInputWrapper .hour-arrow-down,
+:global .numInputWrapper .mins-arrow-down {
+  top: 90%;
+}
+
+:global .react-datepicker-time-section {
+  border-top: 1px solid rgba(84, 106, 140, 0.2);
+  padding-top: 10px;
 }
 
 :global .react-datepicker__month-select option:hover {
