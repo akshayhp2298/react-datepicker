@@ -293,6 +293,7 @@
 .react-datepicker__day--in-selecting-range,
 .react-datepicker__day--in-range {
   color: #fff !important;
+  border-radius: 11px;
 }
 .react-datepicker__year-dropdown-container--select,
 .react-datepicker__month-dropdown-container--select {
@@ -354,7 +355,7 @@ select,
   font-size: 14px;
   line-height: 18px;
 }
-.react-datepicker-am-pm-switch span:active {
+.react-datepicker-am-pm-switch span.active {
   background-color: #0f67ea;
   color: #fff;
   border-color: #0f67ea;
@@ -507,7 +508,7 @@ select,
   cursor: pointer;
 
   &:hover {
-    border-radius: $datepicker__border-radius;
+    border-radius: 11px;
     background-color: $datepicker__background-color;
   }
 
@@ -516,7 +517,7 @@ select,
   }
 
   &--highlighted {
-    border-radius: $datepicker__border-radius;
+    border-radius: 11px;
     background-color: $datepicker__highlighted-color;
     color: #fff;
 
@@ -536,7 +537,7 @@ select,
   &--selected,
   &--in-selecting-range,
   &--in-range {
-    border-radius: $datepicker__border-radius;
+    border-radius: 11px;
     background-color: $datepicker__selected-color;
     color: #fff;
 
@@ -821,6 +822,7 @@ select,
 .react-datepicker__day--in-range {
   background: #0f67ea !important;
   color: #fff !important;
+  border-radius: 11px;
 }
 
 .numInputWrapper {
