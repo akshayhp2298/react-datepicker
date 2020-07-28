@@ -78,7 +78,7 @@ export default class inputTime extends React.Component {
           </span>
           <span className="hour-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              console.log('oioio down');
+              console.log('oioio down', hourValue , hourValue -1 , addZero(hourValue - 1));
               const setHour = addZero(hourValue - 1);
               if (document.getElementById(`datepicker-hour-input-${id}`)) {
                 document.getElementById(`datepicker-hour-input-${id}`).value = setHour;
