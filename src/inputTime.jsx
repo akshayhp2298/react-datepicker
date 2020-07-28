@@ -129,7 +129,7 @@ export default class inputTime extends React.Component {
         </div>
         {timeFormat !== '24' &&
           <div className="react-datepicker-am-pm-switch">
-            <span>AM</span>
+            <span className="active">AM</span>
             <span>PM</span>
           </div>}
       </>
