@@ -825,38 +825,18 @@ select,
   border-radius: 11px;
 }
 
-// .numInputWrapper {
-//   display: inline-block;
-//   margin-right: 7px;
-//   flex: initial!important;
-//   width: 45px!important;
-//   height: 32px!important;
+.numInputWrapper {
+  display: inline-block;
+  margin-right: 7px;
+  flex: initial!important;
+  width: 45px!important;
+  height: 32px!important;
 
-//   .input-arrows {
-//     position: absolute;
-//     cursor: pointer;
-//   }
-
-//   .hour-arrow-up,
-//   .hour-arrow-down {
-//     left: 50px;
-//   }
-
-//   .mins-arrow-down,
-//   .mins-arrow-up {
-//     left: 112px;
-//   }
-
-//   .hour-arrow-up,
-//   .mins-arrow-up {
-//     top: 88%;
-//   }
-
-//   .hour-arrow-down,
-//   .mins-arrow-down {
-//     top: 90%;
-//   }
-// }
+  .input-arrows {
+    position: absolute;
+    cursor: pointer;
+  }
+}
 
 .react-datepicker-time-section{
   border-top: 1px solid rgba(84,106,140,.2);

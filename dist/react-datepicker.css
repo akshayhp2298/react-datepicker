@@ -949,6 +949,19 @@ select,
   border-radius: 11px;
 }
 
+.numInputWrapper {
+  display: inline-block;
+  margin-right: 7px;
+  flex: initial !important;
+  width: 45px !important;
+  height: 32px !important;
+}
+
+.numInputWrapper .input-arrows {
+  position: absolute;
+  cursor: pointer;
+}
+
 .react-datepicker-time-section {
   border-top: 1px solid rgba(84, 106, 140, 0.2);
   padding-top: 10px;
