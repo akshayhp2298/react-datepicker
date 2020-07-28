@@ -824,6 +824,7 @@ export default class DatePicker extends React.Component {
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
         calendarStartDay={this.props.calendarStartDay}
+        id={this.props.id}
       >
         {this.props.children}
       </WrappedCalendar>

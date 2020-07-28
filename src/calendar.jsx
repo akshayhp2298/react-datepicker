@@ -178,6 +178,7 @@ export default class Calendar extends React.Component {
     weekAriaLabelPrefix: PropTypes.string,
     setPreSelection: PropTypes.func,
     calendarStartDay: PropTypes.number,
+    id: PropTypes.string,
   };
 
   constructor(props) {
@@ -884,6 +885,7 @@ export default class Calendar extends React.Component {
       return (
         <InputTime
           timeString={time}
+          id={this.props.id}
           selected={this.props.selected}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}

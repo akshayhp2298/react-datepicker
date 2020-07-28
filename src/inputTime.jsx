@@ -11,6 +11,7 @@ export default class inputTime extends React.Component {
     timeInputLabel: PropTypes.string,
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
+    id: PropTypes.string,
   };
 
   constructor(props) {
@@ -37,7 +38,7 @@ export default class inputTime extends React.Component {
 
   renderTimeInput = () => {
     const { time } = this.state;
-
+    const { id } = this.props;
     const hourValue = addZero(time.getHours());
     const minutesValue = addZero(time.getMinutes());
     const { timeString, customTimeInput, timeFormat } = this.props;
@@ -56,7 +57,7 @@ export default class inputTime extends React.Component {
             aria-label="Hour"
             tabIndex="-1"
             min="1"
-            id="datepicker-hour-input"
+            id={`datepicker-hour-input-${id}`}
             max={`${parseInt(timeFormat, 10) - 1}`}
             onChange={ev => {
               this.onTimeChange(ev.target.value, 'hour');
@@ -94,7 +95,7 @@ export default class inputTime extends React.Component {
             type="number"
             aria-label="Minute"
             tabIndex="-1"
-            id="datepicker-mins-input"
+            id={`datepicker-mins-input-${id}`}
             defaultValue={minutesValue}
             onChange={ev => {
               this.onTimeChange(ev.target.value, 'minutes');
