@@ -949,39 +949,6 @@
   border-radius: 11px;
 }
 
-:global .numInputWrapper {
-  display: inline-block;
-  margin-right: 7px;
-  flex: initial !important;
-  width: 45px !important;
-  height: 32px !important;
-}
-
-:global .numInputWrapper .input-arrows {
-  position: absolute;
-  cursor: pointer;
-}
-
-:global .numInputWrapper .hour-arrow-up,
-:global .numInputWrapper .hour-arrow-down {
-  left: 50px;
-}
-
-:global .numInputWrapper .mins-arrow-down,
-:global .numInputWrapper .mins-arrow-up {
-  left: 112px;
-}
-
-:global .numInputWrapper .hour-arrow-up,
-:global .numInputWrapper .mins-arrow-up {
-  top: 88%;
-}
-
-:global .numInputWrapper .hour-arrow-down,
-:global .numInputWrapper .mins-arrow-down {
-  top: 90%;
-}
-
 :global .react-datepicker-time-section {
   border-top: 1px solid rgba(84, 106, 140, 0.2);
   padding-top: 10px;
