@@ -6,7 +6,7 @@ import TimeArrowUp from './Icons/time-arrow-up';
 
 export default class inputTime extends React.Component {
   static propTypes = {
-    onChange: PropTypes.func,
+    onTimeChange: PropTypes.func,
     timeString: PropTypes.string,
     timeInputLabel: PropTypes.string,
     customTimeInput: PropTypes.element,
@@ -56,7 +56,7 @@ export default class inputTime extends React.Component {
       date.setMinutes(time);
     }
     this.setState({ time: date }, () => {
-      this.props.onChange(date);
+      this.props.onTimeChange(date);
     });
   };
 
