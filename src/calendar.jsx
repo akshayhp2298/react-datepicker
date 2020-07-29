@@ -881,7 +881,6 @@ export default class Calendar extends React.Component {
 
   renderInputTimeSection = () => {
     const time = new Date(this.props.timeValue);
-    console.log( time, new Date(this.props.timeValue));
     if (this.props.showTimeInput) {
       return (
         <InputTime

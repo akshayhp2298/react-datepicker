@@ -42,13 +42,11 @@ export default class inputTime extends React.Component {
       }
 
       if(this.state.activeState === 'AM' && time > 12){
-        console.log(time);
         time %= 12;
         time = parseInt(time,10) || 12;
       }
     }
 
-    console.log('ioio', time);
     if (type === 'hour') {
       date.setHours(time);
     }
