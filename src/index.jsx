@@ -251,7 +251,8 @@ export default class DatePicker extends React.Component {
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
     calendarStartDay: PropTypes.number,
-    timeValue: PropTypes.PropTypes.instanceOf(Date),
+    timeValue: PropTypes.instanceOf(Date),
+    onTimeChange: PropTypes.func,
   };
 
   constructor(props) {
@@ -791,7 +792,7 @@ export default class DatePicker extends React.Component {
         timeClassName={this.props.timeClassName}
         showTimeSelect={this.props.showTimeSelect}
         showTimeSelectOnly={this.props.showTimeSelectOnly}
-        onTimeChange={this.handleTimeChange}
+        onTimeChange={this.props.onTimeChange}
         timeFormat={this.props.timeFormat}
         timeIntervals={this.props.timeIntervals}
         minTime={this.props.minTime}

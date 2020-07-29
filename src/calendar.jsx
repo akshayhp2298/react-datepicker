@@ -889,7 +889,7 @@ export default class Calendar extends React.Component {
           id={this.props.id}
           selected={this.props.selected}
           timeInputLabel={this.props.timeInputLabel}
-          onChange={this.props.onTimeChange}
+          onTimeChange={this.props.onTimeChange}
           customTimeInput={this.props.customTimeInput}
           timeFormat={this.props.timeFormat}
           timeValue={this.props.timeValue}
