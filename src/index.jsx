@@ -251,6 +251,7 @@ export default class DatePicker extends React.Component {
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
     calendarStartDay: PropTypes.number,
+    timeValue: PropTypes.PropTypes.instanceOf(Date),
   };
 
   constructor(props) {
@@ -825,6 +826,7 @@ export default class DatePicker extends React.Component {
         setPreSelection={this.setPreSelection}
         calendarStartDay={this.props.calendarStartDay}
         id={this.props.id}
+        timeValue={this.props.timeValue}
       >
         {this.props.children}
       </WrappedCalendar>

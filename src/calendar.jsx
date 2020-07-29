@@ -179,6 +179,7 @@ export default class Calendar extends React.Component {
     setPreSelection: PropTypes.func,
     calendarStartDay: PropTypes.number,
     id: PropTypes.string,
+    timeValue: PropTypes.instanceOf(Date),
   };
 
   constructor(props) {
@@ -880,7 +881,7 @@ export default class Calendar extends React.Component {
 
   renderInputTimeSection = () => {
     const time = new Date(this.props.selected);
-
+    console.log(this.props.selected , time, new Date(this.props.timeValue), timeValue);
     if (this.props.showTimeInput) {
       return (
         <InputTime
@@ -891,6 +892,7 @@ export default class Calendar extends React.Component {
           onChange={this.props.onTimeChange}
           customTimeInput={this.props.customTimeInput}
           timeFormat={this.props.timeFormat}
+          timeValue={this.props.timeValue}
         />
       );
     }

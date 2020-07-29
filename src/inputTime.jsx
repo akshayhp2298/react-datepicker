@@ -12,6 +12,7 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
+
   };
 
   constructor(props) {
@@ -25,12 +26,15 @@ export default class inputTime extends React.Component {
   onTimeChange = (time, type) => {
     console.log(time, type);
     const date = this.props.timeString;
+    console.log(date);
     if (type === 'hour') {
       date.setHours(time);
     }
     if (type === 'minutes') {
       date.setMinutes(time);
     }
+
+    console.log('date', date);
     this.setState({ time: date }, () => {
       this.props.onChange(date);
     });
@@ -125,8 +129,8 @@ export default class inputTime extends React.Component {
         </div>
         {timeFormat !== '24' &&
           <div className="react-datepicker-am-pm-switch">
-            <span className="active">AM</span>
-            <span>PM</span>
+            <span className="active" onClick={() => {console.log('am click')}}>AM</span>
+            <span onClick={() => {console.log('pm click')}}>PM</span>
           </div>}
       </>
     );
