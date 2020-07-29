@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date('2020', '07', '29', '05', '50', '12', '00'));
   return (
     <DatePicker
       selected={startDate}
@@ -8,7 +8,8 @@
       timeInputLabel="Time"
       dateFormat="MM/dd/yyyy h:mm aa"
       showTimeInput
-      timeFormat="24"
+      timeFormat="12"
+      timeValue={startDate}
     />
   );
 };

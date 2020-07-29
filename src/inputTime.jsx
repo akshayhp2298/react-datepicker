@@ -12,29 +12,46 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
-
   };
 
   constructor(props) {
     super(props);
+    const time = this.props.timeString;
+    let activeState;
+    if (this.props.timeFormat === '12') {
+      let hourValue = time.getHours();
+      activeState = hourValue >= 12 ? 'PM' : 'AM';
+      if (hourValue > 12) {
+        hourValue %= 12;
+        hourValue = hourValue || 12;
+      }
+      time.setHours(hourValue);
+    }
 
     this.state = {
-      time: this.props.timeString
+      time,
+      activeState,
     };
   }
 
   onTimeChange = (time, type) => {
-    console.log(time, type);
     const date = this.props.timeString;
-    console.log(date);
+    if (this.props.timeFormat === '12') {
+      if (this.state.activeState === 'PM' && time < 12) {
+        time = parseInt(time,10) + 12;
+      }
+
+      if(this.state.activeState === 'AM' && time > 12){
+        time %= 12;
+        time = parseInt(time,10) || 12;
+      }
+    }
     if (type === 'hour') {
       date.setHours(time);
     }
     if (type === 'minutes') {
       date.setMinutes(time);
     }
-
-    console.log('date', date);
     this.setState({ time: date }, () => {
       this.props.onChange(date);
     });
@@ -129,8 +146,20 @@ export default class inputTime extends React.Component {
         </div>
         {timeFormat !== '24' &&
           <div className="react-datepicker-am-pm-switch">
-            <span className="active" onClick={() => {console.log('am click')}}>AM</span>
-            <span onClick={() => {console.log('pm click')}}>PM</span>
+            <span className={`${this.state.activeState === 'AM' ? 'active' : ''}`} onClick={() => {
+              this.setState({
+                activeState: 'AM',
+              }, () => {
+                this.onTimeChange(hourValue, 'hour');
+              });
+            }}>AM</span>
+            <span className={`${this.state.activeState === 'PM' ? 'active' : ''}`} onClick={() => {
+              this.setState({
+                activeState: 'PM',
+              }, () => {
+                this.onTimeChange(hourValue, 'hour');
+              });
+            }}>PM</span>
           </div>}
       </>
     );
