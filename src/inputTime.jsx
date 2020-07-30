@@ -49,17 +49,6 @@ export default class inputTime extends React.Component {
           hourValue = hourValue || 12;
         }
       }
-
-        // if (document.getElementById(`datepicker-hour-input-${id}`)) {
-        //   console.log('to set hour', hourValue)
-        //   document.getElementById(`datepicker-hour-input-${id}`).value = hourValue;
-        // }
-
-        // if (document.getElementById(`datepicker-mins-input-${id}`)) {
-        //   console.log('to set min', minsValue);
-        //   document.getElementById(`datepicker-mins-input-${id}`).value = minsValue;
-        // }
-      console.log('diid ypdate' ,time);
       this.setState ({
         time,
         activeState,
@@ -126,9 +115,6 @@ export default class inputTime extends React.Component {
           <span className="hour-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
               const setHour = addZero(parseInt(hourValue, 10) + 1);
-              // if (document.getElementById(`datepicker-hour-input-${id}`)) {
-              //   document.getElementById(`datepicker-hour-input-${id}`).value = setHour;
-              // }
               this.onTimeChange(setHour, 'hour');
             }}
             />
@@ -136,9 +122,6 @@ export default class inputTime extends React.Component {
           <span className="hour-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
               const setHour = addZero(parseInt(hourValue, 10) - 1);
-              // if (document.getElementById(`datepicker-hour-input-${id}`)) {
-              //   document.getElementById(`datepicker-hour-input-${id}`).value = setHour;
-              // }
               this.onTimeChange(setHour, 'hour');
             }}
             />
@@ -163,9 +146,6 @@ export default class inputTime extends React.Component {
           <span className="mins-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
               const setMins = addZero(parseInt(minutesValue, 10) + 1);
-              // if (document.getElementById(`datepicker-mins-input-${id}`)) {
-              //   document.getElementById(`datepicker-mins-input-${id}`).value = setMins;
-              // }
               this.onTimeChange(setMins, 'minutes');
             }}
             />
@@ -173,9 +153,6 @@ export default class inputTime extends React.Component {
           <span className="mins-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
               const setMins = addZero(parseInt(minutesValue, 10) - 1);
-              // if (document.getElementById(`datepicker-mins-input-${id}`)) {
-              //   document.getElementById(`datepicker-mins-input-${id}`).value = setMins;
-              // }
               this.onTimeChange(setMins, 'minutes');
             }}
             />
