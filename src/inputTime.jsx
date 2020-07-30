@@ -68,6 +68,7 @@ export default class inputTime extends React.Component {
   }
 
   onTimeChange = (time, type) => {
+    console.log(time);
     const date = this.props.timeString;
     if (this.props.timeFormat === '12') {
       if (this.state.activeState === 'PM' && time < 12) {
@@ -116,6 +117,7 @@ export default class inputTime extends React.Component {
             key={`datepicker-hour-input-${id}`}
             max={`${parseInt(timeFormat, 10) - 1}`}
             onChange={ev => {
+              console.log(ev, ev.target.value);
               this.onTimeChange(ev.target.value, 'hour');
             }}
             required
