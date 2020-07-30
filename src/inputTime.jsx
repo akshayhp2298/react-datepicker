@@ -47,6 +47,7 @@ export default class inputTime extends React.Component {
         }
         time.setHours(hourValue);
       }
+      console.log('diid ypdate' ,time);
       this.setState ({
         time,
         activeState,
@@ -80,6 +81,7 @@ export default class inputTime extends React.Component {
 
   renderTimeInput = () => {
     const { time } = this.state;
+    console.log(time);
     const { id } = this.props;
     const hourValue = addZero(time.getHours());
     const minutesValue = addZero(time.getMinutes());
@@ -105,7 +107,7 @@ export default class inputTime extends React.Component {
               this.onTimeChange(ev.target.value, 'hour');
             }}
             required
-            defaultValue={hourValue}
+            value={hourValue}
           />
           <span className="hour-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
@@ -136,7 +138,7 @@ export default class inputTime extends React.Component {
             aria-label="Minute"
             tabIndex="-1"
             id={`datepicker-mins-input-${id}`}
-            defaultValue={minutesValue}
+            value={minutesValue}
             onChange={ev => {
               this.onTimeChange(ev.target.value, 'minutes');
             }}
