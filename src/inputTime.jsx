@@ -49,10 +49,12 @@ export default class inputTime extends React.Component {
         }
 
         if (document.getElementById(`datepicker-hour-input-${id}`)) {
+          console.log('to set hour', hourValue)
           document.getElementById(`datepicker-hour-input-${id}`).value = hourValue;
         }
 
         if (document.getElementById(`datepicker-mins-input-${id}`)) {
+          console.log('to set min', minsValue);
           document.getElementById(`datepicker-mins-input-${id}`).value = minsValue;
         }
       }
@@ -90,7 +92,6 @@ export default class inputTime extends React.Component {
 
   renderTimeInput = () => {
     const { time } = this.state;
-    console.log(time);
     const { id } = this.props;
     const hourValue = addZero(time.getHours());
     const minutesValue = addZero(time.getMinutes());
@@ -101,7 +102,7 @@ export default class inputTime extends React.Component {
         onChange: this.onTimeChange
       });
     }
-
+    console.log(hourValue, minutesValue, time);
     return (
       <>
         <div className="numInputWrapper">
