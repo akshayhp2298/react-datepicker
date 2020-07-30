@@ -107,7 +107,7 @@ export default class inputTime extends React.Component {
               this.onTimeChange(ev.target.value, 'hour');
             }}
             required
-            value={hourValue}
+            defaultValue={hourValue}
           />
           <span className="hour-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
@@ -138,7 +138,7 @@ export default class inputTime extends React.Component {
             aria-label="Minute"
             tabIndex="-1"
             id={`datepicker-mins-input-${id}`}
-            value={minutesValue}
+            defaultValue={minutesValue}
             onChange={ev => {
               this.onTimeChange(ev.target.value, 'minutes');
             }}
