@@ -37,15 +37,24 @@ export default class inputTime extends React.Component {
   componentDidUpdate(prevProps) {
     if(prevProps.timeString !== this.props.timeString){
       const time = this.props.timeString;
+      const { id } = this.props;
       let activeState;
       if (this.props.timeFormat === '12') {
-        let hourValue = time.getHours();
+        let hourValue = addZero(time.getHours());
+        let minsValue = addZero(time.getMinutes());
         activeState = hourValue >= 12 ? 'PM' : 'AM';
         if (hourValue > 12) {
           hourValue %= 12;
           hourValue = hourValue || 12;
         }
-        time.setHours(hourValue);
+
+        if (document.getElementById(`datepicker-hour-input-${id}`)) {
+          document.getElementById(`datepicker-hour-input-${id}`).value = hourValue;
+        }
+
+        if (document.getElementById(`datepicker-mins-input-${id}`)) {
+          document.getElementById(`datepicker-mins-input-${id}`).value = minsValue;
+        }
       }
       console.log('diid ypdate' ,time);
       this.setState ({
