@@ -111,7 +111,7 @@ export default class inputTime extends React.Component {
             type="number"
             aria-label="Hour"
             tabIndex="-1"
-            min="1"
+            min="0"
             id={`datepicker-hour-input-${id}`}
             key={`datepicker-hour-input-${id}`}
             max={`${parseInt(timeFormat, 10) - 1}`}
