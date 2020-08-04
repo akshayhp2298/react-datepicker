@@ -567,6 +567,17 @@ select,
   }
 }
 
+.react-datepicker--time--input-only{
+  position: static;
+  border: none !important;
+  box-shadow: none;
+  padding: 0;
+  .react-datepicker-time-section{
+    padding: 0;
+    border: none !important;
+  }
+}
+
 .react-datepicker__month-text,
 .react-datepicker__quarter-text {
 

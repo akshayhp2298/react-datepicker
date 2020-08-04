@@ -668,6 +668,18 @@
   background-color: transparent;
 }
 
+:global .react-datepicker--time--input-only {
+  position: static;
+  border: none !important;
+  box-shadow: none;
+  padding: 0;
+}
+
+:global .react-datepicker--time--input-only .react-datepicker-time-section {
+  padding: 0;
+  border: none !important;
+}
+
 :global .react-datepicker__month-text.react-datepicker__month--selected:hover, :global .react-datepicker__month-text.react-datepicker__month--in-range:hover, :global .react-datepicker__month-text.react-datepicker__quarter--selected:hover, :global .react-datepicker__month-text.react-datepicker__quarter--in-range:hover,
 :global .react-datepicker__quarter-text.react-datepicker__month--selected:hover,
 :global .react-datepicker__quarter-text.react-datepicker__month--in-range:hover,
