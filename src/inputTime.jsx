@@ -93,7 +93,6 @@ export default class inputTime extends React.Component {
         onChange: this.onTimeChange
       });
     }
-    console.log(hourValue, minutesValue, time);
     return (
       <>
         <div className="numInputWrapper">
@@ -106,7 +105,6 @@ export default class inputTime extends React.Component {
             key={`datepicker-hour-input-${id}`}
             max={`${parseInt(timeFormat, 10) - 1}`}
             onChange={ev => {
-              console.log(ev, ev.target.value);
               this.onTimeChange(ev.target.value, 'hour');
             }}
             required
