@@ -112,14 +112,30 @@ export default class inputTime extends React.Component {
           />
           <span className="hour-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
-              const setHour = addZero(parseInt(hourValue, 10) + 1);
+              let hour = parseInt(hourValue, 10);
+              if(timeFormat === '24'){
+                hour = hour === 24 ? '00' : hour;
+              }
+
+              if(timeFormat === '12'){
+                hour = hour === 12 ? '00' : hour;
+              }
+              const setHour = addZero(parseInt(hour, 10) + 1);
               this.onTimeChange(setHour, 'hour');
             }}
             />
           </span>
           <span className="hour-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              const setHour = addZero(parseInt(hourValue, 10) - 1);
+               let hour = parseInt(hourValue, 10);
+               if(timeFormat === '24'){
+                hour = hour === 0 ? '24' : hour;
+              }
+
+              if(timeFormat === '12'){
+                hour = hour === 0 ? '12' : hour;
+              }
+              const setHour = addZero(parseInt(hour, 10) - 1);
               this.onTimeChange(setHour, 'hour');
             }}
             />
@@ -143,14 +159,18 @@ export default class inputTime extends React.Component {
             max="59" />
           <span className="mins-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
-              const setMins = addZero(parseInt(minutesValue, 10) + 1);
+              let mins = parseInt(minutesValue, 10);
+              mins =  mins === 60 ? '00' : mins;
+              const setMins = addZero(mins + 1);
               this.onTimeChange(setMins, 'minutes');
             }}
             />
           </span>
           <span className="mins-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              const setMins = addZero(parseInt(minutesValue, 10) - 1);
+              let mins = parseInt(minutesValue, 10);
+              mins =  mins === 0 ? '60' : mins;
+              const setMins = addZero(mins - 1);
               this.onTimeChange(setMins, 'minutes');
             }}
             />
