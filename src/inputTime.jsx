@@ -22,7 +22,7 @@ export default class inputTime extends React.Component {
       let hourValue = time.getHours();
       activeState = hourValue >= 12 ? 'PM' : 'AM';
       if (hourValue > 12) {
-        hourValue %= 12;
+        hourValue = hourValue - 12;
         hourValue = hourValue || 12;
       }
       time.setHours(hourValue);
@@ -45,7 +45,7 @@ export default class inputTime extends React.Component {
 
         activeState = hourValue >= 12 ? 'PM' : 'AM';
         if (hourValue > 12) {
-          hourValue %= 12;
+          hourValue = hourValue - 12;
           hourValue = hourValue || 12;
         }
       }
@@ -65,7 +65,7 @@ export default class inputTime extends React.Component {
       }
 
       if(this.state.activeState === 'AM' && time > 12){
-        time %= 12;
+        time = time - 12;
         time = parseInt(time,10) || 12;
       }
     }
@@ -84,8 +84,8 @@ export default class inputTime extends React.Component {
   renderTimeInput = () => {
     const { time } = this.state;
     const { id } = this.props;
-    const hourValue = addZero(time.getHours());
-    const minutesValue = addZero(time.getMinutes());
+    const hourValue = time.getHours();
+    const minutesValue = time.getMinutes();
     const { timeString, customTimeInput, timeFormat } = this.props;
     if (customTimeInput) {
       return React.cloneElement(customTimeInput, {
