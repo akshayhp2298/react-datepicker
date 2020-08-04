@@ -86,7 +86,7 @@ export default class inputTime extends React.Component {
     const { id, timeFormat } = this.props;
     let hourValue = addZero(time.getHours());
     if (timeFormat === '12' && parseInt(hourValue, 10) > 12) {
-      hourValue = parseInt(hourValue, 10) - 12;
+      hourValue = addZero(parseInt(hourValue, 10) - 12);
     }
     const minutesValue = addZero(time.getMinutes());
     const { timeString, customTimeInput } = this.props;
