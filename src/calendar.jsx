@@ -905,6 +905,9 @@ export default class Calendar extends React.Component {
         <Container
           className={classnames("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly
+          },
+          {
+            "react-datepicker--time--input-only": this.props.showTimeInputOnly
           })}
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
