@@ -669,7 +669,7 @@ select,
 }
 
 .react-datepicker--time--input-only {
-  position: static;
+  position: static !important;
   border: none !important;
   box-shadow: none;
   padding: 0;
