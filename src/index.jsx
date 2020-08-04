@@ -88,6 +88,7 @@ export default class DatePicker extends React.Component {
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       showTimeInput: false,
+      showTimeInputOnly: false,
       showPreviousMonths: false,
       showMonthYearPicker: false,
       showFullMonthYearPicker: false,
@@ -101,7 +102,7 @@ export default class DatePicker extends React.Component {
       nextMonthButtonLabel: "Next Month",
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
-      timeInputLabel: "Time",
+      timeInputLabel: "",
       enableTabLoop: true,
 
       renderDayContents(date) {
@@ -253,6 +254,7 @@ export default class DatePicker extends React.Component {
     calendarStartDay: PropTypes.number,
     timeValue: PropTypes.instanceOf(Date),
     onTimeChange: PropTypes.func,
+    showTimeInputOnly: PropTypes.bool,
   };
 
   constructor(props) {
@@ -828,6 +830,7 @@ export default class DatePicker extends React.Component {
         calendarStartDay={this.props.calendarStartDay}
         id={this.props.id}
         timeValue={this.props.timeValue}
+        showTimeInputOnly={this.props.showTimeInputOnly}
       >
         {this.props.children}
       </WrappedCalendar>

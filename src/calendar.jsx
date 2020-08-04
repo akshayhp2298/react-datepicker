@@ -180,6 +180,7 @@ export default class Calendar extends React.Component {
     calendarStartDay: PropTypes.number,
     id: PropTypes.string,
     timeValue: PropTypes.instanceOf(Date),
+    showTimeInputOnly: PropTypes.bool,
   };
 
   constructor(props) {
@@ -603,7 +604,7 @@ export default class Calendar extends React.Component {
   };
 
   renderTodayButton = () => {
-    if (!this.props.todayButton || this.props.showTimeSelectOnly) {
+    if (!this.props.todayButton || this.props.showTimeSelectOnly || this.props.showTimeInputOnly) {
       return;
     }
     return (
@@ -758,7 +759,7 @@ export default class Calendar extends React.Component {
   };
 
   renderMonths = () => {
-    if (this.props.showTimeSelectOnly || this.props.showYearPicker) {
+    if (this.props.showTimeSelectOnly || this.props.showYearPicker || this.props.showTimeInputOnly) {
       return;
     }
 
@@ -835,7 +836,7 @@ export default class Calendar extends React.Component {
   };
 
   renderYears = () => {
-    if (this.props.showTimeSelectOnly) {
+    if (this.props.showTimeSelectOnly || this.props.showTimeInputOnly) {
       return;
     }
     if (this.props.showYearPicker) {

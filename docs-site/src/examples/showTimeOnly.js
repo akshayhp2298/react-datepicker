@@ -4,11 +4,12 @@
     <DatePicker
       selected={startDate}
       onChange={date => setStartDate(date)}
-      showTimeSelect
-      showTimeSelectOnly
-      timeIntervals={15}
-      timeCaption="Time"
-      dateFormat="h:mm aa"
+      onTimeChange={date => setStartDate(date)}
+      showTimeInput
+      showTimeInputOnly
+      timeFormat="24"
+      timeValue={startDate}
+      inline
     />
   );
 };
