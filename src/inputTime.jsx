@@ -18,19 +18,22 @@ export default class inputTime extends React.Component {
     super(props);
     const time = this.props.timeString;
     let activeState;
+    let hourValue = time.getHours();
     if (this.props.timeFormat === '12') {
-      let hourValue = time.getHours();
+      hourValue = time.getHours();
       activeState = hourValue >= 12 ? 'PM' : 'AM';
       if (parseInt(hourValue, 10) > 12) {
-        hourValue = parseInt(hourValue,10) - 12;
+        hourValue = parseInt(hourValue, 10) - 12;
         hourValue = hourValue || 12;
       }
-      time.setHours(hourValue);
+      time.setHours(addZero(hourValue));
     }
 
     this.state = {
       time,
       activeState,
+      hour: addZero(hourValue),
+      mins: time.getMinutes(),
     };
   }
 
@@ -45,7 +48,7 @@ export default class inputTime extends React.Component {
 
         activeState = hourValue >= 12 ? 'PM' : 'AM';
         if (parseInt(hourValue, 10) > 12) {
-          hourValue = parseInt(hourValue,10) - 12;
+          hourValue = parseInt(hourValue, 10) - 12;
           hourValue = hourValue || 12;
         }
       }
@@ -57,26 +60,32 @@ export default class inputTime extends React.Component {
   }
 
   onTimeChange = (time, type) => {
-    console.log(time);
+    let timeValue = time !== 'NAN' && time ? time : this.props.timeFormat === '12' ? '12' : '24';
     const date = this.props.timeString;
     if (this.props.timeFormat === '12') {
-      if (this.state.activeState === 'PM' && time < 12) {
-        time = parseInt(time, 10) + 12;
+      if (this.state.activeState === 'PM' && timeValue < 12) {
+        timeValue = addZero(parseInt(timeValue, 10) + 12);
       }
 
-      if (this.state.activeState === 'AM' && parseInt(time, 10) > 12) {
-        time = parseInt(time, 10) - 12;
-        time = parseInt(time, 10) || 12;
+      if (this.state.activeState === 'AM' && parseInt(timeValue, 10) > 12) {
+        timeValue = parseInt(timeValue, 10) - 12;
+        timeValue = addZero(parseInt(timeValue, 10)) || 12;
       }
     }
 
     if (type === 'hour') {
-      date.setHours(time);
+      date.setHours(timeValue);
+      this.setState({
+        hour: time !== 'NAN' ? time : timeValue,
+      });
     }
     if (type === 'minutes') {
       date.setMinutes(time);
+      this.setState({
+        mins: time !== 'NAN' ? time : '00',
+      });
     }
-    this.setState({ time: date }, () => {
+    this.setState({ time: date, }, () => {
       this.props.onTimeChange(date);
     });
   };
@@ -84,11 +93,7 @@ export default class inputTime extends React.Component {
   renderTimeInput = () => {
     const { time } = this.state;
     const { id, timeFormat } = this.props;
-    let hourValue = addZero(time.getHours());
-    if (timeFormat === '12' && parseInt(hourValue, 10) > 12) {
-      hourValue = addZero(parseInt(hourValue, 10) - 12);
-    }
-    const minutesValue = addZero(time.getMinutes());
+    const { hour, mins } = this.state;
     const { timeString, customTimeInput } = this.props;
     if (customTimeInput) {
       return React.cloneElement(customTimeInput, {
@@ -106,39 +111,55 @@ export default class inputTime extends React.Component {
             min="0"
             id={`datepicker-hour-input-${id}`}
             key={`datepicker-hour-input-${id}`}
-            max={`${parseInt(timeFormat, 10) - 1}`}
+            max={`${timeFormat === '24' ? `${parseInt(timeFormat, 10) - 1}` : '12'}`}
             onChange={ev => {
-              this.onTimeChange(ev.target.value, 'hour');
+              if (ev.target.value) {
+                let hourValue = parseInt(ev.target.value, 10);
+                if (timeFormat === '12' && hourValue > 12) {
+                  hourValue = hourValue % 12;
+                  hourValue = hourValue == 0 ? 12 : hourValue;
+                }
+                if (timeFormat === '24' && hourValue > 24) {
+                  hourValue = hourValue % 24;
+                  hourValue = hourValue == 0 ? 24 : hourValue;
+                }
+                if(ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward'  && ev.nativeEvent.inputType !== 'insertText'){
+                  hourValue = addZero(hourValue);
+                }
+                  this.onTimeChange(hourValue, 'hour');
+              } else {
+                this.onTimeChange(ev.target.value, 'hour');
+              }
             }}
             required
-            value={hourValue}
+            value={hour}
           />
           <span className="hour-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
-              let hour = parseInt(hourValue, 10);
+              let hourValue = parseInt(hour, 10);
               if (timeFormat === '24') {
-                hour = hour === 24 ? '00' : hour;
+                hourValue = hourValue === 24 ? '00' : hourValue;
               }
 
               if (timeFormat === '12') {
-                hour = hour === 12 ? '00' : hour;
+                hourValue = hourValue === 12 ? '00' : hourValue;
               }
-              const setHour = addZero(parseInt(hour, 10) + 1);
+              const setHour = addZero(parseInt(hourValue, 10) + 1);
               this.onTimeChange(setHour, 'hour');
             }}
             />
           </span>
           <span className="hour-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              let hour = parseInt(hourValue, 10);
+              let hourValue = parseInt(hour, 10);
               if (timeFormat === '24') {
-                hour = hour === 0 ? '24' : hour;
+                hourValue = hourValue === 0 ? '24' : hourValue;
               }
 
               if (timeFormat === '12') {
-                hour = hour === 0 ? '12' : hour;
+                hourValue = hourValue === 0 ? '12' : hourValue;
               }
-              const setHour = addZero(parseInt(hour, 10) - 1);
+              const setHour = addZero(parseInt(hourValue, 10) - 1);
               this.onTimeChange(setHour, 'hour');
             }}
             />
@@ -153,27 +174,40 @@ export default class inputTime extends React.Component {
             tabIndex="-1"
             id={`datepicker-mins-input-${id}`}
             key={`datepicker-mins-input-${id}`}
-            value={minutesValue}
+            value={mins}
             onChange={ev => {
-              this.onTimeChange(ev.target.value, 'minutes');
+              if (ev.target.value) {
+                let minsValue = parseInt(ev.target.value, 10);
+                if (minsValue < 61) {
+                  minsValue = minsValue == 60 ? '00' : minsValue;
+                } else{
+                  minsValue = '00';
+                }
+                if(ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward'  && ev.nativeEvent.inputType !== 'insertText'){
+                  minsValue = addZero(minsValue);
+                }
+                  this.onTimeChange(minsValue, 'minutes');
+              } else {
+                this.onTimeChange(ev.target.value, 'minutes');
+              }
             }}
             required
             min="0"
             max="59" />
           <span className="mins-arrow-up input-arrows">
             <TimeArrowUp onClick={() => {
-              let mins = parseInt(minutesValue, 10);
-              mins = mins === 60 ? '00' : mins;
-              const setMins = addZero(mins + 1);
+              let minsValue = parseInt(mins, 10);
+              minsValue = minsValue === 60 ? '00' : minsValue;
+              const setMins = addZero(minsValue + 1);
               this.onTimeChange(setMins, 'minutes');
             }}
             />
           </span>
           <span className="mins-arrow-down input-arrows">
             <TimeArrowDown onClick={() => {
-              let mins = parseInt(minutesValue, 10);
-              mins = mins === 0 ? '60' : mins;
-              const setMins = addZero(mins - 1);
+              let minsValue = parseInt(mins, 10);
+              minsValue = minsValue === 0 ? '60' : minsValue;
+              const setMins = addZero(minsValue - 1);
               this.onTimeChange(setMins, 'minutes');
             }}
             />
@@ -186,14 +220,14 @@ export default class inputTime extends React.Component {
               this.setState({
                 activeState: 'AM',
               }, () => {
-                this.onTimeChange(hourValue, 'hour');
+                this.onTimeChange(hour, 'hour');
               });
             }}>AM</span>
             <span className={`${this.state.activeState === 'PM' ? 'active' : ''}`} onClick={() => {
               this.setState({
                 activeState: 'PM',
               }, () => {
-                this.onTimeChange(hourValue, 'hour');
+                this.onTimeChange(hour, 'hour');
               });
             }}>PM</span>
           </div>}
