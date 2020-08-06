@@ -69,17 +69,17 @@ export default class inputTime extends React.Component {
         }
         time.setHours(addZero(hourValue));
       }
-      if( addZero(parseInt(hourValue,10)) !== this.state.hour){
-        console.log(this.state.hour , addZero(parseInt(hourValue, 10)));
+      if( parseInt(hourValue,10) !== this.state.hour){
+        console.log(this.state.hour , hourValue);
         this.setState({
-          hour: addZero(parseInt(hourValue,10))
+          hour: hourValue,
         });
       }
 
-      if( addZero(parseInt(time.getMinutes())) !== this.state.mins){
-        console.log(this.state.mins , addZero(parseInt(time.getHours, 10)));
+      if( time.getMinutes() !== this.state.mins){
+        console.log(this.state.mins , time.getMinutes());
         this.setState({
-          mins: addZero(parseInt(time.getMinutes())),
+          mins:time.getMinutes(),
         });
       }
       this.setState({
