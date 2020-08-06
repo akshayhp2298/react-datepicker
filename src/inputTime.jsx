@@ -33,7 +33,7 @@ export default class inputTime extends React.Component {
       time,
       activeState,
       hour: addZero(hourValue),
-      mins: time.getMinutes(),
+      mins: addZero(time.getMinutes()),
     };
   }
 
@@ -43,18 +43,17 @@ export default class inputTime extends React.Component {
       const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
-      let minsValue = addZero(time.getMinutes());
-      if (this.props.timeFormat === '12') {
+      if (this.props.timeFormat === '12' && parseInt(hourValue,10) !== 12) {
 
-        activeState = hourValue >= 12 ? 'PM' : 'AM';
-        if (parseInt(hourValue, 10) > 12) {
-          hourValue = parseInt(hourValue, 10) - 12;
-          hourValue = hourValue || 12;
+        activeState = parseInt(hourValue,10) > 12  ? 'PM' : 'AM';
+        if(activeState !== this.state.activeState){
+          this.setState({
+            activeState,
+          });
         }
       }
       this.setState({
         time,
-        activeState,
       });
     }
   }
@@ -63,7 +62,7 @@ export default class inputTime extends React.Component {
     let timeValue = time !== 'NAN' && time ? time : this.props.timeFormat === '12' ? '12' : '24';
     const date = this.props.timeString;
     if (this.props.timeFormat === '12') {
-      if (this.state.activeState === 'PM' && timeValue < 12) {
+      if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
         timeValue = addZero(parseInt(timeValue, 10) + 12);
       }
 
@@ -121,7 +120,14 @@ export default class inputTime extends React.Component {
                 }
                 if (timeFormat === '24' && hourValue > 24) {
                   hourValue = hourValue % 24;
-                  hourValue = hourValue == 0 ? 24 : hourValue;
+                  hourValue = hourValue == 0 ? '00' : hourValue;
+                }
+
+                if(timeFormat === '12' && ev.target.value === '00'){
+                  hourValue = 12;
+                }
+                if(timeFormat === '24' && hourValue === 24){
+                  hourValue = '00';
                 }
                 if(ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward'  && ev.nativeEvent.inputType !== 'insertText'){
                   hourValue = addZero(hourValue);
@@ -145,6 +151,9 @@ export default class inputTime extends React.Component {
                 hourValue = hourValue === 12 ? '00' : hourValue;
               }
               const setHour = addZero(parseInt(hourValue, 10) + 1);
+              if(setHour === '24'){
+                setHour = '00';
+              }
               this.onTimeChange(setHour, 'hour');
             }}
             />
