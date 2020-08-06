@@ -70,6 +70,10 @@ export default class inputTime extends React.Component {
         timeValue = parseInt(timeValue, 10) - 12;
         timeValue = addZero(parseInt(timeValue, 10)) || 12;
       }
+
+      if(parseInt(timeValue, 10) === 12){
+        timeValue = '00';
+      }
     }
 
     if (type === 'hour') {
