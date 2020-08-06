@@ -26,6 +26,10 @@ export default class inputTime extends React.Component {
         hourValue = parseInt(hourValue, 10) - 12;
         hourValue = hourValue || 12;
       }
+
+      if(parseInt(hourValue,10) === 0){
+        hourValue = 12;
+      }
       time.setHours(addZero(hourValue));
     }
 
