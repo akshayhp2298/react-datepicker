@@ -12,11 +12,12 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
+    timeValue: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
-    const time = this.props.timeString;
+    const time = this.props.timeValue;
     let activeState;
     let hourValue = time.getHours();
     if (this.props.timeFormat === '12') {
@@ -42,8 +43,8 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.timeString !== this.props.timeString) {
-      const time = this.props.timeString;
+    if (prevProps.timeValue !== this.props.timeValue) {
+      const time = this.props.timeValue;
       const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
@@ -61,7 +62,7 @@ export default class inputTime extends React.Component {
         hourValue = time.getHours();
         if (parseInt(hourValue, 10) > 12) {
           hourValue = parseInt(hourValue, 10) - 12;
-          hourValue = hourValue || 12;
+          hourValue = hourValue || '';
         }
 
         if (parseInt(hourValue, 10) === 0) {
@@ -69,17 +70,15 @@ export default class inputTime extends React.Component {
         }
         time.setHours(addZero(hourValue));
       }
-      if( parseInt(hourValue,10) !== this.state.hour){
-        console.log(this.state.hour , hourValue);
+      if (parseInt(hourValue, 10) !== this.state.hour) {
         this.setState({
           hour: hourValue,
         });
       }
 
-      if( time.getMinutes() !== this.state.mins){
-        console.log(this.state.mins , time.getMinutes());
+      if (time.getMinutes() !== this.state.mins) {
         this.setState({
-          mins:time.getMinutes(),
+          mins: time.getMinutes(),
         });
       }
       this.setState({
@@ -89,8 +88,8 @@ export default class inputTime extends React.Component {
   }
 
   onTimeChange = (time, type) => {
-    let timeValue = time !== 'NAN' && time ? time : this.props.timeFormat === '12' ? '12' : '24';
-    const date = this.props.timeString;
+    let timeValue = time !== 'NAN' && time || this.props.timeFormat === '12' ? '12' : '24';
+    const date = this.props.timeValue;
     if (this.props.timeFormat === '12') {
       if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
         timeValue = addZero(parseInt(timeValue, 10) + 12);
@@ -115,12 +114,14 @@ export default class inputTime extends React.Component {
     if (type === 'minutes') {
       date.setMinutes(time);
       this.setState({
-        mins: time !== 'NAN' ? time : '00',
+        mins: time !== 'NAN' ? time : '',
       });
     }
-    this.setState({ time: date, }, () => {
-      this.props.onTimeChange(date);
-    });
+    if (time) {
+      this.setState({ time: date, }, () => {
+        this.props.onTimeChange(date);
+      });
+    }
   };
 
   renderTimeInput = () => {
@@ -160,6 +161,7 @@ export default class inputTime extends React.Component {
                 if (timeFormat === '12' && ev.target.value === '00') {
                   hourValue = 12;
                 }
+
                 if (timeFormat === '24' && hourValue === 24) {
                   hourValue = '00';
                 }
