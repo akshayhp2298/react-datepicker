@@ -71,7 +71,7 @@ export default class inputTime extends React.Component {
         timeValue = addZero(parseInt(timeValue, 10)) || 12;
       }
 
-      if(parseInt(timeValue, 10) === 12){
+      if(parseInt(timeValue, 10) === 12 && this.state.activeState === 'AM' ){
         timeValue = '00';
       }
     }
