@@ -28,7 +28,7 @@ export default class inputTime extends React.Component {
         hourValue = hourValue || 12;
       }
 
-      if(parseInt(hourValue,10) === 0){
+      if (parseInt(hourValue, 10) === 0) {
         hourValue = 12;
       }
       time.setHours(addZero(hourValue));
@@ -43,23 +43,39 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.timeString , this.props.timeValue, 'didupdate');
+    console.log(this.props.timeString, this.props.timeValue, 'didupdate');
     if (prevProps.timeString !== this.props.timeString) {
       const time = this.props.timeString;
       const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
-      if (this.props.timeFormat === '12' && parseInt(hourValue,10) !== 12) {
+      if (this.props.timeFormat === '12' && parseInt(hourValue, 10) !== 12) {
 
-        activeState = parseInt(hourValue,10) > 12  ? 'PM' : 'AM';
-        if(activeState !== this.state.activeState){
+        activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
+        if (activeState !== this.state.activeState) {
           this.setState({
             activeState,
           });
         }
       }
+
+      if (this.props.timeFormat === '12') {
+        hourValue = time.getHours();
+        if (parseInt(hourValue, 10) > 12) {
+          hourValue = parseInt(hourValue, 10) - 12;
+          hourValue = hourValue || 12;
+        }
+
+        if (parseInt(hourValue, 10) === 0) {
+          hourValue = 12;
+        }
+        time.setHours(addZero(hourValue));
+      }
+
       this.setState({
         time,
+        hour: addZero(hourValue),
+        mins: addZero(time.getMinutes()),
       });
     }
   }
@@ -77,7 +93,7 @@ export default class inputTime extends React.Component {
         timeValue = addZero(parseInt(timeValue, 10)) || 12;
       }
 
-      if(parseInt(timeValue, 10) === 12 && this.state.activeState === 'AM' ){
+      if (parseInt(timeValue, 10) === 12 && this.state.activeState === 'AM') {
         timeValue = '00';
       }
     }
@@ -133,16 +149,16 @@ export default class inputTime extends React.Component {
                   hourValue = hourValue == 0 ? '00' : hourValue;
                 }
 
-                if(timeFormat === '12' && ev.target.value === '00'){
+                if (timeFormat === '12' && ev.target.value === '00') {
                   hourValue = 12;
                 }
-                if(timeFormat === '24' && hourValue === 24){
+                if (timeFormat === '24' && hourValue === 24) {
                   hourValue = '00';
                 }
-                if(ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward'  && ev.nativeEvent.inputType !== 'insertText'){
+                if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
                   hourValue = addZero(hourValue);
                 }
-                  this.onTimeChange(hourValue, 'hour');
+                this.onTimeChange(hourValue, 'hour');
               } else {
                 this.onTimeChange(ev.target.value, 'hour');
               }
@@ -161,7 +177,7 @@ export default class inputTime extends React.Component {
                 hourValue = hourValue === 12 ? '00' : hourValue;
               }
               let setHour = addZero(parseInt(hourValue, 10) + 1);
-              if(setHour === '24'){
+              if (setHour === '24') {
                 setHour = '00';
               }
               this.onTimeChange(setHour, 'hour');
@@ -179,7 +195,7 @@ export default class inputTime extends React.Component {
                 hourValue = hourValue === 0 ? '12' : hourValue;
               }
               let setHour = addZero(parseInt(hourValue, 10) - 1);
-              if(setHour === '00'){
+              if (setHour === '00') {
                 setHour = '12';
               }
               this.onTimeChange(setHour, 'hour');
@@ -202,13 +218,13 @@ export default class inputTime extends React.Component {
                 let minsValue = parseInt(ev.target.value, 10);
                 if (minsValue < 61) {
                   minsValue = minsValue == 60 ? '00' : minsValue;
-                } else{
+                } else {
                   minsValue = '00';
                 }
-                if(ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward'  && ev.nativeEvent.inputType !== 'insertText'){
+                if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
                   minsValue = addZero(minsValue);
                 }
-                  this.onTimeChange(minsValue, 'minutes');
+                this.onTimeChange(minsValue, 'minutes');
               } else {
                 this.onTimeChange(ev.target.value, 'minutes');
               }
