@@ -158,7 +158,7 @@ export default class inputTime extends React.Component {
               if (timeFormat === '12') {
                 hourValue = hourValue === 12 ? '00' : hourValue;
               }
-              const setHour = addZero(parseInt(hourValue, 10) + 1);
+              let setHour = addZero(parseInt(hourValue, 10) + 1);
               if(setHour === '24'){
                 setHour = '00';
               }
@@ -176,7 +176,7 @@ export default class inputTime extends React.Component {
               if (timeFormat === '12') {
                 hourValue = hourValue === 0 ? '12' : hourValue;
               }
-              const setHour = addZero(parseInt(hourValue, 10) - 1);
+              let setHour = addZero(parseInt(hourValue, 10) - 1);
               if(setHour === '00'){
                 setHour = '12';
               }
