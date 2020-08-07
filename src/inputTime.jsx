@@ -92,10 +92,13 @@ export default class inputTime extends React.Component {
   onTimeChange = (time, type) => {
     console.log(time);
     let timeValue = time !== 'NAN' && time || this.props.timeFormat === '12' ? '12' : '24';
+    console.log(timeValue, '111');
     const date = this.props.timeValue;
     if (this.props.timeFormat === '12') {
       if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
+        console.log(parseInt(timeValue, 10) + 12, parseInt(timeValue, 10) );
         timeValue = addZero(parseInt(timeValue, 10) + 12);
+        console.log('timeValue', timeValue);
       }
 
       if (this.state.activeState === 'AM' && parseInt(timeValue, 10) > 12) {
