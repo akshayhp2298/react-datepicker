@@ -44,10 +44,12 @@ export default class inputTime extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.timeValue !== this.props.timeValue) {
+      console.log(this.props.timeValue);
       const time = this.props.timeValue;
       const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
+      console.log(hourValue, this.state.hour);
       if (this.props.timeFormat === '12' && parseInt(hourValue, 10) !== 12) {
 
         activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
@@ -75,7 +77,7 @@ export default class inputTime extends React.Component {
           hour: hourValue,
         });
       }
-
+      console.log(time.getMinutes(), this.state.mins);
       if (time.getMinutes() !== this.state.mins) {
         this.setState({
           mins: time.getMinutes(),
@@ -119,6 +121,7 @@ export default class inputTime extends React.Component {
     }
     if (time) {
       this.setState({ time: date, }, () => {
+        console.log('changeDate', date);
         this.props.onTimeChange(date);
       });
     }
