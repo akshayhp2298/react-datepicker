@@ -20,7 +20,7 @@ export default class inputTime extends React.Component {
     const time = this.props.timeValue;
     let activeState;
     let hourValue = time.getHours();
-    console.log(this.props.timeValue);
+    console.log(this.props.timeValue, this.props.timeString);
     if (this.props.timeFormat === '12') {
       hourValue = time.getHours();
       activeState = hourValue >= 12 ? 'PM' : 'AM';
