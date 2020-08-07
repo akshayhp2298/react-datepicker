@@ -90,6 +90,7 @@ export default class inputTime extends React.Component {
   }
 
   onTimeChange = (time, type) => {
+    console.log(time);
     let timeValue = time !== 'NAN' && time || this.props.timeFormat === '12' ? '12' : '24';
     const date = this.props.timeValue;
     if (this.props.timeFormat === '12') {
@@ -106,7 +107,7 @@ export default class inputTime extends React.Component {
         timeValue = '00';
       }
     }
-
+    console.log(timeValue);
     if (type === 'hour') {
       date.setHours(timeValue);
       this.setState({
