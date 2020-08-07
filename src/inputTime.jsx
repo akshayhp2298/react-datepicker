@@ -17,7 +17,7 @@ export default class inputTime extends React.Component {
 
   constructor(props) {
     super(props);
-    const time = this.props.timeValue;
+    const time = this.props.timeString;
     let activeState;
     let hourValue = time.getHours();
     console.log(this.props.timeValue, this.props.timeString);
@@ -44,9 +44,9 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.timeValue !== this.props.timeValue) {
-      console.log(this.props.timeValue);
-      const time = this.props.timeValue;
+    if (prevProps.timeString !== this.props.timeString) {
+      console.log(this.props.timeString);
+      const time = this.props.timeString;
       const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
@@ -94,7 +94,7 @@ export default class inputTime extends React.Component {
     console.log(time);
     let timeValue = time !== 'NAN' && time ? time :  this.props.timeFormat === '12' ? '12' : '24';
     console.log(timeValue, '111');
-    const date = this.props.timeValue;
+    const date = this.props.timeString;
     if (this.props.timeFormat === '12') {
       if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
         console.log(parseInt(timeValue, 10) + 12, parseInt(timeValue, 10) );
