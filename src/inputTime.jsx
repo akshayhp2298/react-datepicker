@@ -12,7 +12,6 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
-    timeValue: PropTypes.string,
   };
 
   constructor(props) {
@@ -20,7 +19,6 @@ export default class inputTime extends React.Component {
     const time = this.props.timeString;
     let activeState;
     let hourValue = time.getHours();
-    console.log(this.props.timeValue, this.props.timeString);
     if (this.props.timeFormat === '12') {
       hourValue = time.getHours();
       activeState = hourValue >= 12 ? 'PM' : 'AM';
@@ -45,12 +43,12 @@ export default class inputTime extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.timeString !== this.props.timeString) {
-      console.log(this.props.timeString);
+
       const time = this.props.timeString;
       const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
-      console.log(hourValue, this.state.hour);
+
       if (this.props.timeFormat === '12' && parseInt(hourValue, 10) !== 12) {
 
         activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
@@ -78,7 +76,6 @@ export default class inputTime extends React.Component {
           hour: hourValue,
         });
       }
-      console.log(time.getMinutes(), this.state.mins);
       if (time.getMinutes() !== this.state.mins) {
         this.setState({
           mins: time.getMinutes(),
@@ -91,15 +88,11 @@ export default class inputTime extends React.Component {
   }
 
   onTimeChange = (time, type) => {
-    console.log(time);
     let timeValue = time !== 'NAN' && time ? time :  this.props.timeFormat === '12' ? '12' : '24';
-    console.log(timeValue, '111');
     const date = this.props.timeString;
     if (this.props.timeFormat === '12') {
       if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
-        console.log(parseInt(timeValue, 10) + 12, parseInt(timeValue, 10) );
         timeValue = addZero(parseInt(timeValue, 10) + 12);
-        console.log('timeValue', timeValue);
       }
 
       if (this.state.activeState === 'AM' && parseInt(timeValue, 10) > 12) {
@@ -111,7 +104,6 @@ export default class inputTime extends React.Component {
         timeValue = '00';
       }
     }
-    console.log(timeValue);
     if (type === 'hour') {
       date.setHours(timeValue);
       this.setState({
@@ -126,7 +118,6 @@ export default class inputTime extends React.Component {
     }
     if (time) {
       this.setState({ time: date, }, () => {
-        console.log('changeDate', date);
         this.props.onTimeChange(date);
       });
     }
