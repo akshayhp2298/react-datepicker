@@ -91,7 +91,7 @@ export default class inputTime extends React.Component {
 
   onTimeChange = (time, type) => {
     console.log(time);
-    let timeValue = time !== 'NAN' && time || this.props.timeFormat === '12' ? '12' : '24';
+    let timeValue = time !== 'NAN' && time ? time :  this.props.timeFormat === '12' ? '12' : '24';
     console.log(timeValue, '111');
     const date = this.props.timeValue;
     if (this.props.timeFormat === '12') {
