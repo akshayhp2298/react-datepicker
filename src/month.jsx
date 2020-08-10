@@ -324,7 +324,7 @@ export default class Month extends React.Component {
       showQuarterYearPicker
     } = this.props;
     return classnames(
-      "react-datepicker__month",
+      "notranslate",
       "react-datepicker__month",
       {
         "react-datepicker__month--selecting-range":
