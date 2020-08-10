@@ -263,9 +263,8 @@ export default class DatePicker extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps.selected, this.props.selected, prevProps.inline, this.props);
+    console.log(prevProps.selected, this.props.selected, prevProps.inline, this.props,'teets', hasPreSelectionChanged(prevProps.selected, this.props.selected));
     if (
-      this.props.inline &&
       hasPreSelectionChanged(prevProps.selected, this.props.selected)
     ) {
       console.log('changes', this.props.selected);
