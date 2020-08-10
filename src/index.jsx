@@ -356,6 +356,7 @@ export default class DatePicker extends React.Component {
   };
 
   setOpen = (open, skipSetBlur = false) => {
+    console.log(open , this.state.open , this.state.preSelection, 'set open', this.calcInitialState().preSelection);
     this.setState(
       {
         open: open,
