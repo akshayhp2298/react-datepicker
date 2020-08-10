@@ -212,6 +212,7 @@ export default class Calendar extends React.Component {
       this.props.preSelection &&
       !isSameDay(this.props.preSelection, prevProps.preSelection)
     ) {
+      console.log(this.props.preSelection, 'if', prevProps.preSelection);
       this.setState({
         date: this.props.preSelection
       });
@@ -219,6 +220,7 @@ export default class Calendar extends React.Component {
       this.props.openToDate &&
       !isSameDay(this.props.openToDate, prevProps.openToDate)
     ) {
+      console.log('else', this.props.openToDate);
       this.setState({
         date: this.props.openToDate
       });
@@ -345,7 +347,7 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(date, this.props.locale,this.props.calendarStartDay);
+    const startOfWeek = getStartOfWeek(date, this.props.locale, this.props.calendarStartDay);
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -906,9 +908,9 @@ export default class Calendar extends React.Component {
           className={classnames("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly
           },
-          {
-            "react-datepicker--time--input-only": this.props.showTimeInputOnly
-          })}
+            {
+              "react-datepicker--time--input-only": this.props.showTimeInputOnly
+            })}
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
         >
