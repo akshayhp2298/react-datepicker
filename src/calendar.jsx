@@ -240,6 +240,7 @@ export default class Calendar extends React.Component {
 
   getDateInView = () => {
     const { preSelection, selected, openToDate } = this.props;
+    console.log(openToDate, selected , preSelection);
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
     const current = newDate();

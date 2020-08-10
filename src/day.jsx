@@ -281,6 +281,7 @@ export default class Day extends React.Component {
 
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
+
   render = () => (
     <div
       ref={this.dayEl}
@@ -293,6 +294,7 @@ export default class Day extends React.Component {
       role="button"
       aria-disabled={this.isDisabled()}
     >
+      {console.log(this.props.day, getDate(this.props.day),'dat')}
       {this.props.renderDayContents
         ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
         : getDate(this.props.day)}
