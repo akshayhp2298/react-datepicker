@@ -140,7 +140,6 @@ export default class inputTime extends React.Component {
           <input className="numInput react-datepicker-time__input react-datepicker__hour"
             type="number"
             aria-label="Hour"
-            tabIndex="-1"
             min="0"
             id={`datepicker-hour-input-${id}`}
             key={`datepicker-hour-input-${id}`}
@@ -218,7 +217,6 @@ export default class inputTime extends React.Component {
             className="numInput react-datepicker-time__input react-datepicker__minute"
             type="number"
             aria-label="Minute"
-            tabIndex="-1"
             id={`datepicker-mins-input-${id}`}
             key={`datepicker-mins-input-${id}`}
             value={mins}

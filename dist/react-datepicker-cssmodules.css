@@ -356,6 +356,10 @@
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.096427);
   border-radius: 2px;
   font-family: 'Source Sans Pro', sans-serif;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 :global .react-datepicker-time-section,
