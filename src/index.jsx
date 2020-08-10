@@ -712,6 +712,15 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  resetInput = date => {
+    if(date){
+      console.log(date);
+      this.setState({
+        preSelection: date
+      });
+    }
+  };
+
   onClearClick = event => {
     if (event) {
       if (event.preventDefault) {
