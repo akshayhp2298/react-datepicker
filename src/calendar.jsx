@@ -208,6 +208,7 @@ export default class Calendar extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log(prevProps.preSelection, this.props.preSelection, 'did');
     if (
       this.props.preSelection &&
       !isSameDay(this.props.preSelection, prevProps.preSelection)
