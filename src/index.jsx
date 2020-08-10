@@ -263,11 +263,10 @@ export default class DatePicker extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps.selected, this.props.selected, prevProps.inline, this.props,'teets', hasPreSelectionChanged(prevProps.selected, this.props.selected));
     if (
+      prevProps.inline &&
       hasPreSelectionChanged(prevProps.selected, this.props.selected)
     ) {
-      console.log('changes', this.props.selected);
       this.setPreSelection(this.props.selected);
     }
     if (
@@ -322,7 +321,6 @@ export default class DatePicker extends React.Component {
         : maxDate && isAfter(defaultPreSelection, maxDate)
         ? maxDate
         : defaultPreSelection;
-        console.log('calc init', this.props.selected, boundedPreSelection);
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -357,7 +355,6 @@ export default class DatePicker extends React.Component {
   };
 
   setOpen = (open, skipSetBlur = false) => {
-    console.log(open , this.state.open , this.state.preSelection, 'set open', this.calcInitialState().preSelection);
     this.setState(
       {
         open: open,
@@ -472,7 +469,6 @@ export default class DatePicker extends React.Component {
     }
     this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
-      console.log('handle see', date);
       this.setPreSelection(date);
     } else if (!this.props.inline) {
       this.setOpen(false);
@@ -502,7 +498,6 @@ export default class DatePicker extends React.Component {
           });
         }
         if (!this.props.inline) {
-          console.log('set slecetd', changedDate);
           this.setState({
             preSelection: changedDate
           });
@@ -538,7 +533,6 @@ export default class DatePicker extends React.Component {
       }
     }
     if (isValidDateSelection) {
-      console.log(';set pre ', date);
       this.setState({
         preSelection: date
       });
@@ -553,7 +547,6 @@ export default class DatePicker extends React.Component {
       hour: getHours(time),
       minute: getMinutes(time)
     });
-    console.log('time change', changedDate);
     this.setState({
       preSelection: changedDate
     });
@@ -617,7 +610,6 @@ export default class DatePicker extends React.Component {
           this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
         ) {
           this.handleSelect(copy, event);
-          console.log('on inut', copy);
           !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
         } else {
           this.setOpen(false);
@@ -690,7 +682,6 @@ export default class DatePicker extends React.Component {
       if (this.props.adjustDateOnChange) {
         this.setSelected(newSelection);
       }
-      console.log('222', newSelection);
       this.setPreSelection(newSelection);
     }
   };

@@ -187,7 +187,6 @@ export default class Calendar extends React.Component {
     super(props);
 
     this.containerRef = React.createRef();
-    console.log('state', this.getDateInView());
     this.state = {
       date: this.getDateInView(),
       selectingDate: null,
@@ -208,12 +207,10 @@ export default class Calendar extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps.preSelection, this.props.preSelection, 'did');
     if (
       this.props.preSelection &&
       !isSameDay(this.props.preSelection, prevProps.preSelection)
     ) {
-      console.log(this.props.preSelection, 'if', prevProps.preSelection);
       this.setState({
         date: this.props.preSelection
       });
@@ -221,7 +218,6 @@ export default class Calendar extends React.Component {
       this.props.openToDate &&
       !isSameDay(this.props.openToDate, prevProps.openToDate)
     ) {
-      console.log('else', this.props.openToDate);
       this.setState({
         date: this.props.openToDate
       });
