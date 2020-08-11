@@ -12,7 +12,6 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
-    timeValue: PropTypes.string,
   };
 
   constructor(props) {
@@ -90,10 +89,6 @@ export default class inputTime extends React.Component {
         time,
       });
     }
-
-    if (this.props.timeValue !== prevProps.timeValue) {
-      console.log(this.props.timeValue);
-    }
   }
 
   componentWillUnmount() {
@@ -108,10 +103,7 @@ export default class inputTime extends React.Component {
       date.setMinutes(addZero(parseInt(mins, 10)));
       this.setState({
         hour: addZero(parseInt(hour, 10)),
-        mins: addZero(parseInt(mins, 10)),
-        time: date,
-      }, () => {
-        this.props.onTimeChange(date);
+        mins: addZero(parseInt(mins, 10))
       });
     }
   }
@@ -163,7 +155,6 @@ export default class inputTime extends React.Component {
         onChange: this.onTimeChange
       });
     }
-    console.log('hour', hour);
     return (
       <>
         <div className="numInputWrapper">
