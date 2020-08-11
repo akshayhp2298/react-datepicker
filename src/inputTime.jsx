@@ -12,6 +12,7 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
+    timeValue: PropTypes.string,
   };
 
   constructor(props) {
@@ -49,7 +50,6 @@ export default class inputTime extends React.Component {
     if (prevProps.timeString !== this.props.timeString) {
 
       const time = this.props.timeString;
-      const { id } = this.props;
       let activeState;
       let hourValue = addZero(time.getHours());
 
@@ -89,17 +89,25 @@ export default class inputTime extends React.Component {
         time,
       });
     }
+
+    if (this.props.timeValue !== prevProps.timeValue) {
+      console.log(timeValue);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleoutsideClick, true);
   }
 
   handleoutsideClick = event => {
     if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
       const { hour, mins } = this.state;
       const date = this.props.timeString;
-      date.setHours(addZero(parseInt(hour,10)));
-      date.setMinutes(addZero(parseInt(mins,10)));
+      date.setHours(addZero(parseInt(hour, 10)));
+      date.setMinutes(addZero(parseInt(mins, 10)));
       this.setState({
-        hour:addZero(parseInt(hour,10)),
-        mins: addZero(parseInt(mins,10)),
+        hour: addZero(parseInt(hour, 10)),
+        mins: addZero(parseInt(mins, 10)),
         time: date,
       }, () => {
         this.props.onTimeChange(date);
