@@ -91,7 +91,7 @@ export default class inputTime extends React.Component {
     }
 
     if (this.props.timeValue !== prevProps.timeValue) {
-      console.log(timeValue);
+      console.log(this.props.timeValue);
     }
   }
 
