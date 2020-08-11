@@ -166,7 +166,6 @@ export default class inputTime extends React.Component {
             max={`${timeFormat === '24' ? `${parseInt(timeFormat, 10) - 1}` : '12'}`}
             onChange={ev => {
               if (ev.target.value) {
-                console.log(ev.target.value.toString().length);
                 if (ev.target.value.toString().length < 3) {
                   let hourValue = parseInt(ev.target.value, 10);
                   if (timeFormat === '12' && hourValue > 12) {
@@ -193,7 +192,9 @@ export default class inputTime extends React.Component {
                   }
                   this.onTimeChange(hourValue, 'hour');
                 }else{
-                  console.log(hour, 'else');
+                  const hourValue = addZero(parseInt(hour,10));
+                  this.onTimeChange(hourValue, 'hour');
+                  console.log(hourValue, 'else');
                 }
               } else {
                 this.onTimeChange(ev.target.value, 'hour');
