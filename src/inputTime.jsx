@@ -75,7 +75,6 @@ export default class inputTime extends React.Component {
         }
         time.setHours(addZero(hourValue));
       }
-      console.log(hourValue, this.state.hour, parseInt(hourValue, 10), time, 'tetst0');
       if (parseInt(hourValue, 10) !== this.state.hour) {
         this.setState({
           hour: hourValue,
@@ -94,12 +93,10 @@ export default class inputTime extends React.Component {
 
   handleoutsideClick = event => {
     if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
-      console.log('encounter outside');
       const { hour, mins } = this.state;
       const date = this.props.timeString;
       date.setHours(addZero(parseInt(hour,10)));
       date.setMinutes(addZero(parseInt(mins,10)));
-      console.log(date, addZero(parseInt(hour,10)), addZero(parseInt(mins,10)));
       this.setState({
         hour:addZero(parseInt(hour,10)),
         mins: addZero(parseInt(mins,10)),
