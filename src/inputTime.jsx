@@ -76,6 +76,7 @@ export default class inputTime extends React.Component {
         time.setHours(addZero(hourValue));
       }
       if (parseInt(hourValue, 10) !== this.state.hour) {
+        console.log(hourValue);
         this.setState({
           hour: hourValue,
         });
@@ -134,7 +135,7 @@ export default class inputTime extends React.Component {
     }
     console.log(time , timeValue);
     if (type === 'hour') {
-      date.setHours(time !== 'NAN' ? time : timeValue);
+      date.setHours(timeValue);
       this.setState({
         hour: time !== 'NAN' ? time : timeValue,
       });
@@ -163,6 +164,7 @@ export default class inputTime extends React.Component {
         onChange: this.onTimeChange
       });
     }
+    console.log('hour', hour);
     return (
       <>
         <div className="numInputWrapper">
