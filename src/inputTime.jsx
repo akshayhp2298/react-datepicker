@@ -55,7 +55,7 @@ export default class inputTime extends React.Component {
 
       if (this.props.timeFormat === '12' && parseInt(hourValue, 10) !== 12) {
 
-        activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
+        activeState = parseInt(hourValue, 10) > 12 ? 'PM' : this.state.activeState;
         if (activeState !== this.state.activeState) {
           this.setState({
             activeState,
@@ -76,7 +76,7 @@ export default class inputTime extends React.Component {
         time.setHours(addZero(hourValue));
       }
       if (parseInt(hourValue, 10) !== this.state.hour) {
-        console.log(hourValue);
+        console.log(hourValue, 'uiuiui', this.state.hour);
         this.setState({
           hour: hourValue,
         });
@@ -133,7 +133,6 @@ export default class inputTime extends React.Component {
         timeValue = '00';
       }
     }
-    console.log(time, timeValue);
     if (type === 'hour') {
       date.setHours(timeValue);
       this.setState({
@@ -197,7 +196,6 @@ export default class inputTime extends React.Component {
                 if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
                   hourValue = addZero(hourValue);
                 }
-                console.log(hourValue, 'uiu',hourValue.toString().lengt);
                 if (hourValue.toString().length > 2) {
                   hourValue = addZero(hourValue);
                 }
