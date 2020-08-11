@@ -41,6 +41,10 @@ export default class inputTime extends React.Component {
     };
   }
 
+  componentDidMount() {
+    window.addEventListener('click', this.handleoutsideClick, true);
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.timeString !== this.props.timeString) {
 
@@ -71,7 +75,7 @@ export default class inputTime extends React.Component {
         }
         time.setHours(addZero(hourValue));
       }
-      console.log(hourValue , this.state.hour, parseInt(hourValue, 10), time , prevProps.timeString, 'tetst0');
+      console.log(hourValue, this.state.hour, parseInt(hourValue, 10), time, 'tetst0');
       if (parseInt(hourValue, 10) !== this.state.hour) {
         this.setState({
           hour: hourValue,
@@ -88,8 +92,12 @@ export default class inputTime extends React.Component {
     }
   }
 
+  handleoutsideClick = event => {
+    console.log(event, 'outside click');
+  }
+
   onTimeChange = (time, type) => {
-    let timeValue = time !== 'NAN' && time ? time :  this.props.timeFormat === '12' ? '12' : '24';
+    let timeValue = time !== 'NAN' && time ? time : this.props.timeFormat === '12' ? '12' : '24';
     const date = this.props.timeString;
     if (this.props.timeFormat === '12') {
       if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
