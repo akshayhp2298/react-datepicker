@@ -166,30 +166,35 @@ export default class inputTime extends React.Component {
             max={`${timeFormat === '24' ? `${parseInt(timeFormat, 10) - 1}` : '12'}`}
             onChange={ev => {
               if (ev.target.value) {
-                let hourValue = parseInt(ev.target.value, 10);
-                if (timeFormat === '12' && hourValue > 12) {
-                  hourValue = hourValue % 12;
-                  hourValue = hourValue == 0 ? 12 : hourValue;
-                }
-                if (timeFormat === '24' && hourValue > 24) {
-                  hourValue = hourValue % 24;
-                  hourValue = hourValue == 0 ? '00' : hourValue;
-                }
+                console.log(ev.target.value.toString().length);
+                if (ev.target.value.toString().length < 3) {
+                  let hourValue = parseInt(ev.target.value, 10);
+                  if (timeFormat === '12' && hourValue > 12) {
+                    hourValue = hourValue % 12;
+                    hourValue = hourValue == 0 ? 12 : hourValue;
+                  }
+                  if (timeFormat === '24' && hourValue > 24) {
+                    hourValue = hourValue % 24;
+                    hourValue = hourValue == 0 ? '00' : hourValue;
+                  }
 
-                if (timeFormat === '12' && ev.target.value === '00') {
-                  hourValue = 12;
-                }
+                  if (timeFormat === '12' && ev.target.value === '00') {
+                    hourValue = 12;
+                  }
 
-                if (timeFormat === '24' && hourValue === 24) {
-                  hourValue = '00';
+                  if (timeFormat === '24' && hourValue === 24) {
+                    hourValue = '00';
+                  }
+                  if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
+                    hourValue = addZero(hourValue);
+                  }
+                  if (hourValue.toString().length > 2) {
+                    hourValue = addZero(hourValue);
+                  }
+                  this.onTimeChange(hourValue, 'hour');
+                }else{
+                  console.log(hour, 'else');
                 }
-                if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
-                  hourValue = addZero(hourValue);
-                }
-                if (hourValue.toString().length > 2) {
-                  hourValue = addZero(hourValue);
-                }
-                this.onTimeChange(hourValue, 'hour');
               } else {
                 this.onTimeChange(ev.target.value, 'hour');
               }
@@ -245,16 +250,18 @@ export default class inputTime extends React.Component {
             value={mins}
             onChange={ev => {
               if (ev.target.value) {
-                let minsValue = parseInt(ev.target.value, 10);
-                if (minsValue < 61) {
-                  minsValue = minsValue == 60 ? '00' : minsValue;
-                } else {
-                  minsValue = '00';
+                if (ev.target.value.toString().length < 3) {
+                  let minsValue = parseInt(ev.target.value, 10);
+                  if (minsValue < 61) {
+                    minsValue = minsValue == 60 ? '00' : minsValue;
+                  } else {
+                    minsValue = '00';
+                  }
+                  if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
+                    minsValue = addZero(minsValue);
+                  }
+                  this.onTimeChange(minsValue, 'minutes');
                 }
-                if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
-                  minsValue = addZero(minsValue);
-                }
-                this.onTimeChange(minsValue, 'minutes');
               } else {
                 this.onTimeChange(ev.target.value, 'minutes');
               }
