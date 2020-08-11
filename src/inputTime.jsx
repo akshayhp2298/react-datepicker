@@ -197,8 +197,8 @@ export default class inputTime extends React.Component {
                 if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
                   hourValue = addZero(hourValue);
                 }
-                console.log(hourValue, 'uiu', hourValue.length);
-                if (hourValue.toString.length > 2) {
+                console.log(hourValue, 'uiu',hourValue.toString().lengt);
+                if (hourValue.toString().length > 2) {
                   hourValue = addZero(hourValue);
                 }
                 this.onTimeChange(hourValue, 'hour');
