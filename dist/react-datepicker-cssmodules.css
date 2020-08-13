@@ -895,6 +895,7 @@
   text-align: left;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 :global select,
