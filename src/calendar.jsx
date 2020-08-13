@@ -181,6 +181,7 @@ export default class Calendar extends React.Component {
     id: PropTypes.string,
     timeValue: PropTypes.instanceOf(Date),
     showTimeInputOnly: PropTypes.bool,
+    showYearArrows: PropTypes.bool,
   };
 
   constructor(props) {
@@ -622,20 +623,21 @@ export default class Calendar extends React.Component {
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
       >
-        <span className="react-datepicker__header__arrows left-double-arrow" >
-          <LeftDoubleArrow onClick={() => {
+        {this.props.showYearArrows &&
+          <span className="react-datepicker__header__arrows left-double-arrow" >
+            <LeftDoubleArrow onClick={() => {
 
-            const prevYearButtonDisabled = yearDisabledBefore(
-              this.state.date,
-              this.props
-            );
+              const prevYearButtonDisabled = yearDisabledBefore(
+                this.state.date,
+                this.props
+              );
 
-            if (!prevYearButtonDisabled) {
-              this.decreaseYear();
-            }
+              if (!prevYearButtonDisabled) {
+                this.decreaseYear();
+              }
 
-          }} />
-        </span>
+            }} />
+          </span>}
         <span className="react-datepicker__header__arrows left-arrow" >
           <LeftArrow onClick={() => {
             const prevMonthButtonDisabled = monthDisabledBefore(
@@ -658,16 +660,17 @@ export default class Calendar extends React.Component {
             this.increaseMonth();
           }
         }} /></span>
-        <span className="react-datepicker__header__arrows right-double-arrow" ><RightDoubleArrow onClick={() => {
+        {this.props.showYearArrows &&
+          <span className="react-datepicker__header__arrows right-double-arrow" ><RightDoubleArrow onClick={() => {
 
-          const nextYearButtonDisabled = yearDisabledAfter(
-            this.state.date,
-            this.props
-          );
-          if (!nextYearButtonDisabled) {
-            this.increaseYear();
-          }
-        }} /></span>
+            const nextYearButtonDisabled = yearDisabledAfter(
+              this.state.date,
+              this.props
+            );
+            if (!nextYearButtonDisabled) {
+              this.increaseYear();
+            }
+          }} /></span>}
       </div>
       <div className="react-datepicker__day-names">
         {this.header(monthDate)}
