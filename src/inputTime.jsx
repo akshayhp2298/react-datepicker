@@ -21,7 +21,6 @@ export default class inputTime extends React.Component {
   constructor(props) {
     super(props);
     const time = this.props.timeString;
-    console.log(formatDate(time, 'HH:mm'));
     let activeState;
     let hourValue = time.getHours();
     if (this.props.timeFormat === '12') {
@@ -100,16 +99,24 @@ export default class inputTime extends React.Component {
   }
 
   handleoutsideClick = event => {
-    if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
-      const { hour, mins } = this.state;
-      const date = this.props.timeString;
-      const hourValue = addZero(parseInt(hour, 10));
-      const minsValue = addZero(parseInt(mins, 10));
-      this.setState({
-        hour: hourValue,
-        mins: minsValue,
-      });
+    console.log(event.target);
+    if(event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList!== 'time-section-item'){
+      const element = document.getElementsByClassName('time-selection-menu');
+              console.log(element);
+              if(element && element[0]){
+                element[0].classList.add('d-none');
+              }
     }
+    // if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
+    //   const { hour, mins } = this.state;
+    //   const date = this.props.timeString;
+    //   const hourValue = addZero(parseInt(hour, 10));
+    //   const minsValue = addZero(parseInt(mins, 10));
+    //   this.setState({
+    //     hour: hourValue,
+    //     mins: minsValue,
+    //   });
+    // }
   }
 
   onTimeChange = (time, type) => {
@@ -158,7 +165,6 @@ export default class inputTime extends React.Component {
 
   renderTimeInput = () => {
     const { time } = this.state;
-    console.log(time);
     const { id, timeFormat } = this.props;
     const { hour, mins } = this.state;
     const { timeString, customTimeInput } = this.props;
@@ -179,8 +185,16 @@ export default class inputTime extends React.Component {
             value={time}
             id={`datepicker-time-input-${id}`}
             key={`datepicker-time-input-${id}`}
+            className="react-datepicker-time-inputbox"
+            onClick={() => {
+              const element = document.getElementsByClassName('time-selection-menu');
+              console.log(element);
+              if(element){
+                element[0].classList.remove('d-none');
+              }
+            }}
           />
-          <div className="time-selection-menu">
+          <div className="time-selection-menu d-none">
             <ul className="time-selection-ul">
               {times.map((timeValue, i) => (
                 <li
