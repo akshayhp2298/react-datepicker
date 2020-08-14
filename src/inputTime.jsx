@@ -25,25 +25,10 @@ export default class inputTime extends React.Component {
     const time = this.props.timeString;
     let activeState;
     let hourValue = time.getHours();
-    if (this.props.timeFormat === '12') {
-      hourValue = time.getHours();
-      activeState = hourValue >= 12 ? 'PM' : 'AM';
-      if (parseInt(hourValue, 10) > 12) {
-        hourValue = parseInt(hourValue, 10) - 12;
-        hourValue = hourValue || 12;
-      }
-
-      if (parseInt(hourValue, 10) === 0) {
-        hourValue = 12;
-      }
-      time.setHours(addZero(hourValue));
-    }
-
     this.state = {
       time: formatDate(time, 'HH:mm'),
       activeState,
-      hour: addZero(parseInt(hourValue, 10)),
-      mins: addZero(time.getMinutes()),
+      notValid: false,
     };
   }
 
@@ -51,50 +36,6 @@ export default class inputTime extends React.Component {
     window.addEventListener('click', this.handleoutsideClick, true);
   }
 
-  componentDidUpdate(prevProps) {
-    // if (prevProps.timeString !== this.props.timeString) {
-
-    //   const time = this.props.timeString;
-    //   let activeState;
-    //   let hourValue = time.getHours();
-
-    //   if (this.props.timeFormat === '12' && parseInt(hourValue, 10) !== 12) {
-
-    //     activeState = parseInt(hourValue, 10) > 12 ? 'PM' : this.state.activeState;
-    //     if (activeState !== this.state.activeState) {
-    //       this.setState({
-    //         activeState,
-    //       });
-    //     }
-    //   }
-
-    //   if (this.props.timeFormat === '12') {
-    //     hourValue = time.getHours();
-    //     if (parseInt(hourValue, 10) > 12) {
-    //       hourValue = parseInt(hourValue, 10) - 12;
-    //       hourValue = hourValue || '';
-    //     }
-
-    //     if (parseInt(hourValue, 10) === 0) {
-    //       hourValue = 12;
-    //     }
-    //     time.setHours(addZero(hourValue));
-    //   }
-    //   if (parseInt(hourValue, 10) !== this.state.hour) {
-    //     this.setState({
-    //       hour: addZero(parseInt(hourValue, 10)),
-    //     });
-    //   }
-    //   if (time.getMinutes() !== this.state.mins) {
-    //     this.setState({
-    //       mins: addZero(parseInt(time.getMinutes(), 10)),
-    //     });
-    //   }
-    //   this.setState({
-    //     time,
-    //   });
-    // }
-  }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleoutsideClick, true);
@@ -108,16 +49,6 @@ export default class inputTime extends React.Component {
         this.setTimeValue();
       }
     }
-    // if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
-    //   const { hour, mins } = this.state;
-    //   const date = this.props.timeString;
-    //   const hourValue = addZero(parseInt(hour, 10));
-    //   const minsValue = addZero(parseInt(mins, 10));
-    //   this.setState({
-    //     hour: hourValue,
-    //     mins: minsValue,
-    //   });
-    // }
   }
 
   onTimeChange = (time, type) => {
@@ -157,8 +88,16 @@ export default class inputTime extends React.Component {
   };
 
   handleTimeInput = event => {
+    const timeValue = event.target.value;
+    let notValid = this.state.notValid;
+    if (timeValue && (timeValue.length === 5 && !timeValue.includes(':'))) {
+      notValid = true;
+    } else {
+      notValid = false;
+    }
     this.setState({
       time: event.target.value,
+      notValid,
     });
   };
 
@@ -170,23 +109,23 @@ export default class inputTime extends React.Component {
 
   setTimeValue = () => {
     const { time } = this.state;
-    if(time.toString().length === 1){
+    if (time.toString().length === 1) {
       this.setState({
         time: `0${time}:00`,
       });
-    } else if(time.toString().length === 2){
+    } else if (time.toString().length === 2) {
       this.setState({
         time: `${time}:00`,
       });
-    } else if( time.toString().length === 3){
+    } else if (time.toString().length === 3) {
       this.setState({
-        time: `0${time.substring(0,1)}:${time.substring(1,3)}`,
+        time: `0${time.substring(0, 1)}:${time.substring(1, 3)}`,
       });
-    } else if( time.toString().length === 4){
+    } else if (time.toString().length === 4) {
       this.setState({
-        time: `${time.substring(0,2)}:${time.substring(2,4)}`,
+        time: `${time.substring(0, 2)}:${time.substring(2, 4)}`,
       });
-    } else{
+    } else {
       this.setState({
         time,
       })
@@ -194,7 +133,7 @@ export default class inputTime extends React.Component {
   }
 
   renderTimeInput = () => {
-    const { time } = this.state;
+    const { time, notValid } = this.state;
     const { id, timeFormat } = this.props;
     const { hour, mins } = this.state;
     const { timeString, customTimeInput } = this.props;
@@ -220,6 +159,7 @@ export default class inputTime extends React.Component {
             id={`datepicker-time-input-${id}`}
             key={`datepicker-time-input-${id}`}
             className="react-datepicker-time-inputbox"
+            maxLength={5}
             onClick={() => {
               const element = document.getElementsByClassName('time-selection-menu');
               if (element) {
@@ -232,6 +172,7 @@ export default class inputTime extends React.Component {
               }
             }}
           />
+          {notValid && <p className="text-danger">Invalid time entered</p>}
           <div className="time-selection-menu d-none">
             <ul className="time-selection-ul">
               {times.map((timeValue, i) => (
@@ -385,14 +326,14 @@ export default class inputTime extends React.Component {
               this.setState({
                 activeState: 'AM',
               }, () => {
-                this.onTimeChange(hour, 'hour');
+                this.setTimeValue();
               });
             }}>AM</span>
             <span className={`${this.state.activeState === 'PM' ? 'active' : ''}`} onClick={() => {
               this.setState({
                 activeState: 'PM',
               }, () => {
-                this.onTimeChange(hour, 'hour');
+                this.setTimeValue();
               });
             }}>PM</span>
           </div>}
