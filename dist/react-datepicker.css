@@ -297,7 +297,7 @@
 }
 
 .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input {
-  display: inline-block;
+  display: flex;
 }
 
 .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type="time"]::-webkit-inner-spin-button,
@@ -906,6 +906,21 @@ select,
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  width: 50px;
+}
+
+.time-selection-ul {
+  position: absolute;
+  height: 200px;
+  overflow-y: scroll;
+  background: #fff;
+  width: 70px;
+  left: -24px;
+  border: 1px solid #aeaeae;
+}
+
+.time-selection-ul li {
+  padding: 10px;
 }
 
 .react-datepicker__month-select {
