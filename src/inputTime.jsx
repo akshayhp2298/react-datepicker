@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { addZero, isValid, formatDate, getHours,
+import {
+  addZero, isValid, formatDate, getHours,
   getMinutes,
   addMinutes,
   newDate,
-  getStartOfDay, } from './date_utils';
+  getStartOfDay,
+} from './date_utils';
 import TimeArrowDown from './Icons/time-arrow-down';
 import TimeArrowUp from './Icons/time-arrow-up';
 
@@ -100,12 +102,12 @@ export default class inputTime extends React.Component {
 
   handleoutsideClick = event => {
     console.log(event.target);
-    if(event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList!== 'time-section-item'){
+    if (event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList !== 'time-section-item') {
       const element = document.getElementsByClassName('time-selection-menu');
-              console.log(element);
-              if(element && element[0]){
-                element[0].classList.add('d-none');
-              }
+      console.log(element);
+      if (element && element[0]) {
+        element[0].classList.add('d-none');
+      }
     }
     // if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
     //   const { hour, mins } = this.state;
@@ -157,10 +159,16 @@ export default class inputTime extends React.Component {
 
   handleTimeInput = event => {
     console.log(event.target.value);
+    this.setState({
+      time: event.target.value,
+    });
   };
 
-  handleTimeSelectionClick = (event, timeValue) => {
-   console.log(event, timeValue);
+  handleTimeSelectionClick = (timeValue) => {
+    console.log(timeValue);
+    this.setState({
+      time: formatDate(timeValue, 'HH:mm')
+    });
   };
 
   renderTimeInput = () => {
@@ -170,6 +178,10 @@ export default class inputTime extends React.Component {
     const { timeString, customTimeInput } = this.props;
     let times = [];
     let intervals = 15;
+    let totalSection = 1440;
+    if (timeFormat === '12') {
+      totalSection = 720;
+    }
     let base = getStartOfDay(newDate());
     const multiplier = 1440 / intervals;
     for (let i = 0; i < multiplier; i++) {
@@ -189,7 +201,7 @@ export default class inputTime extends React.Component {
             onClick={() => {
               const element = document.getElementsByClassName('time-selection-menu');
               console.log(element);
-              if(element){
+              if (element) {
                 element[0].classList.remove('d-none');
               }
             }}
