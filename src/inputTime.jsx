@@ -101,10 +101,8 @@ export default class inputTime extends React.Component {
   }
 
   handleoutsideClick = event => {
-    console.log(event.target);
     if (event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList !== 'time-section-item') {
       const element = document.getElementsByClassName('time-selection-menu');
-      console.log(element);
       if (element && element[0]) {
         element[0].classList.add('d-none');
       }
@@ -165,7 +163,6 @@ export default class inputTime extends React.Component {
   };
 
   handleTimeSelectionClick = (timeValue) => {
-    console.log(timeValue);
     this.setState({
       time: formatDate(timeValue, 'HH:mm')
     });
@@ -200,7 +197,6 @@ export default class inputTime extends React.Component {
             className="react-datepicker-time-inputbox"
             onClick={() => {
               const element = document.getElementsByClassName('time-selection-menu');
-              console.log(element);
               if (element) {
                 element[0].classList.remove('d-none');
               }
