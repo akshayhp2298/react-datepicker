@@ -105,6 +105,7 @@ export default class inputTime extends React.Component {
       const element = document.getElementsByClassName('time-selection-menu');
       if (element && element[0]) {
         element[0].classList.add('d-none');
+        this.setTimeValue();
       }
     }
     // if (event.target.className !== 'react-datepicker-time__input' || event.target.className && event.target.className.baseVal !== 'time-input-arrow') {
@@ -156,7 +157,6 @@ export default class inputTime extends React.Component {
   };
 
   handleTimeInput = event => {
-    console.log(event.target.value);
     this.setState({
       time: event.target.value,
     });
@@ -167,6 +167,31 @@ export default class inputTime extends React.Component {
       time: formatDate(timeValue, 'HH:mm')
     });
   };
+
+  setTimeValue = () => {
+    const { time } = this.state;
+    if(time.toString().length === 1){
+      this.setState({
+        time: `0${time}:00`,
+      });
+    } else if(time.toString().length === 2){
+      this.setState({
+        time: `${time}:00`,
+      });
+    } else if( time.toString().length === 3){
+      this.setState({
+        time: `0${time.substring(0,1)}:${time.substring(1,3)}`,
+      });
+    } else if( time.toString().length === 4){
+      this.setState({
+        time: `${time.substring(0,2)}:${time.substring(2,4)}`,
+      });
+    } else{
+      this.setState({
+        time,
+      })
+    }
+  }
 
   renderTimeInput = () => {
     const { time } = this.state;
@@ -180,7 +205,7 @@ export default class inputTime extends React.Component {
       totalSection = 720;
     }
     let base = getStartOfDay(newDate());
-    const multiplier = 1440 / intervals;
+    const multiplier = totalSection / intervals;
     for (let i = 0; i < multiplier; i++) {
       const currentTime = addMinutes(base, i * intervals);
       times.push(currentTime);
@@ -199,6 +224,11 @@ export default class inputTime extends React.Component {
               const element = document.getElementsByClassName('time-selection-menu');
               if (element) {
                 element[0].classList.remove('d-none');
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.keyCode === 13) {
+                this.setTimeValue();
               }
             }}
           />
