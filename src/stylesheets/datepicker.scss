@@ -804,7 +804,7 @@ select,
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 50px;
+  width: 60px;
 }
 
 .time-selection-ul {
@@ -812,8 +812,6 @@ select,
   height: 200px;
   overflow-y: scroll;
   background: #fff;
-  width: 70px;
-  left: -24px;
   border: 1px solid #aeaeae;
 
   li {
