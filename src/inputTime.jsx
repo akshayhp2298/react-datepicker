@@ -28,10 +28,12 @@ export default class inputTime extends React.Component {
     if (this.props.timeFormat === '12') {
       activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
     }
+    let timeFormat = this.props.timeFormat === '12' ? 'hh:mm':'HH:mm'
     this.state = {
-      time: formatDate(time, 'HH:mm'),
+      time: formatDate(time,timeFormat),
       activeState,
       notValid: false,
+      timeFormat
     };
   }
 
@@ -54,84 +56,57 @@ export default class inputTime extends React.Component {
     }
   }
 
-  onTimeChange = (time, type) => {
-    let timeValue = time !== 'NAN' && time ? time : this.props.timeFormat === '12' ? '12' : '24';
-    const date = this.props.timeString;
-    if (this.props.timeFormat === '12') {
-      if (this.state.activeState === 'PM' && parseInt(timeValue, 10) < 12) {
-        timeValue = addZero(parseInt(timeValue, 10) + 12);
-      }
-
-      if (this.state.activeState === 'AM' && parseInt(timeValue, 10) > 12) {
-        timeValue = parseInt(timeValue, 10) - 12;
-        timeValue = addZero(parseInt(timeValue, 10)) || 12;
-      }
-
-      if (parseInt(timeValue, 10) === 12 && this.state.activeState === 'AM') {
-        timeValue = '00';
-      }
-    }
-    if (type === 'hour') {
-      date.setHours(timeValue);
-      this.setState({
-        hour: time !== 'NAN' ? time : timeValue,
-      });
-    }
-    if (type === 'minutes') {
-      date.setMinutes(time !== 'NAN' ? time : '00');
-      this.setState({
-        mins: time !== 'NAN' ? time : '',
-      });
-    }
-    if (time) {
-      this.setState({ time: date, }, () => {
-        this.props.onTimeChange(date);
-      });
-    }
-  };
-
   handleTimeInput = event => {
     let timeValue = event.target.value;
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
     timeValue = timeValue.replace(':', '');
-    console.log(timeValue);
-    if (timeValue && (timeValue.length > 4)) {
+
+    if (timeValue && !timeValue.match('^[0-9]*$')) {
+      notValid = true;
+    } else if (timeValue && (timeValue.length > 4)) {
       notValid = true;
     } else if (timeValue && timeValue.length === 1) {
       if (timeFormat === '12') {
-        notValid = parseInt(timeValue, 10) > 12 ? true : notValid;
+        notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
-        notValid = parseInt(timeValue, 10) > 24 ? true : notValid;
+        notValid = parseInt(timeValue, 10) > 24 ? true : false;
       }
     } else if (timeValue && timeValue.length === 2) {
       if (timeFormat === '12') {
-        notValid = parseInt(timeValue, 10) > 12 ? true : notValid;
+        notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
-        notValid = parseInt(timeValue, 10) > 24 ? true : notValid;
+        notValid = parseInt(timeValue, 10) > 24 ? true : false;
       }
     } else if (timeValue && timeValue.length === 3) {
       if (timeFormat === '12') {
-        notValid = parseInt(timeValue.substring(0, 1), 10) > 12 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : notValid
+        notValid = parseInt(timeValue.substring(0, 1), 10) > 12 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : false
       } else {
-        notValid = parseInt(timeValue.substring(0, 1), 10) > 24 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : notValid
+        notValid = parseInt(timeValue.substring(0, 1), 10) > 24 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : false
       }
     } else if (timeValue && timeValue.length === 4) {
       if (timeFormat === '12') {
-        notValid = parseInt(timeValue.substring(0, 2), 10) > 12 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : notValid
+        notValid = parseInt(timeValue.substring(0, 2), 10) > 12 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : false
       } else {
-        notValid = parseInt(timeValue.substring(0, 2), 10) > 24 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : notValid
+        notValid = parseInt(timeValue.substring(0, 2), 10) > 24 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : false
       }
     }
     this.setState({
       time: event.target.value,
       notValid,
+    }, () =>{
+      if(notValid){
+        const element = document.getElementsByClassName('time-selection-menu');
+        if (element) {
+          element[0].classList.add('d-none');
+        }
+      }
     });
   };
 
   handleTimeSelectionClick = (timeValue) => {
     this.setState({
-      time: formatDate(timeValue, 'HH:mm')
+      time: formatDate(timeValue, this.state.timeFormat)
     });
   };
 
