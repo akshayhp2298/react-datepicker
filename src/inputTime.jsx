@@ -28,9 +28,9 @@ export default class inputTime extends React.Component {
     if (this.props.timeFormat === '12') {
       activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
     }
-    let timeFormat = this.props.timeFormat === '12' ? 'hh:mm':'HH:mm'
+    let timeFormat = this.props.timeFormat === '12' ? 'hh:mm' : 'HH:mm'
     this.state = {
-      time: formatDate(time,timeFormat),
+      time: formatDate(time, timeFormat),
       activeState,
       notValid: false,
       timeFormat
@@ -39,6 +39,10 @@ export default class inputTime extends React.Component {
 
   componentDidMount() {
     window.addEventListener('click', this.handleoutsideClick, true);
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(this.props.timeString, prevProps.timeString);
   }
 
 
@@ -94,19 +98,22 @@ export default class inputTime extends React.Component {
     this.setState({
       time: event.target.value,
       notValid,
-    }, () =>{
-      if(notValid){
+    }, () => {
+      if (notValid) {
         const element = document.getElementsByClassName('time-selection-menu');
         if (element) {
           element[0].classList.add('d-none');
         }
       }
+      this.props.onTimeChange(this.state.time);
     });
   };
 
   handleTimeSelectionClick = (timeValue) => {
     this.setState({
       time: formatDate(timeValue, this.state.timeFormat)
+    }, () => {
+      this.props.onTimeChange(this.state.time);
     });
   };
 
@@ -115,22 +122,32 @@ export default class inputTime extends React.Component {
     if (time.toString().length === 1) {
       this.setState({
         time: `0${time}:00`,
+      }, () => {
+        this.props.onTimeChange(this.state.time);
       });
     } else if (time.toString().length === 2) {
       this.setState({
         time: `${time}:00`,
+      }, () => {
+        this.props.onTimeChange(this.state.time);
       });
     } else if (time.toString().length === 3) {
       this.setState({
         time: `0${time.substring(0, 1)}:${time.substring(1, 3)}`,
+      }, () => {
+        this.props.onTimeChange(this.state.time);
       });
     } else if (time.toString().length === 4) {
       this.setState({
         time: `${time.substring(0, 2)}:${time.substring(2, 4)}`,
+      }, () => {
+        this.props.onTimeChange(this.state.time);
       });
     } else {
       this.setState({
         time,
+      }, () => {
+        this.props.onTimeChange(this.state.time);
       })
     }
   }
