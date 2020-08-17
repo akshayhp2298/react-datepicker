@@ -25,6 +25,9 @@ export default class inputTime extends React.Component {
     const time = this.props.timeString;
     let activeState;
     let hourValue = time.getHours();
+    if (this.props.timeFormat === '12') {
+      activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
+    }
     this.state = {
       time: formatDate(time, 'HH:mm'),
       activeState,
@@ -88,12 +91,37 @@ export default class inputTime extends React.Component {
   };
 
   handleTimeInput = event => {
-    const timeValue = event.target.value;
+    let timeValue = event.target.value;
+    const { timeFormat } = this.props;
     let notValid = this.state.notValid;
-    if (timeValue && (timeValue.length === 5 && !timeValue.includes(':'))) {
+    timeValue = timeValue.replace(':', '');
+    console.log(timeValue);
+    if (timeValue && (timeValue.length > 4)) {
       notValid = true;
-    } else {
-      notValid = false;
+    } else if (timeValue && timeValue.length === 1) {
+      if (timeFormat === '12') {
+        notValid = parseInt(timeValue, 10) > 12 ? true : notValid;
+      } else {
+        notValid = parseInt(timeValue, 10) > 24 ? true : notValid;
+      }
+    } else if (timeValue && timeValue.length === 2) {
+      if (timeFormat === '12') {
+        notValid = parseInt(timeValue, 10) > 12 ? true : notValid;
+      } else {
+        notValid = parseInt(timeValue, 10) > 24 ? true : notValid;
+      }
+    } else if (timeValue && timeValue.length === 3) {
+      if (timeFormat === '12') {
+        notValid = parseInt(timeValue.substring(0, 1), 10) > 12 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : notValid
+      } else {
+        notValid = parseInt(timeValue.substring(0, 1), 10) > 24 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : notValid
+      }
+    } else if (timeValue && timeValue.length === 4) {
+      if (timeFormat === '12') {
+        notValid = parseInt(timeValue.substring(0, 2), 10) > 12 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : notValid
+      } else {
+        notValid = parseInt(timeValue.substring(0, 2), 10) > 24 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : notValid
+      }
     }
     this.setState({
       time: event.target.value,
@@ -187,139 +215,6 @@ export default class inputTime extends React.Component {
             </ul>
           </div>
         </div>
-        {/* <div className="numInputWrapper">
-          <input className="numInput react-datepicker-time__input react-datepicker__hour"
-            type="number"
-            aria-label="Hour"
-            min="0"
-            id={`datepicker-hour-input-${id}`}
-            key={`datepicker-hour-input-${id}`}
-            max={`${timeFormat === '24' ? `${parseInt(timeFormat, 10) - 1}` : '12'}`}
-            onChange={ev => {
-              if (ev.target.value) {
-                if (ev.target.value.toString().length < 3) {
-                  let hourValue = parseInt(ev.target.value, 10);
-                  if (timeFormat === '12' && hourValue > 12) {
-                    hourValue = hourValue % 12;
-                    hourValue = hourValue == 0 ? 12 : hourValue;
-                  }
-                  if (timeFormat === '24' && hourValue > 24) {
-                    hourValue = hourValue % 24;
-                    hourValue = hourValue == 0 ? '00' : hourValue;
-                  }
-
-                  if (timeFormat === '12' && ev.target.value === '00') {
-                    hourValue = 12;
-                  }
-
-                  if (timeFormat === '24' && hourValue === 24) {
-                    hourValue = '00';
-                  }
-                  if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
-                    hourValue = addZero(hourValue);
-                  }
-                  if (hourValue.toString().length > 2) {
-                    hourValue = addZero(hourValue);
-                  }
-                  this.onTimeChange(hourValue, 'hour');
-                } else {
-                  const hourValue = addZero(parseInt(hour, 10));
-                  this.onTimeChange(hourValue, 'hour');
-                }
-              } else {
-                this.onTimeChange(ev.target.value, 'hour');
-              }
-            }}
-            required
-            value={hour}
-          />
-          <span className="hour-arrow-up input-arrows">
-            <TimeArrowUp onClick={() => {
-              let hourValue = parseInt(hour, 10);
-              if (timeFormat === '24') {
-                hourValue = hourValue === 24 ? '00' : hourValue;
-              }
-
-              if (timeFormat === '12') {
-                hourValue = hourValue === 12 ? '00' : hourValue;
-              }
-              let setHour = addZero(parseInt(hourValue, 10) + 1);
-              if (setHour === '24') {
-                setHour = '00';
-              }
-              this.onTimeChange(setHour, 'hour');
-            }}
-            />
-          </span>
-          <span className="hour-arrow-down input-arrows">
-            <TimeArrowDown onClick={() => {
-              let hourValue = parseInt(hour, 10);
-              if (timeFormat === '24') {
-                hourValue = hourValue === 0 ? '24' : hourValue;
-              }
-
-              if (timeFormat === '12') {
-                hourValue = hourValue === 0 ? '12' : hourValue;
-              }
-              let setHour = addZero(parseInt(hourValue, 10) - 1);
-              if (setHour === '00') {
-                setHour = '12';
-              }
-              this.onTimeChange(setHour, 'hour');
-            }}
-            />
-          </span>
-        </div>
-        <span className="react-datepicker-time-separator">:</span>
-        <div className="numInputWrapper">
-          <input
-            className="numInput react-datepicker-time__input react-datepicker__minute"
-            type="number"
-            aria-label="Minute"
-            id={`datepicker-mins-input-${id}`}
-            key={`datepicker-mins-input-${id}`}
-            value={mins}
-            onChange={ev => {
-              if (ev.target.value) {
-                if (ev.target.value.toString().length < 3) {
-                  let minsValue = parseInt(ev.target.value, 10);
-                  if (minsValue < 61) {
-                    minsValue = minsValue == 60 ? '00' : minsValue;
-                  } else {
-                    minsValue = '00';
-                  }
-                  if (ev.nativeEvent.inputType !== 'deleteContentForward' && ev.nativeEvent.inputType !== 'deleteContentBackward' && ev.nativeEvent.inputType !== 'insertText') {
-                    minsValue = addZero(minsValue);
-                  }
-                  this.onTimeChange(minsValue, 'minutes');
-                }
-              } else {
-                this.onTimeChange(ev.target.value, 'minutes');
-              }
-            }}
-            required
-            min="0"
-            max="59" />
-          <span className="mins-arrow-up input-arrows">
-            <TimeArrowUp onClick={() => {
-              let minsValue = parseInt(mins, 10);
-              minsValue = minsValue === 60 ? '00' : minsValue;
-              const setMins = addZero(minsValue + 1);
-              this.onTimeChange(setMins, 'minutes');
-            }}
-            />
-          </span>
-          <span className="mins-arrow-down input-arrows">
-            <TimeArrowDown onClick={() => {
-              let minsValue = parseInt(mins, 10);
-              minsValue = minsValue === 0 ? '60' : minsValue;
-              const setMins = addZero(minsValue - 1);
-              this.onTimeChange(setMins, 'minutes');
-            }}
-            />
-          </span>
-
-        </div> */}
         {timeFormat !== '24' &&
           <div className="react-datepicker-am-pm-switch">
             <span className={`${this.state.activeState === 'AM' ? 'active' : ''}`} onClick={() => {

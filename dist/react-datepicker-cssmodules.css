@@ -923,10 +923,12 @@
 
 :global .react-datepicker__month-select {
   width: 96px;
+  background: #fff;
 }
 
 :global .react-datepicker__year-select {
   width: 66px;
+  background: #fff;
 }
 
 :global .react-datepicker__navigation {
