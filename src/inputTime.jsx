@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import set from 'date-fns'
 import {
   addZero, isValid, formatDate, getHours,
   getMinutes,
@@ -43,6 +44,25 @@ export default class inputTime extends React.Component {
 
   componentDidUpdate(prevProps) {
     console.log(this.props.timeString, prevProps.timeString);
+    if (this.props.timeString !== prevProps.timeString) {
+      let { activeState, time } = this.state;
+      if (this.props.timeFormat === '12') {
+        activeState = parseInt(hourValue, 10) > 12 ? 'PM' : activeState;
+        if (activeState !== this.state.activeState) {
+          this.setState({
+            activeState,
+          });
+        }
+      }
+
+      let timeValue = formatDate(this.props.timeString, this.state.timeFormat);
+      if(timeValue !== time){
+        this.setState({
+          time: timeValue,
+        });
+      }
+
+    }
   }
 
 
@@ -104,8 +124,9 @@ export default class inputTime extends React.Component {
         if (element) {
           element[0].classList.add('d-none');
         }
+      } else {
+        this.props.onTimeChange(this.state.time);
       }
-      this.props.onTimeChange(this.state.time);
     });
   };
 
