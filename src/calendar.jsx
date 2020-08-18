@@ -188,7 +188,7 @@ export default class Calendar extends React.Component {
     super(props);
 
     this.containerRef = React.createRef();
-    this.inputRef = REact.createRef();
+    this.inputRef = React.createRef();
     this.state = {
       date: this.getDateInView(),
       selectingDate: null,
