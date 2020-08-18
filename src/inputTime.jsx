@@ -76,9 +76,10 @@ export default class inputTime extends React.Component {
       const element =  document.getElementById(`time-menu-${this.props.id}`);
       console.log(element);
       if (element) {
+        console.log('inside');
         element.classList.add('d-none');
-        this.setTimeValue();
       }
+      this.setTimeValue();
     }
   }
 
