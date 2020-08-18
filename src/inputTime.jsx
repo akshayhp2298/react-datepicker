@@ -45,7 +45,7 @@ export default class inputTime extends React.Component {
 
   componentDidUpdate(prevProps) {
     console.log(this.props.timeValue!== prevProps.timeValue, this.props.timeValue, prevProps.timeValue);
-    if (this.props.timeString !== prevProps.timeString) {
+    if (this.props.timeValue !== prevProps.timeValue) {
       let { activeState, time } = this.state;
       if (this.props.timeFormat === '12') {
         const hourValue = this.props.timeString.getHours();
@@ -129,7 +129,9 @@ export default class inputTime extends React.Component {
         }
       } else {
         console.log(this.state.time);
-        this.props.onTimeChange(this.state.time);
+        if(event.nativeEvent.inputType !== 'deleteContentBackward' || event.nativeEvent.inputType !== 'deleteContentForward' || event.nativeEvent.inputType !== 'insertText'){
+          this.props.onTimeChange(this.state.time);
+        }
       }
     });
   };
