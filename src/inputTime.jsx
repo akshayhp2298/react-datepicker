@@ -72,7 +72,7 @@ export default class inputTime extends React.Component {
   }
 
   handleoutsideClick = event => {
-    Cconsole.log(event.target.className);
+    console.log(event.target.className);
     if (event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList !== 'time-section-item') {
       const element =  document.getElementById(`time-menu-${this.props.id}`);
       console.log(element);
