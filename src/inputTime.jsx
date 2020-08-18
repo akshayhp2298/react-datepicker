@@ -40,7 +40,6 @@ export default class inputTime extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props, this.state);
     window.addEventListener('click', this.handleoutsideClick, true);
   }
 
@@ -73,8 +72,9 @@ export default class inputTime extends React.Component {
   }
 
   handleoutsideClick = event => {
-    if (event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList !== 'time-section-item') {
+    if (event.target.className !== 'react-datepicker-time-inputbox' && event.target.classList !== 'time-section-item') {
       const element =  document.getElementById(`time-menu-${this.props.id}`);
+      console.log(element);
       if (element) {
         element.classList.add('d-none');
         this.setTimeValue();
@@ -177,6 +177,7 @@ export default class inputTime extends React.Component {
           hourValue = parseInt(hourValue, 10) - 12
         }
       }
+      console.log(`${addZero(parseInt(hourValue, 10))}:${minsValue}`, 'test');
       this.props.onTimeChange(`${addZero(parseInt(hourValue, 10))}:${minsValue}`);
     });
   }
@@ -212,7 +213,6 @@ export default class inputTime extends React.Component {
             onClick={() => {
               const element = document.getElementById(`time-menu-${this.props.id}`);
               if (element) {
-                console.log(element);
                 element.classList.remove('d-none');
               }
             }}

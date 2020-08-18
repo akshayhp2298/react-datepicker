@@ -915,6 +915,7 @@ select,
   overflow-y: scroll;
   background: #fff;
   border: 1px solid #aeaeae;
+  z-index: 2;
 }
 
 .time-selection-ul li {
