@@ -44,7 +44,7 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.timeValue!== prevProps.timeValue, this.props.timeValue, prevProps.timeValue);
+    console.log(this.props.timeValue !== prevProps.timeValue, this.props.timeValue, prevProps.timeValue);
     if (this.props.timeValue !== prevProps.timeValue) {
       let { activeState, time } = this.state;
       if (this.props.timeFormat === '12') {
@@ -58,7 +58,7 @@ export default class inputTime extends React.Component {
       }
 
       let timeValue = formatDate(this.props.timeString, this.state.timeFormat);
-      if(timeValue !== time){
+      if (timeValue !== time) {
         this.setState({
           time: timeValue,
         });
@@ -127,13 +127,13 @@ export default class inputTime extends React.Component {
         if (element) {
           element[0].classList.add('d-none');
         }
-      } else {
-        console.log(this.state.time);
-        if(event.nativeEvent.inputType !== 'deleteContentBackward' || event.nativeEvent.inputType !== 'deleteContentForward' || event.nativeEvent.inputType !== 'insertText'){
-          this.props.onTimeChange(this.state.time);
-        }
       }
     });
+    if (!notValid) {
+      if (event.nativeEvent.inputType !== 'deleteContentBackward' || event.nativeEvent.inputType !== 'deleteContentForward' || event.nativeEvent.inputType !== 'insertText') {
+        this.props.onTimeChange(event.target.value);
+      }
+    }
   };
 
   handleTimeSelectionClick = (timeValue) => {
@@ -146,11 +146,11 @@ export default class inputTime extends React.Component {
   };
 
   setTimeValue = () => {
-   let timeValue = this.state.time;
+    let timeValue = this.state.time;
     if (timeValue.toString().length === 1) {
-      timeValue =  `0${timeValue}:00`;
+      timeValue = `0${timeValue}:00`;
     } else if (timeValue.toString().length === 2) {
-      timeValue =   `${timeValue}:00`;
+      timeValue = `${timeValue}:00`;
     } else if (timeValue.toString().length === 3) {
       timeValue = `0${timeValue.substring(0, 1)}:${timeValue.substring(1, 3)}`;
     } else if (timeValue.toString().length === 4) {
@@ -158,7 +158,7 @@ export default class inputTime extends React.Component {
     }
     this.setState({
       time: timeValue,
-    },() => {
+    }, () => {
       console.log(timeValue);
       this.props.onTimeChange(timeValue);
     });
