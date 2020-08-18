@@ -130,7 +130,7 @@ export default class inputTime extends React.Component {
       }
     });
     if (!notValid) {
-      if (event.nativeEvent.inputType !== 'deleteContentBackward' || event.nativeEvent.inputType !== 'deleteContentForward' || event.nativeEvent.inputType !== 'insertText') {
+      if (event.nativeEvent.inputType !== 'deleteContentBackward' && event.nativeEvent.inputType !== 'deleteContentForward' && event.nativeEvent.inputType !== 'insertText') {
         this.props.onTimeChange(event.target.value);
       }
     }
