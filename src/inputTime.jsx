@@ -142,14 +142,14 @@ export default class inputTime extends React.Component {
 
   setTimeValue = () => {
    let timeValue = this.state.time;
-    if (time.toString().length === 1) {
-      timeValue =  `0${time}:00`;
-    } else if (time.toString().length === 2) {
-      timeValue =   `${time}:00`;
-    } else if (time.toString().length === 3) {
-      timeValue = `0${time.substring(0, 1)}:${time.substring(1, 3)}`;
-    } else if (time.toString().length === 4) {
-      timeValue = `${time.substring(0, 2)}:${time.substring(2, 4)}`;
+    if (timeValue.toString().length === 1) {
+      timeValue =  `0${timeValue}:00`;
+    } else if (timeValue.toString().length === 2) {
+      timeValue =   `${timeValue}:00`;
+    } else if (timeValue.toString().length === 3) {
+      timeValue = `0${timeValue.substring(0, 1)}:${timeValue.substring(1, 3)}`;
+    } else if (timeValue.toString().length === 4) {
+      timeValue = `${timeValue.substring(0, 2)}:${timeValue.substring(2, 4)}`;
     }
     this.setState({
       time: timeValue,
