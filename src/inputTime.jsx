@@ -40,6 +40,7 @@ export default class inputTime extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props, this.state);
     window.addEventListener('click', this.handleoutsideClick, true);
   }
 
@@ -73,9 +74,9 @@ export default class inputTime extends React.Component {
 
   handleoutsideClick = event => {
     if (event.target.className !== 'react-datepicker-time-inputbox' || event.target.classList !== 'time-section-item') {
-      const element = document.getElementsByClassName('time-selection-menu');
-      if (element && element[0]) {
-        element[0].classList.add('d-none');
+      const element =  document.getElementById(`time-menu-${this.props.id}`);
+      if (element) {
+        element.classList.add('d-none');
         this.setTimeValue();
       }
     }
@@ -121,9 +122,9 @@ export default class inputTime extends React.Component {
       notValid,
     }, () => {
       if (notValid) {
-        const element = document.getElementsByClassName('time-selection-menu');
+        const element = document.getElementById(`time-menu-${this.props.id}`);
         if (element) {
-          element[0].classList.add('d-none');
+          element.classList.add('d-none');
         }
       }
     });
@@ -209,9 +210,10 @@ export default class inputTime extends React.Component {
             className="react-datepicker-time-inputbox"
             maxLength={5}
             onClick={() => {
-              const element = document.getElementsByClassName('time-selection-menu');
+              const element = document.getElementById(`time-menu-${this.props.id}`);
               if (element) {
-                element[0].classList.remove('d-none');
+                console.log(element);
+                element.classList.remove('d-none');
               }
             }}
             onKeyDown={(event) => {
@@ -221,7 +223,7 @@ export default class inputTime extends React.Component {
             }}
           />
           {notValid && <p className="text-danger">Invalid time entered</p>}
-          <div className="time-selection-menu d-none">
+          <div className="time-selection-menu  d-none" id={`time-menu-${id}`}>
             <ul className="time-selection-ul">
               {times.map((timeValue, i) => (
                 <li
