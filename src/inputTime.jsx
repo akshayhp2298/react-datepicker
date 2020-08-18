@@ -44,7 +44,6 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.timeValue !== prevProps.timeValue, this.props.timeValue, prevProps.timeValue);
     if (this.props.timeValue !== prevProps.timeValue) {
       let { activeState, time } = this.state;
       if (this.props.timeFormat === '12') {
@@ -129,11 +128,11 @@ export default class inputTime extends React.Component {
         }
       }
     });
-    if (!notValid) {
-      if (event.nativeEvent.inputType !== 'deleteContentBackward' && event.nativeEvent.inputType !== 'deleteContentForward' && event.nativeEvent.inputType !== 'insertText') {
-        this.props.onTimeChange(event.target.value);
-      }
-    }
+    // if (!notValid) {
+    //   if (event.nativeEvent.inputType !== 'deleteContentBackward' && event.nativeEvent.inputType !== 'deleteContentForward' && event.nativeEvent.inputType !== 'insertText') {
+    //     this.props.onTimeChange(event.target.value);
+    //   }
+    // }
   };
 
   handleTimeSelectionClick = (timeValue) => {
@@ -141,7 +140,12 @@ export default class inputTime extends React.Component {
       time: formatDate(timeValue, this.state.timeFormat)
     }, () => {
       console.log(this.state.time);
-      this.props.onTimeChange(this.state.time);
+      let hourValue = this.state.time.split(':')[0] || '00';
+      const minsValue = this.state.time.split(':')[1] || '00';
+      if(this.props.timeFormat === '12' && parseInt(hourValue,10) > 12){
+        hourValue = parseInt(hourValue,10) - 12
+      }
+      this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
     });
   };
 
@@ -160,7 +164,12 @@ export default class inputTime extends React.Component {
       time: timeValue,
     }, () => {
       console.log(timeValue);
-      this.props.onTimeChange(timeValue);
+      let hourValue = timeValue.split(':')[0] || '00';
+      const minsValue = timeValue.split(':')[1] || '00';
+      if(this.props.timeFormat === '12' && parseInt(hourValue,10) > 12){
+        hourValue = parseInt(hourValue,10) - 12
+      }
+      this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
     });
   }
 
