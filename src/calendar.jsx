@@ -182,6 +182,7 @@ export default class Calendar extends React.Component {
     timeValue: PropTypes.instanceOf(Date),
     showTimeInputOnly: PropTypes.bool,
     showYearArrows: PropTypes.bool,
+    ref: PropTypes.node,
   };
 
   constructor(props) {
@@ -895,6 +896,7 @@ export default class Calendar extends React.Component {
           customTimeInput={this.props.customTimeInput}
           timeFormat={this.props.timeFormat}
           timeValue={this.props.timeValue}
+          ref={this.props.ref}
         />
       );
     }

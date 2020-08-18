@@ -19,7 +19,6 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
-    timeValue: PropTypes.string,
   };
 
   constructor(props) {
@@ -43,32 +42,23 @@ export default class inputTime extends React.Component {
     window.addEventListener('click', this.handleoutsideClick, true);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.timeValue !== prevProps.timeValue) {
-      let { activeState, time } = this.state;
-      if (this.props.timeFormat === '12') {
-        const hourValue = this.props.timeString.getHours();
-        activeState = parseInt(hourValue, 10) > 12 ? 'PM' : this.state.activeState;
-        if (activeState !== this.state.activeState) {
-          this.setState({
-            activeState,
-          });
-        }
-      }
-
-      let timeValue = formatDate(this.props.timeString, this.state.timeFormat);
-      if (timeValue !== time) {
-        this.setState({
-          time: timeValue,
-        });
-      }
-
-    }
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleoutsideClick, true);
   }
 
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.handleoutsideClick, true);
+  resetInputBox = (date) => {
+    let activeState;
+    let hourValue = date.getHours();
+    if (this.props.timeFormat === '12') {
+      activeState = parseInt(hourValue, 10) > 12 ? 'PM' : this.state.activeState;
+    }
+    let timeFormat = this.props.timeFormat === '12' ? 'hh:mm' : 'HH:mm'
+    this.setState({
+      time: formatDate(date, timeFormat),
+      activeState,
+      notValid: false,
+    });
   }
 
   handleoutsideClick = event => {

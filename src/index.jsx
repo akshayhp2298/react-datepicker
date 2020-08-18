@@ -256,6 +256,7 @@ export default class DatePicker extends React.Component {
     onTimeChange: PropTypes.func,
     showTimeInputOnly: PropTypes.bool,
     showYearArrows: PropTypes.bool,
+    ref:PropTypes.node,
   };
 
   constructor(props) {
@@ -840,6 +841,7 @@ export default class DatePicker extends React.Component {
         timeValue={this.props.timeValue}
         showTimeInputOnly={this.props.showTimeInputOnly}
         showYearArrows={this.props.showYearArrows}
+        ref={this.props.ref}
       >
         {this.props.children}
       </WrappedCalendar>
