@@ -83,7 +83,7 @@ export default class inputTime extends React.Component {
   }
 
   handleTimeInput = event => {
-    console.log(event);
+    console.log(event.nativeEvent);
     let timeValue = event.target.value;
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
