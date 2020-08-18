@@ -125,6 +125,7 @@ export default class inputTime extends React.Component {
           element[0].classList.add('d-none');
         }
       } else {
+        console.log(this.state.time);
         this.props.onTimeChange(this.state.time);
       }
     });
@@ -134,43 +135,28 @@ export default class inputTime extends React.Component {
     this.setState({
       time: formatDate(timeValue, this.state.timeFormat)
     }, () => {
+      console.log(this.state.time);
       this.props.onTimeChange(this.state.time);
     });
   };
 
   setTimeValue = () => {
-    const { time } = this.state;
+   let timeValue = this.state.time;
     if (time.toString().length === 1) {
-      this.setState({
-        time: `0${time}:00`,
-      }, () => {
-        this.props.onTimeChange(this.state.time);
-      });
+      timeValue =  `0${time}:00`;
     } else if (time.toString().length === 2) {
-      this.setState({
-        time: `${time}:00`,
-      }, () => {
-        this.props.onTimeChange(this.state.time);
-      });
+      timeValue =   `${time}:00`;
     } else if (time.toString().length === 3) {
-      this.setState({
-        time: `0${time.substring(0, 1)}:${time.substring(1, 3)}`,
-      }, () => {
-        this.props.onTimeChange(this.state.time);
-      });
+      timeValue = `0${time.substring(0, 1)}:${time.substring(1, 3)}`;
     } else if (time.toString().length === 4) {
-      this.setState({
-        time: `${time.substring(0, 2)}:${time.substring(2, 4)}`,
-      }, () => {
-        this.props.onTimeChange(this.state.time);
-      });
-    } else {
-      this.setState({
-        time,
-      }, () => {
-        this.props.onTimeChange(this.state.time);
-      })
+      timeValue = `${time.substring(0, 2)}:${time.substring(2, 4)}`;
     }
+    this.setState({
+      time: timeValue,
+    },() => {
+      console.log(timeValue);
+      this.props.onTimeChange(timeValue);
+    });
   }
 
   renderTimeInput = () => {
