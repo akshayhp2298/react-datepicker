@@ -62,12 +62,9 @@ export default class inputTime extends React.Component {
   }
 
   handleoutsideClick = event => {
-    console.log(event.target.className);
     if (!event.target.className.includes('react-datepicker-time-inputbox') && !event.target.className.includes('time-section-item')) {
       const element =  document.getElementById(`time-menu-${this.props.id}`);
-      console.log(element);
       if (element) {
-        console.log('inside');
         element.classList.add('d-none');
       }
       this.setTimeValue();
@@ -120,11 +117,9 @@ export default class inputTime extends React.Component {
         }
       }
     });
-    // if (!notValid) {
-    //   if (event.nativeEvent.inputType !== 'deleteContentBackward' && event.nativeEvent.inputType !== 'deleteContentForward' && event.nativeEvent.inputType !== 'insertText') {
-    //     this.props.onTimeChange(event.target.value);
-    //   }
-    // }
+    if (!notValid) {
+        this.props.onTimeChange(event.target.value);
+    }
   };
 
   handleTimeSelectionClick = (timeValue) => {
@@ -169,7 +164,6 @@ export default class inputTime extends React.Component {
           hourValue = parseInt(hourValue, 10) - 12
         }
       }
-      console.log(`${addZero(parseInt(hourValue, 10))}:${minsValue}`, 'test');
       this.props.onTimeChange(`${addZero(parseInt(hourValue, 10))}:${minsValue}`);
     });
   }
