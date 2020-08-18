@@ -140,8 +140,13 @@ export default class inputTime extends React.Component {
     }, () => {
       let hourValue = this.state.time.split(':')[0] || '00';
       const minsValue = this.state.time.split(':')[1] || '00';
-      if (this.props.timeFormat === '12' && parseInt(hourValue, 10) > 12) {
-        hourValue = parseInt(hourValue, 10) - 12
+      if (this.props.timeFormat === '12') {
+        if(parseInt(hourValue, 10) < 12 && this.state.activeState=== 'PM'){
+          hourValue = parseInt(hourValue, 10) + 12
+        }
+        if(parseInt(hourValue, 10) > 12 && this.state.activeState=== 'AM'){
+          hourValue = parseInt(hourValue, 10) - 12
+        }
       }
       this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
     });
@@ -163,8 +168,13 @@ export default class inputTime extends React.Component {
     }, () => {
       let hourValue = timeValue.split(':')[0] || '00';
       const minsValue = timeValue.split(':')[1] || '00';
-      if (this.props.timeFormat === '12' && parseInt(hourValue, 10) > 12) {
-        hourValue = parseInt(hourValue, 10) - 12
+      if (this.props.timeFormat === '12') {
+        if(parseInt(hourValue, 10) < 12 && this.state.activeState=== 'PM'){
+          hourValue = parseInt(hourValue, 10) + 12
+        }
+        if(parseInt(hourValue, 10) > 12 && this.state.activeState=== 'AM'){
+          hourValue = parseInt(hourValue, 10) - 12
+        }
       }
       this.props.onTimeChange(`${addZero(parseInt(hourValue, 10))}:${minsValue}`);
     });
