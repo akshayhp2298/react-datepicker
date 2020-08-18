@@ -39,7 +39,6 @@ export default class inputTime extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props, this.state);
     window.addEventListener('click', this.handleoutsideClick, true);
   }
 

@@ -715,7 +715,6 @@ export default class DatePicker extends React.Component {
 
   resetInput = date => {
     if(date){
-      console.log(this.calendar);
       if(this.calendar && this.calendar.instanceRef && this.calendar.instanceRef.inputRef && this.calendar.instanceRef.inputRef.current){
          this.calendar.instanceRef.inputRef.current.resetInputBox(date);
       }
@@ -724,6 +723,14 @@ export default class DatePicker extends React.Component {
       });
     }
   };
+
+  changeOnlyTimePickerValue = date => {
+    if(date){
+      if(this.calendar && this.calendar.instanceRef && this.calendar.instanceRef.inputRef && this.calendar.instanceRef.inputRef.current){
+         this.calendar.instanceRef.inputRef.current.resetInputBox(date);
+      }
+    }
+  }
 
   onClearClick = event => {
     if (event) {
