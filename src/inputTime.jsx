@@ -82,7 +82,6 @@ export default class inputTime extends React.Component {
   }
 
   handleTimeInput = event => {
-    console.log(event.nativeEvent);
     let timeValue = event.target.value;
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
@@ -139,11 +138,10 @@ export default class inputTime extends React.Component {
     this.setState({
       time: formatDate(timeValue, this.state.timeFormat)
     }, () => {
-      console.log(this.state.time);
       let hourValue = this.state.time.split(':')[0] || '00';
       const minsValue = this.state.time.split(':')[1] || '00';
-      if(this.props.timeFormat === '12' && parseInt(hourValue,10) > 12){
-        hourValue = parseInt(hourValue,10) - 12
+      if (this.props.timeFormat === '12' && parseInt(hourValue, 10) > 12) {
+        hourValue = parseInt(hourValue, 10) - 12
       }
       this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
     });
@@ -163,13 +161,12 @@ export default class inputTime extends React.Component {
     this.setState({
       time: timeValue,
     }, () => {
-      console.log(timeValue);
       let hourValue = timeValue.split(':')[0] || '00';
       const minsValue = timeValue.split(':')[1] || '00';
-      if(this.props.timeFormat === '12' && parseInt(hourValue,10) > 12){
-        hourValue = parseInt(hourValue,10) - 12
+      if (this.props.timeFormat === '12' && parseInt(hourValue, 10) > 12) {
+        hourValue = parseInt(hourValue, 10) - 12
       }
-      this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
+      this.props.onTimeChange(`${addZero(parseInt(hourValue, 10))}:${minsValue}`);
     });
   }
 
