@@ -19,6 +19,7 @@ export default class inputTime extends React.Component {
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
     id: PropTypes.string,
+    timeValue: PropTypes.string,
   };
 
   constructor(props) {
@@ -43,7 +44,7 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.timeString !== prevProps.timeString) {
+    if (this.props.timeString !== prevProps.timeString, this.props.timeValue!== prevProps.timeValue) {
       let { activeState, time } = this.state;
       if (this.props.timeFormat === '12') {
         const hourValue = this.props.timeString.getHours();
@@ -81,6 +82,7 @@ export default class inputTime extends React.Component {
   }
 
   handleTimeInput = event => {
+    console.log(event);
     let timeValue = event.target.value;
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
