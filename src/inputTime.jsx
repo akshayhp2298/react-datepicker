@@ -44,7 +44,8 @@ export default class inputTime extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.timeString !== prevProps.timeString, this.props.timeValue!== prevProps.timeValue) {
+    console.log(this.props.timeValue!== prevProps.timeValue, this.props.timeValue, prevProps.timeValue);
+    if (this.props.timeString !== prevProps.timeString) {
       let { activeState, time } = this.state;
       if (this.props.timeFormat === '12') {
         const hourValue = this.props.timeString.getHours();
