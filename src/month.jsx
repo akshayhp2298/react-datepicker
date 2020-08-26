@@ -345,7 +345,7 @@ export default class Month extends React.Component {
     return (
       <div
         className={this.getClassNames()}
-        // onMouseLeave={this.handleMouseLeave}
+        onMouseLeave={this.handleMouseLeave}
         aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
       >
         {showMonthYearPicker

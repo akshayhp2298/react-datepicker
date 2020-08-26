@@ -650,8 +650,8 @@ export default class Calendar extends React.Component {
             }
           }} />
         </span>
-        {this.renderMonthDropdown(i !== 0)}
-        {this.renderYearDropdown(i !== 0)}
+        {this.renderMonthDropdown()}
+        {this.renderYearDropdown()}
         <span className="react-datepicker__header__arrows right-arrow" ><RightArrow onClick={() => {
           const nextMonthButtonDisabled = monthDisabledAfter(
             this.state.date,
@@ -795,7 +795,7 @@ export default class Calendar extends React.Component {
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnKeyDown}
             onDayMouseEnter={this.handleDayMouseEnter}
-            // onMouseLeave={this.handleMonthMouseLeave}
+            onMouseLeave={this.handleMonthMouseLeave}
             onWeekSelect={this.props.onWeekSelect}
             orderInDisplay={i}
             formatWeekNumber={this.props.formatWeekNumber}
