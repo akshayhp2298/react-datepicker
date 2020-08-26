@@ -550,8 +550,8 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderYearDropdown = (overrideHide = false) => {
-    if (!this.props.showYearDropdown || overrideHide) {
+  renderYearDropdown = (monthDate= this.state.date) => {
+    if (!this.props.showYearDropdown) {
       return;
     }
     return (
@@ -564,15 +564,16 @@ export default class Calendar extends React.Component {
         onChange={this.changeYear}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
-        year={getYear(this.state.date)}
+        year={getYear(monthDate)}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
       />
     );
   };
 
-  renderMonthDropdown = (overrideHide = false) => {
-    if (!this.props.showMonthDropdown || overrideHide) {
+  renderMonthDropdown = (monthDate = this.state.date) => {
+    console.log(this.state.date);
+    if (!this.props.showMonthDropdown) {
       return;
     }
     return (
@@ -580,7 +581,7 @@ export default class Calendar extends React.Component {
         dropdownMode={this.props.dropdownMode}
         locale={this.props.locale}
         onChange={this.changeMonth}
-        month={getMonth(this.state.date)}
+        month={getMonth(monthDate)}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}
       />
     );
@@ -620,6 +621,7 @@ export default class Calendar extends React.Component {
 
   renderDefaultHeader = ({ monthDate, i }) => (
     <div className="react-datepicker__header">
+      {console.log(i, monthDate)}
       <div
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
@@ -650,8 +652,8 @@ export default class Calendar extends React.Component {
             }
           }} />
         </span>
-        {this.renderMonthDropdown()}
-        {this.renderYearDropdown()}
+        {this.renderMonthDropdown(monthDate)}
+        {this.renderYearDropdown(monthDate)}
         <span className="react-datepicker__header__arrows right-arrow" ><RightArrow onClick={() => {
           const nextMonthButtonDisabled = monthDisabledAfter(
             this.state.date,
