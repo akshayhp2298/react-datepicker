@@ -147,9 +147,8 @@ export default class Day extends React.Component {
     }
 
     const { day, selectingDate, startDate, selectsStart } = this.props;
-
     if (selectsStart) {
-      return isSameDay(day, selectingDate);
+      return isSameDay(day, selectingDate) && isBefore(selectingDate, startDate);
     } else {
       return isSameDay(day, startDate);
     }
@@ -161,9 +160,8 @@ export default class Day extends React.Component {
     }
 
     const { day, selectingDate, endDate, selectsEnd } = this.props;
-
     if (selectsEnd) {
-      return isSameDay(day, selectingDate);
+      return isSameDay(day, selectingDate) && isAfter(selectingDate, endDate);
     } else {
       return isSameDay(day, endDate);
     }
