@@ -572,7 +572,6 @@ export default class Calendar extends React.Component {
   };
 
   renderMonthDropdown = (monthDate = this.state.date) => {
-    console.log(this.state.date);
     if (!this.props.showMonthDropdown) {
       return;
     }
@@ -621,7 +620,6 @@ export default class Calendar extends React.Component {
 
   renderDefaultHeader = ({ monthDate, i }) => (
     <div className="react-datepicker__header">
-      {console.log(i, monthDate)}
       <div
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
