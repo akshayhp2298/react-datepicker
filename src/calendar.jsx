@@ -328,8 +328,7 @@ export default class Calendar extends React.Component {
   };
 
   changeMonth = month => {
-    console.log(month, setMonth(this.state.date, month));
-    console.log(isAfter(this.props.maxDate, setMonth(this.state.date, month)));
+    console.log(month , getMonth(this.props.maxDate));
     this.setState(
       ({ date }) => ({
         date: setMonth(date, month)
