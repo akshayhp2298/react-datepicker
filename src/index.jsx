@@ -468,12 +468,17 @@ export default class DatePicker extends React.Component {
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw(event);
     }
-    this.setSelected(date, event, false, monthSelectedIn);
-    if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
-      this.setPreSelection(date);
-    } else if (!this.props.inline) {
-      this.setOpen(false);
+    if(this.props.selectsStart || this.props.selectsEnd){
+      this.props.onChange(date, event);
+    }else{
+      this.setSelected(date, event, false, monthSelectedIn);
+      if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
+        this.setPreSelection(date);
+      } else if (!this.props.inline) {
+        this.setOpen(false);
+      }
     }
+
   };
 
   setSelected = (date, event, keepInput, monthSelectedIn) => {
