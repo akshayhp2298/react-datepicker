@@ -328,13 +328,14 @@ export default class Calendar extends React.Component {
   };
 
   changeMonth = month => {
-    console.log(month , getMonth(this.props.maxDate));
-    this.setState(
-      ({ date }) => ({
-        date: setMonth(date, month)
-      }),
-      () => this.handleMonthChange(this.state.date)
-    );
+    if(month <= getMonth(this.props.maxDate)){
+      this.setState(
+        ({ date }) => ({
+          date: setMonth(date, month)
+        }),
+        () => this.handleMonthChange(this.state.date)
+      );
+    }
   };
 
   changeMonthYear = monthYear => {
