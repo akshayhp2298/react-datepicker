@@ -125,6 +125,9 @@ export default class Day extends React.Component {
     if(isEqual(selectingDate, endDate) || isEqual(selectingDate, startDate)){
       return false;
     }
+    if(isEqual(day, endDate) || isEqual(day, startDate)){
+      return false;
+    }
 
     if (
       selectsStart &&
