@@ -189,12 +189,13 @@ export default class Day extends React.Component {
 
   checkOverLapping = () => {
     const { day, selectingDate, endDate, selectsEnd } = this.props;
+    console.log(selectingDate, startDate, endDate);
     if (selectsEnd) {
-      return isSameDay(endDate, selectingDate);
+      return isEqual(endDate, selectingDate);
     }
 
     if(selectsStart){
-      return isSameDay(startDate, selectingDate);
+      return isEqual(startDate, selectingDate);
     }
 
     return false;
@@ -229,12 +230,12 @@ export default class Day extends React.Component {
         "react-datepicker__day--range-end": this.isRangeEnd(),
         "react-datepicker__day--in-range": this.isInRange(),
         "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
+        "react-datepicker__day__is--overlapping-range": this.checkOverLapping(),
         "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
         "react-datepicker__day--today": this.isSameDay(newDate()),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month": this.isOutsideMonth(),
-        "react-datepicker__day__is--overlapping-range": this.checkOverLapping(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted")
     );
