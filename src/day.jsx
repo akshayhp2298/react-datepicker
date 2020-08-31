@@ -188,7 +188,7 @@ export default class Day extends React.Component {
   };
 
   checkOverLapping = () => {
-    const { day, selectingDate, endDate, selectsEnd } = this.props;
+    const { selectingDate, endDate, selectsEnd, startDate } = this.props;
     console.log(selectingDate, startDate, endDate);
     if (selectsEnd) {
       return isEqual(endDate, selectingDate);
