@@ -224,6 +224,12 @@ export default class Calendar extends React.Component {
         date: this.props.openToDate
       });
     }
+
+    if(this.props.selectsEnd && this.props.endDate !== prevProps.endDate){
+      this.setState({
+        date: this.props.endDate
+      });
+    }
   }
 
   handleClickOutside = event => {
