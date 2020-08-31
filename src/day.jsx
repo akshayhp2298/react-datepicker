@@ -189,7 +189,6 @@ export default class Day extends React.Component {
 
   checkOverLapping = () => {
     const { day, endDate, selectsEnd, startDate , selectsStart} = this.props;
-    console.log(day, startDate, endDate);
     if (selectsEnd) {
       return isSameDay(endDate, day);
     }
