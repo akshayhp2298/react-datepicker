@@ -125,9 +125,6 @@ export default class Day extends React.Component {
     if(isEqual(selectingDate, endDate) || isEqual(selectingDate, startDate)){
       return false;
     }
-    if(isEqual(day, endDate) || isEqual(day, startDate)){
-      return false;
-    }
 
     if (
       selectsStart &&
@@ -190,6 +187,19 @@ export default class Day extends React.Component {
     return isSameDay(endDate, day);
   };
 
+  checkOverLapping = () => {
+    const { day, selectingDate, endDate, selectsEnd } = this.props;
+    if (selectsEnd) {
+      return isSameDay(endDate, selectingDate);
+    }
+
+    if(selectsStart){
+      return isSameDay(startDate, selectingDate);
+    }
+
+    return false;
+  };
+
   isWeekend = () => {
     const weekday = getDay(this.props.day);
     return weekday === 0 || weekday === 6;
@@ -223,7 +233,8 @@ export default class Day extends React.Component {
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
         "react-datepicker__day--today": this.isSameDay(newDate()),
         "react-datepicker__day--weekend": this.isWeekend(),
-        "react-datepicker__day--outside-month": this.isOutsideMonth()
+        "react-datepicker__day--outside-month": this.isOutsideMonth(),
+        "react-datepicker__day__is--overlapping-range": this.checkOverLapping(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted")
     );
