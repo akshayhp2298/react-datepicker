@@ -132,7 +132,7 @@ export default class inputTime extends React.Component {
         if(parseInt(hourValue, 10) < 12 && this.state.activeState=== 'PM'){
           hourValue = parseInt(hourValue, 10) + 12
         }
-        if(parseInt(hourValue, 10) > 12 && this.state.activeState=== 'AM'){
+        if(parseInt(hourValue, 10) >= 12 && this.state.activeState=== 'AM'){
           hourValue = parseInt(hourValue, 10) - 12
         }
       }
@@ -157,10 +157,11 @@ export default class inputTime extends React.Component {
       let hourValue = timeValue.split(':')[0] || '00';
       const minsValue = timeValue.split(':')[1] || '00';
       if (this.props.timeFormat === '12') {
+        if(parseInt(hourValue, 10) === 0 ) hourValue = 12
         if(parseInt(hourValue, 10) < 12 && this.state.activeState=== 'PM'){
           hourValue = parseInt(hourValue, 10) + 12
         }
-        if(parseInt(hourValue, 10) > 12 && this.state.activeState=== 'AM'){
+        if(parseInt(hourValue, 10) >= 12 && this.state.activeState=== 'AM'){
           hourValue = parseInt(hourValue, 10) - 12
         }
       }
@@ -176,9 +177,9 @@ export default class inputTime extends React.Component {
     let times = [];
     let intervals = 15;
     let totalSection = 1440;
-    if (timeFormat === '12') {
-      totalSection = 720;
-    }
+    // if (timeFormat === '12') {
+    //   totalSection = 720;
+    // }
     let base = getStartOfDay(newDate());
     const multiplier = totalSection / intervals;
     for (let i = 0; i < multiplier; i++) {
@@ -211,14 +212,21 @@ export default class inputTime extends React.Component {
           {notValid && <p className="text-danger">Invalid time entered</p>}
           <div className="time-selection-menu  d-none" id={`time-menu-${id}`}>
             <ul className="time-selection-ul">
-              {times.map((timeValue, i) => (
+              { timeFormat === '24' ? (times.map((timeValue, i) => (
                 <li
                   key={i}
                   onClick={this.handleTimeSelectionClick.bind(this, timeValue)}
                   className={'time-section-item'}
                 >
                   {formatDate(timeValue, 'HH:mm')}
-                </li>))
+                </li>))) : (times.map((timeValue, i) => (
+                <li
+                  key={i}
+                  onClick={this.handleTimeSelectionClick.bind(this, timeValue)}
+                  className={'time-section-item'}
+                >
+                  {formatDate(timeValue, 'hh:mm a')}
+                </li>)))
               }
             </ul>
           </div>
