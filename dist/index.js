@@ -2366,26 +2366,27 @@ var _t = (function(e) {
         var t = e.target.value,
           n = a.props.timeFormat,
           r = a.state.notValid;
-        ((t = t.replace(":", "")) && !t.match("^[0-9]*$")) ||
-        (t && t.length > 4)
-          ? (r = !0)
-          : (t && 1 === t.length) || (t && 2 === t.length)
-          ? (r = "12" === n ? parseInt(t, 10) > 12 : parseInt(t, 10) > 24)
-          : t && 3 === t.length
-          ? (r =
-              "12" === n
-                ? parseInt(t.substring(0, 1), 10) > 12 ||
-                  parseInt(t.substring(1, 3), 10) > 60
-                : parseInt(t.substring(0, 1), 10) > 24 ||
-                  parseInt(t.substring(1, 3), 10) > 60)
-          : t &&
-            4 === t.length &&
-            (r =
-              "12" === n
-                ? parseInt(t.substring(0, 2), 10) > 12 ||
-                  parseInt(t.substring(2, 4), 10) > 60
-                : parseInt(t.substring(0, 2), 10) > 24 ||
-                  parseInt(t.substring(2, 4), 10) > 60),
+        (t = t.replace(":", "")),
+          console.log(t, "asdfasdf"),
+          (t && !t.match("^[0-9]*$")) || (t && t.length > 4)
+            ? (r = !0)
+            : (t && 1 === t.length) || (t && 2 === t.length)
+            ? (r = "12" === n ? parseInt(t, 10) > 12 : parseInt(t, 10) > 23)
+            : t && 3 === t.length
+            ? (r =
+                "12" === n
+                  ? parseInt(t.substring(0, 1), 10) > 12 ||
+                    parseInt(t.substring(1, 3), 10) > 60
+                  : parseInt(t.substring(0, 1), 10) > 23 ||
+                    parseInt(t.substring(1, 3), 10) > 60)
+            : t &&
+              4 === t.length &&
+              (r =
+                "12" === n
+                  ? parseInt(t.substring(0, 2), 10) > 12 ||
+                    parseInt(t.substring(2, 4), 10) > 60
+                  : parseInt(t.substring(0, 2), 10) > 23 ||
+                    parseInt(t.substring(2, 4), 10) > 60),
           a.setState({ time: e.target.value, notValid: r }, function() {
             if (r) {
               var e = document.getElementById("time-menu-".concat(a.props.id));

@@ -81,7 +81,7 @@ export default class inputTime extends React.Component {
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
     timeValue = timeValue.replace(":", "");
-
+    console.log(timeValue, "asdfasdf");
     if (timeValue && !timeValue.match("^[0-9]*$")) {
       notValid = true;
     } else if (timeValue && timeValue.length > 4) {
@@ -90,13 +90,13 @@ export default class inputTime extends React.Component {
       if (timeFormat === "12") {
         notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
-        notValid = parseInt(timeValue, 10) > 24 ? true : false;
+        notValid = parseInt(timeValue, 10) > 23 ? true : false;
       }
     } else if (timeValue && timeValue.length === 2) {
       if (timeFormat === "12") {
         notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
-        notValid = parseInt(timeValue, 10) > 24 ? true : false;
+        notValid = parseInt(timeValue, 10) > 23 ? true : false;
       }
     } else if (timeValue && timeValue.length === 3) {
       if (timeFormat === "12") {
@@ -107,7 +107,7 @@ export default class inputTime extends React.Component {
             : false;
       } else {
         notValid =
-          parseInt(timeValue.substring(0, 1), 10) > 24 ||
+          parseInt(timeValue.substring(0, 1), 10) > 23 ||
           parseInt(timeValue.substring(1, 3), 10) > 60
             ? true
             : false;
@@ -121,7 +121,7 @@ export default class inputTime extends React.Component {
             : false;
       } else {
         notValid =
-          parseInt(timeValue.substring(0, 2), 10) > 24 ||
+          parseInt(timeValue.substring(0, 2), 10) > 23 ||
           parseInt(timeValue.substring(2, 4), 10) > 60
             ? true
             : false;
