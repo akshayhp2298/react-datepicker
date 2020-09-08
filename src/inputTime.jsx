@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import set from 'date-fns'
+import set from "date-fns";
 import {
-  addZero, isValid, formatDate, getHours,
+  addZero,
+  isValid,
+  formatDate,
+  getHours,
   getMinutes,
   addMinutes,
   newDate,
-  getStartOfDay,
-} from './date_utils';
-import TimeArrowDown from './Icons/time-arrow-down';
-import TimeArrowUp from './Icons/time-arrow-up';
+  getStartOfDay
+} from "./date_utils";
+import TimeArrowDown from "./Icons/time-arrow-down";
+import TimeArrowUp from "./Icons/time-arrow-up";
 
 export default class inputTime extends React.Component {
   static propTypes = {
@@ -18,7 +21,7 @@ export default class inputTime extends React.Component {
     timeInputLabel: PropTypes.string,
     customTimeInput: PropTypes.element,
     timeFormat: PropTypes.string,
-    id: PropTypes.string,
+    id: PropTypes.string
   };
 
   constructor(props) {
@@ -26,10 +29,10 @@ export default class inputTime extends React.Component {
     const time = this.props.timeString;
     let activeState;
     let hourValue = time.getHours();
-    if (this.props.timeFormat === '12') {
-      activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
+    if (this.props.timeFormat === "12") {
+      activeState = parseInt(hourValue, 10) > 12 ? "PM" : "AM";
     }
-    let timeFormat = this.props.timeFormat === '12' ? 'hh:mm' : 'HH:mm'
+    let timeFormat = this.props.timeFormat === "12" ? "hh:mm" : "HH:mm";
     this.state = {
       time: formatDate(time, timeFormat),
       activeState,
@@ -39,105 +42,132 @@ export default class inputTime extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('click', this.handleoutsideClick, true);
+    window.addEventListener("click", this.handleoutsideClick, true);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('click', this.handleoutsideClick, true);
+    window.removeEventListener("click", this.handleoutsideClick, true);
   }
 
-
-  resetInputBox = (date) => {
+  resetInputBox = date => {
     let activeState;
     let hourValue = date.getHours();
-    if (this.props.timeFormat === '12') {
-      activeState = parseInt(hourValue, 10) > 12 ? 'PM' : 'AM';
+    if (this.props.timeFormat === "12") {
+      activeState = parseInt(hourValue, 10) > 12 ? "PM" : "AM";
     }
-    let timeFormat = this.props.timeFormat === '12' ? 'hh:mm' : 'HH:mm'
+    let timeFormat = this.props.timeFormat === "12" ? "hh:mm" : "HH:mm";
     this.setState({
       time: formatDate(date, timeFormat),
       activeState,
-      notValid: false,
+      notValid: false
     });
-  }
+  };
 
   handleoutsideClick = event => {
-    if (!event.target.className.includes('react-datepicker-time-inputbox') && !event.target.className.includes('time-section-item')) {
-      const element =  document.getElementById(`time-menu-${this.props.id}`);
+    if (
+      !event.target.className.includes("react-datepicker-time-inputbox") &&
+      !event.target.className.includes("time-section-item")
+    ) {
+      const element = document.getElementById(`time-menu-${this.props.id}`);
       if (element) {
-        element.classList.add('d-none');
+        element.classList.add("d-none");
       }
       this.setTimeValue();
     }
-  }
+  };
 
   handleTimeInput = event => {
     let timeValue = event.target.value;
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
-    timeValue = timeValue.replace(':', '');
+    timeValue = timeValue.replace(":", "");
 
-    if (timeValue && !timeValue.match('^[0-9]*$')) {
+    if (timeValue && !timeValue.match("^[0-9]*$")) {
       notValid = true;
-    } else if (timeValue && (timeValue.length > 4)) {
+    } else if (timeValue && timeValue.length > 4) {
       notValid = true;
     } else if (timeValue && timeValue.length === 1) {
-      if (timeFormat === '12') {
+      if (timeFormat === "12") {
         notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
         notValid = parseInt(timeValue, 10) > 24 ? true : false;
       }
     } else if (timeValue && timeValue.length === 2) {
-      if (timeFormat === '12') {
+      if (timeFormat === "12") {
         notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
         notValid = parseInt(timeValue, 10) > 24 ? true : false;
       }
     } else if (timeValue && timeValue.length === 3) {
-      if (timeFormat === '12') {
-        notValid = parseInt(timeValue.substring(0, 1), 10) > 12 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : false
+      if (timeFormat === "12") {
+        notValid =
+          parseInt(timeValue.substring(0, 1), 10) > 12 ||
+          parseInt(timeValue.substring(1, 3), 10) > 60
+            ? true
+            : false;
       } else {
-        notValid = parseInt(timeValue.substring(0, 1), 10) > 24 || parseInt(timeValue.substring(1, 3), 10) > 60 ? true : false
+        notValid =
+          parseInt(timeValue.substring(0, 1), 10) > 24 ||
+          parseInt(timeValue.substring(1, 3), 10) > 60
+            ? true
+            : false;
       }
     } else if (timeValue && timeValue.length === 4) {
-      if (timeFormat === '12') {
-        notValid = parseInt(timeValue.substring(0, 2), 10) > 12 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : false
+      if (timeFormat === "12") {
+        notValid =
+          parseInt(timeValue.substring(0, 2), 10) > 12 ||
+          parseInt(timeValue.substring(2, 4), 10) > 60
+            ? true
+            : false;
       } else {
-        notValid = parseInt(timeValue.substring(0, 2), 10) > 24 || parseInt(timeValue.substring(2, 4), 10) > 60 ? true : false
+        notValid =
+          parseInt(timeValue.substring(0, 2), 10) > 24 ||
+          parseInt(timeValue.substring(2, 4), 10) > 60
+            ? true
+            : false;
       }
     }
-    this.setState({
-      time: event.target.value,
-      notValid,
-    }, () => {
-      if (notValid) {
-        const element = document.getElementById(`time-menu-${this.props.id}`);
-        if (element) {
-          element.classList.add('d-none');
+    this.setState(
+      {
+        time: event.target.value,
+        notValid
+      },
+      () => {
+        if (notValid) {
+          const element = document.getElementById(`time-menu-${this.props.id}`);
+          if (element) {
+            element.classList.add("d-none");
+          }
         }
       }
-    });
+    );
     if (!notValid) {
-        this.props.onTimeChange(event.target.value);
+      this.props.onTimeChange(event.target.value);
     }
   };
 
-  handleTimeSelectionClick = (timeValue) => {
-    this.setState({
-      time: formatDate(timeValue, this.state.timeFormat)
-    }, () => {
-      let hourValue = this.state.time.split(':')[0] || '00';
-      const minsValue = this.state.time.split(':')[1] || '00';
-      if (this.props.timeFormat === '12') {
-        if(parseInt(hourValue, 10) < 12 && this.state.activeState=== 'PM'){
-          hourValue = parseInt(hourValue, 10) + 12
+  handleTimeSelectionClick = timeValue => {
+    this.setState(
+      {
+        time: formatDate(timeValue, this.state.timeFormat)
+      },
+      () => {
+        let hourValue = this.state.time.split(":")[0] || "00";
+        const minsValue = this.state.time.split(":")[1] || "00";
+        if (this.props.timeFormat === "12") {
+          if (parseInt(hourValue, 10) < 12 && this.state.activeState === "PM") {
+            hourValue = parseInt(hourValue, 10) + 12;
+          }
+          if (
+            parseInt(hourValue, 10) >= 12 &&
+            this.state.activeState === "AM"
+          ) {
+            hourValue = parseInt(hourValue, 10) - 12;
+          }
         }
-        if(parseInt(hourValue, 10) > 12 && this.state.activeState=== 'AM'){
-          hourValue = parseInt(hourValue, 10) - 12
-        }
+        this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
       }
-      this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
-    });
+    );
   };
 
   setTimeValue = () => {
@@ -151,22 +181,31 @@ export default class inputTime extends React.Component {
     } else if (timeValue.toString().length === 4) {
       timeValue = `${timeValue.substring(0, 2)}:${timeValue.substring(2, 4)}`;
     }
-    this.setState({
-      time: timeValue,
-    }, () => {
-      let hourValue = timeValue.split(':')[0] || '00';
-      const minsValue = timeValue.split(':')[1] || '00';
-      if (this.props.timeFormat === '12') {
-        if(parseInt(hourValue, 10) < 12 && this.state.activeState=== 'PM'){
-          hourValue = parseInt(hourValue, 10) + 12
+    this.setState(
+      {
+        time: timeValue
+      },
+      () => {
+        let hourValue = timeValue.split(":")[0] || "00";
+        const minsValue = timeValue.split(":")[1] || "00";
+        if (this.props.timeFormat === "12") {
+          if (parseInt(hourValue, 10) === 0) hourValue = 12;
+          if (parseInt(hourValue, 10) < 12 && this.state.activeState === "PM") {
+            hourValue = parseInt(hourValue, 10) + 12;
+          }
+          if (
+            parseInt(hourValue, 10) >= 12 &&
+            this.state.activeState === "AM"
+          ) {
+            hourValue = parseInt(hourValue, 10) - 12;
+          }
         }
-        if(parseInt(hourValue, 10) > 12 && this.state.activeState=== 'AM'){
-          hourValue = parseInt(hourValue, 10) - 12
-        }
+        this.props.onTimeChange(
+          `${addZero(parseInt(hourValue, 10))}:${minsValue}`
+        );
       }
-      this.props.onTimeChange(`${addZero(parseInt(hourValue, 10))}:${minsValue}`);
-    });
-  }
+    );
+  };
 
   renderTimeInput = () => {
     const { time, notValid } = this.state;
@@ -176,9 +215,9 @@ export default class inputTime extends React.Component {
     let times = [];
     let intervals = 15;
     let totalSection = 1440;
-    if (timeFormat === '12') {
-      totalSection = 720;
-    }
+    // if (timeFormat === '12') {
+    //   totalSection = 720;
+    // }
     let base = getStartOfDay(newDate());
     const multiplier = totalSection / intervals;
     for (let i = 0; i < multiplier; i++) {
@@ -197,12 +236,14 @@ export default class inputTime extends React.Component {
             className="react-datepicker-time-inputbox"
             maxLength={5}
             onClick={() => {
-              const element = document.getElementById(`time-menu-${this.props.id}`);
+              const element = document.getElementById(
+                `time-menu-${this.props.id}`
+              );
               if (element) {
-                element.classList.remove('d-none');
+                element.classList.remove("d-none");
               }
             }}
-            onKeyDown={(event) => {
+            onKeyDown={event => {
               if (event.keyCode === 13) {
                 this.setTimeValue();
               }
@@ -211,35 +252,68 @@ export default class inputTime extends React.Component {
           {notValid && <p className="text-danger">Invalid time entered</p>}
           <div className="time-selection-menu  d-none" id={`time-menu-${id}`}>
             <ul className="time-selection-ul">
-              {times.map((timeValue, i) => (
-                <li
-                  key={i}
-                  onClick={this.handleTimeSelectionClick.bind(this, timeValue)}
-                  className={'time-section-item'}
-                >
-                  {formatDate(timeValue, 'HH:mm')}
-                </li>))
-              }
+              {timeFormat === "24"
+                ? times.map((timeValue, i) => (
+                    <li
+                      key={i}
+                      onClick={this.handleTimeSelectionClick.bind(
+                        this,
+                        timeValue
+                      )}
+                      className={"time-section-item"}
+                    >
+                      {formatDate(timeValue, "HH:mm")}
+                    </li>
+                  ))
+                : times.map((timeValue, i) => (
+                    <li
+                      key={i}
+                      onClick={this.handleTimeSelectionClick.bind(
+                        this,
+                        timeValue
+                      )}
+                      className={"time-section-item"}
+                    >
+                      {formatDate(timeValue, "hh:mm a")}
+                    </li>
+                  ))}
             </ul>
           </div>
         </div>
-        {timeFormat !== '24' &&
+        {timeFormat !== "24" && (
           <div className="react-datepicker-am-pm-switch">
-            <span className={`${this.state.activeState === 'AM' ? 'active' : ''}`} onClick={() => {
-              this.setState({
-                activeState: 'AM',
-              }, () => {
-                this.setTimeValue();
-              });
-            }}>AM</span>
-            <span className={`${this.state.activeState === 'PM' ? 'active' : ''}`} onClick={() => {
-              this.setState({
-                activeState: 'PM',
-              }, () => {
-                this.setTimeValue();
-              });
-            }}>PM</span>
-          </div>}
+            <span
+              className={`${this.state.activeState === "AM" ? "active" : ""}`}
+              onClick={() => {
+                this.setState(
+                  {
+                    activeState: "AM"
+                  },
+                  () => {
+                    this.setTimeValue();
+                  }
+                );
+              }}
+            >
+              AM
+            </span>
+            <span
+              className={`${this.state.activeState === "PM" ? "active" : ""}`}
+              onClick={() => {
+                this.setState(
+                  {
+                    activeState: "PM"
+                  },
+                  () => {
+                    this.setTimeValue();
+                  }
+                );
+              }}
+            >
+              PM
+            </span>
+          </div>
+        )}
       </>
     );
   };

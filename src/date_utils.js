@@ -77,11 +77,21 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
-      let tryParseDate = parse(value, df.replace('DD','dd').replace('YYYY','yyyy'), new Date(), { locale: localeObject });
+      let tryParseDate = parse(
+        value,
+        df.replace("DD", "dd").replace("YYYY", "yyyy"),
+        new Date(),
+        { locale: localeObject }
+      );
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate) &&
-          value === format(tryParseDate, df.replace('DD','dd').replace('YYYY','yyyy'), { awareOfUnicodeTokens: true });
+          value ===
+            format(
+              tryParseDate,
+              df.replace("DD", "dd").replace("YYYY", "yyyy"),
+              { awareOfUnicodeTokens: true }
+            );
       }
       if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
@@ -89,12 +99,22 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
     });
     return parsedDate;
   }
-  parsedDate = parse(value, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), new Date(), { locale: localeObject });
+  parsedDate = parse(
+    value,
+    dateFormat.replace("DD", "dd").replace("YYYY", "yyyy"),
+    new Date(),
+    { locale: localeObject }
+  );
 
   if (strictParsing) {
     strictParsingValueMatch =
       isValid(parsedDate) &&
-      value === format(parsedDate, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), { awareOfUnicodeTokens: true });
+      value ===
+        format(
+          parsedDate,
+          dateFormat.replace("DD", "dd").replace("YYYY", "yyyy"),
+          { awareOfUnicodeTokens: true }
+        );
   } else if (!isValid(parsedDate)) {
     dateFormat = dateFormat
       .match(longFormattingTokensRegExp)
@@ -111,7 +131,11 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       .join("");
 
     if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.replace('DD','dd').replace('YYYY','yyyy'), new Date());
+      parsedDate = parse(
+        value,
+        dateFormat.replace("DD", "dd").replace("YYYY", "yyyy"),
+        new Date()
+      );
     }
 
     if (!isValid(parsedDate)) {
@@ -160,7 +184,9 @@ export function safeDateFormat(date, { dateFormat, locale }) {
     (date &&
       formatDate(
         date,
-        Array.isArray(dateFormat) ? dateFormat[0].replace('DD','dd').replace('YYYY','yyyy') : dateFormat.replace('DD','dd').replace('YYYY','yyyy'),
+        Array.isArray(dateFormat)
+          ? dateFormat[0].replace("DD", "dd").replace("YYYY", "yyyy")
+          : dateFormat.replace("DD", "dd").replace("YYYY", "yyyy"),
         (locale: locale)
       )) ||
     ""
@@ -211,7 +237,10 @@ export function getStartOfWeek(date, locale, calendarStartDay) {
   let localeObj = locale
     ? getLocaleObject(locale)
     : getLocaleObject(getDefaultLocale());
-  return startOfWeek(date, { locale: localeObj ,weekStartsOn : calendarStartDay});
+  return startOfWeek(date, {
+    locale: localeObj,
+    weekStartsOn: calendarStartDay
+  });
 }
 
 export function getStartOfMonth(date) {
@@ -645,5 +674,7 @@ export function timesToInjectAfter(
 }
 
 export function addZero(i) {
-  return i < 10 ? `0${i}` : `${i}`;
+  console.log("i");
+  alert(i);
+  return i.toString().length === 1 ? `0${i}` : `${i}`;
 }
