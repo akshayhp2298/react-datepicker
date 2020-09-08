@@ -674,7 +674,5 @@ export function timesToInjectAfter(
 }
 
 export function addZero(i) {
-  console.log("i");
-  alert(i);
   return i.toString().length === 1 ? `0${i}` : `${i}`;
 }
