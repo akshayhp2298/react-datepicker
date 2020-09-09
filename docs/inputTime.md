@@ -3,6 +3,8 @@
 | name              | type      | default value | description |
 | ----------------- | --------- | ------------- | ----------- |
 | `customTimeInput` | `element` |               |             |
-| `onChange`        | `func`    |               |             |
+| `id`              | `string`  |               |             |
+| `onTimeChange`    | `func`    |               |             |
+| `timeFormat`      | `string`  |               |             |
 | `timeInputLabel`  | `string`  |               |             |
 | `timeString`      | `string`  |               |             |
