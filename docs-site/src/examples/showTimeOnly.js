@@ -3,8 +3,8 @@
   return (
     <DatePicker
       selected={startDate}
-      onChange={date => setStartDate(date)}
-      onTimeChange={date => setStartDate(date)}
+      onChange={date => console.log(date)}
+      onTimeChange={date => console.log(date)}
       showTimeInput
       showTimeInputOnly
       timeFormat="24"

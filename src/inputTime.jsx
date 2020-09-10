@@ -77,58 +77,73 @@ export default class inputTime extends React.Component {
   };
 
   handleTimeInput = event => {
-    let timeValue = event.target.value;
+    const timeValue = event.target.value;
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
-    timeValue = timeValue.replace(":", "");
-    if (timeValue && !timeValue.match("^[0-9]*$")) {
-      notValid = true;
-    } else if (timeValue && timeValue.length > 4) {
-      notValid = true;
-    } else if (timeValue && timeValue.length === 1) {
-      if (timeFormat === "12") {
-        notValid = parseInt(timeValue, 10) > 12 ? true : false;
-      } else {
-        notValid =
-          parseInt(timeValue, 10) > 23 && parseInt(timeValue, 10) < 0
-            ? true
-            : false;
-      }
-    } else if (timeValue && timeValue.length === 2) {
-      if (timeFormat === "12") {
-        notValid = parseInt(timeValue, 10) > 12 ? true : false;
-      } else {
-        notValid = parseInt(timeValue, 10) > 23 ? true : false;
-      }
-    } else if (timeValue && timeValue.length === 3) {
-      if (timeFormat === "12") {
-        notValid =
-          parseInt(timeValue.substring(0, 1), 10) > 12 ||
-          parseInt(timeValue.substring(1, 3), 10) > 60
-            ? true
-            : false;
-      } else {
-        notValid =
-          parseInt(timeValue.substring(0, 1), 10) > 23 ||
-          parseInt(timeValue.substring(1, 3), 10) > 60
-            ? true
-            : false;
-      }
-    } else if (timeValue && timeValue.length === 4) {
-      if (timeFormat === "12") {
-        notValid =
-          parseInt(timeValue.substring(0, 2), 10) > 12 ||
-          parseInt(timeValue.substring(2, 4), 10) > 60
-            ? true
-            : false;
-      } else {
-        notValid =
-          parseInt(timeValue.substring(0, 2), 10) > 23 ||
-          parseInt(timeValue.substring(2, 4), 10) > 60
-            ? true
-            : false;
-      }
+    // timeValue = timeValue.replace(":", "");
+    // if (timeValue && !timeValue.match("^[0-9]*$")) {
+    //   notValid = true;
+    // } else if (timeValue && timeValue.length > 4) {
+    //   notValid = true;
+    // } else if (timeValue && timeValue.length === 1) {
+    //   if (timeFormat === "12") {
+    //     notValid = parseInt(timeValue, 10) > 12 ? true : false;
+    //   } else {
+    //     notValid =
+    //       parseInt(timeValue, 10) > 23 && parseInt(timeValue, 10) < 0
+    //         ? true
+    //         : false;
+    //   }
+    // } else if (timeValue && timeValue.length === 2) {
+    //   if (timeFormat === "12") {
+    //     notValid = parseInt(timeValue, 10) > 12 ? true : false;
+    //   } else {
+    //     notValid = parseInt(timeValue, 10) > 23 ? true : false;
+    //   }
+    // } else if (timeValue && timeValue.length === 3) {
+    //   if (timeFormat === "12") {
+    //     notValid =
+    //       parseInt(timeValue.substring(0, 1), 10) > 12 ||
+    //       parseInt(timeValue.substring(1, 3), 10) > 60
+    //         ? true
+    //         : false;
+    //   } else {
+    //     notValid =
+    //       parseInt(timeValue.substring(0, 1), 10) > 23 ||
+    //       parseInt(timeValue.substring(1, 3), 10) > 60
+    //         ? true
+    //         : false;
+    //   }
+    // } else if (timeValue && timeValue.length === 4) {
+    //   if (timeFormat === "12") {
+    //     notValid =
+    //       parseInt(timeValue.substring(0, 2), 10) > 12 ||
+    //       parseInt(timeValue.substring(2, 4), 10) > 60
+    //         ? true
+    //         : false;
+    //   } else {
+    //     notValid =
+    //       parseInt(timeValue.substring(0, 2), 10) > 23 ||
+    //       parseInt(timeValue.substring(2, 4), 10) > 60
+    //         ? true
+    //         : false;
+    //   }
+    // }
+
+    const timeArray = timeValue.split(":");
+    let hour = parseInt(timeArray[0], 10);
+    let min = parseInt(timeArray[1], 10);
+    if (!(min >= 0 && min <= 59)) notValid = true;
+    else {
+      if (timeFormat === "12" && hour >= 1 && hour <= 12) notValid = false;
+      else if (timeFormat === "24" && hour >= 0 && hour <= 23) notValid = false;
+      else notValid = true;
     }
+    if (isNaN(hour)) hour = "";
+    if (isNaN(min)) min = "";
+    // hour = hour.toString().length === 1 ? `0${hour}` : hour.toString()
+    // min = min.toString().length === 1 ? `0${min}` : min.toString()
+    const time = `${hour}:${min}`;
     this.setState(
       {
         time: event.target.value,
@@ -144,8 +159,11 @@ export default class inputTime extends React.Component {
       }
     );
     console.log("not valid", notValid);
+    console.log("from handleInputTime");
     if (!notValid) {
       this.props.onTimeChange(event.target.value);
+    } else {
+      this.props.onTimeChange("InvalidDate");
     }
   };
 
@@ -168,46 +186,38 @@ export default class inputTime extends React.Component {
             hourValue = parseInt(hourValue, 10) - 12;
           }
         }
-        this.props.onTimeChange(`${addZero(hourValue)}:${minsValue}`);
+        this.props.onTimeChange(`${hourValue}:${minsValue}`);
       }
     );
   };
 
   setTimeValue = () => {
     let timeValue = this.state.time;
-    const notValid = this.state;
+    const { notValid } = this.state;
+    console.log("return from setTimeValue");
     if (notValid) {
-      this.props.onTimeChange("NaN");
+      this.props.onTimeChange("InvalidDate");
       return;
     }
-    if (timeValue.toString().length === 1) {
-      timeValue = `0${timeValue}:00`;
-    } else if (timeValue.toString().length === 2) {
-      timeValue = `${timeValue}:00`;
-    } else if (timeValue.toString().length === 3) {
-      timeValue = `0${timeValue.substring(0, 1)}:${timeValue.substring(1, 3)}`;
-    } else if (timeValue.toString().length === 4) {
-      timeValue = `${timeValue.substring(0, 2)}:${timeValue.substring(2, 4)}`;
+    let hourValue = timeValue.split(":")[0] || "00";
+    const minsValue = timeValue.split(":")[1] || "00";
+    if (this.props.timeFormat === "12") {
+      if (parseInt(hourValue, 10) === 0) hourValue = 12;
+      if (parseInt(hourValue, 10) < 12 && this.state.activeState === "PM") {
+        hourValue = parseInt(hourValue, 10) + 12;
+      }
+      if (parseInt(hourValue, 10) >= 12 && this.state.activeState === "AM") {
+        hourValue = parseInt(hourValue, 10) - 12;
+      }
     }
+    const time = `${addZero(parseInt(hourValue, 10))}:${addZero(
+      parseInt(minsValue)
+    )}`;
     this.setState(
       {
-        time: timeValue
+        time
       },
       () => {
-        let hourValue = timeValue.split(":")[0] || "00";
-        const minsValue = timeValue.split(":")[1] || "00";
-        if (this.props.timeFormat === "12") {
-          if (parseInt(hourValue, 10) === 0) hourValue = 12;
-          if (parseInt(hourValue, 10) < 12 && this.state.activeState === "PM") {
-            hourValue = parseInt(hourValue, 10) + 12;
-          }
-          if (
-            parseInt(hourValue, 10) >= 12 &&
-            this.state.activeState === "AM"
-          ) {
-            hourValue = parseInt(hourValue, 10) - 12;
-          }
-        }
         this.props.onTimeChange(
           `${addZero(parseInt(hourValue, 10))}:${minsValue}`
         );
