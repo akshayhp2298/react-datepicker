@@ -2598,8 +2598,6 @@
                   e && e.classList.add("d-none");
                 }
               }),
-              console.log("not valid", n),
-              console.log("from handleInputTime"),
               n
                 ? a.props.onTimeChange("InvalidDate")
                 : a.props.onTimeChange(e.target.value);
@@ -2619,30 +2617,47 @@
             });
           }),
           fe(ge(a), "setTimeValue", function() {
-            var e = a.state.time,
-              t = a.state.notValid;
-            if ((console.log("return from setTimeValue"), t))
-              a.props.onTimeChange("InvalidDate");
+            var e = a.state.time;
+            if (a.state.notValid) a.props.onTimeChange("InvalidDate");
             else {
-              var r = e.split(":")[0] || "00",
-                n = e.split(":")[1] || "00";
+              var t = e.split(":")[0] || "00",
+                r = e.split(":")[1] || "00";
               "12" === a.props.timeFormat &&
-                (0 === parseInt(r, 10) && (r = 12),
-                parseInt(r, 10) < 12 &&
+                (0 === parseInt(t, 10) && (t = 12),
+                parseInt(t, 10) < 12 &&
                   "PM" === a.state.activeState &&
-                  (r = parseInt(r, 10) + 12),
-                parseInt(r, 10) >= 12 &&
+                  (t = parseInt(t, 10) + 12),
+                parseInt(t, 10) >= 12 &&
                   "AM" === a.state.activeState &&
-                  (r = parseInt(r, 10) - 12));
-              var o = ""
-                .concat(ht(parseInt(r, 10)), ":")
-                .concat(ht(parseInt(n)));
-              a.setState({ time: o }, function() {
+                  (t = parseInt(t, 10) - 12));
+              var n = ""
+                .concat(ht(parseInt(t, 10)), ":")
+                .concat(ht(parseInt(r)));
+              a.setState({ time: n }, function() {
                 a.props.onTimeChange(
-                  "".concat(ht(parseInt(r, 10)), ":").concat(n)
+                  "".concat(ht(parseInt(t, 10)), ":").concat(r)
                 );
               });
             }
+          }),
+          fe(ge(a), "handleFocus", function(e) {
+            var t,
+              r,
+              n,
+              o = a.state.time;
+            (t = o),
+              (r = ""
+                .concat(parseFloat(t.replace(":", ".")) + 0.3)
+                .replace(".", ":")),
+              (n = document.getElementById(r)) ||
+                (n = document.getElementById(t)),
+              n &&
+                n.scrollIntoView({
+                  behavior: "smooth",
+                  block: "nearest",
+                  inline: "start"
+                }),
+              e.stopPropagation();
           }),
           fe(ge(a), "renderTimeInput", function() {
             for (
@@ -2675,6 +2690,7 @@
                   value: r,
                   id: "datepicker-time-input-".concat(s),
                   key: "datepicker-time-input-".concat(s),
+                  onFocus: a.handleFocus,
                   className: "react-datepicker-time-inputbox",
                   maxLength: 5,
                   onClick: function() {
@@ -2708,6 +2724,7 @@
                             "li",
                             {
                               key: r,
+                              id: Ye(e, "HH:mm"),
                               onClick: a.handleTimeSelectionClick.bind(
                                 ge(a),
                                 e
@@ -2722,6 +2739,7 @@
                             "li",
                             {
                               key: r,
+                              id: Ye(e, "HH:mm"),
                               onClick: a.handleTimeSelectionClick.bind(
                                 ge(a),
                                 e

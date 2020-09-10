@@ -22,8 +22,8 @@ var u = e(require("date-fns/subDays")),
   f = e(require("date-fns/subYears")),
   v = e(require("date-fns/getSeconds")),
   y = e(require("date-fns/getMinutes")),
-  D = e(require("date-fns/getHours")),
-  w = e(require("date-fns/getDay")),
+  w = e(require("date-fns/getHours")),
+  D = e(require("date-fns/getDay")),
   k = e(require("date-fns/getDate")),
   g = e(require("date-fns/getWeek")),
   C = e(require("date-fns/getMonth")),
@@ -218,7 +218,7 @@ function ye(e, t) {
       return t.date({ width: "full" });
   }
 }
-function De(e, t) {
+function we(e, t) {
   switch (e) {
     case "p":
       return t.time({ width: "short" });
@@ -231,8 +231,8 @@ function De(e, t) {
       return t.time({ width: "full" });
   }
 }
-var we = {
-    p: De,
+var De = {
+    p: we,
     P: function(e, t) {
       var r,
         n = e.match(/(P+)(p+)?/),
@@ -253,7 +253,7 @@ var we = {
         default:
           r = t.dateTime({ width: "full" });
       }
-      return r.replace("{{date}}", ye(a, t)).replace("{{time}}", De(o, t));
+      return r.replace("{{date}}", ye(a, t)).replace("{{time}}", we(o, t));
     }
   },
   ke = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
@@ -304,7 +304,7 @@ function Ce(e, t, r, n) {
               var t = e[0];
               return "p" === t || "P" === t
                 ? s
-                  ? (0, we[t])(e, s.formatLong)
+                  ? (0, De[t])(e, s.formatLong)
                   : t
                 : e;
             })
@@ -516,7 +516,7 @@ function $e(e) {
 }
 function ze(e, t) {
   for (var r = t.length, n = 0; n < r; n++)
-    if (D(t[n]) === D(e) && y(t[n]) === y(e)) return !0;
+    if (w(t[n]) === w(e) && y(t[n]) === y(e)) return !0;
   return !1;
 }
 function Ge(e, t) {
@@ -525,9 +525,9 @@ function Ge(e, t) {
   if (!r || !n) throw new Error("Both minTime and maxTime props required");
   var a,
     o = ge(),
-    s = P(E(o, y(e)), D(e)),
-    i = P(E(o, y(r)), D(r)),
-    p = P(E(o, y(n)), D(n));
+    s = P(E(o, y(e)), w(e)),
+    i = P(E(o, y(r)), w(r)),
+    p = P(E(o, y(n)), w(n));
   try {
     a = !z(s, { start: i, end: p });
   } catch (e) {
@@ -647,7 +647,7 @@ function at() {
 }
 function ot(e, t, r, n, a) {
   for (var o = a.length, p = [], c = 0; c < o; c++) {
-    var l = s(i(e, D(a[c])), y(a[c])),
+    var l = s(i(e, w(a[c])), y(a[c])),
       d = s(e, (r + 1) * n);
     Z(l, t) && $(l, d) && p.push(a[c]);
   }
@@ -1395,7 +1395,7 @@ var ht = ee(
           return a ? Le(n, r) : !!s && Le(o, r);
         }),
         ie(me(e), "isWeekend", function() {
-          var t = w(e.props.day);
+          var t = D(e.props.day);
           return 0 === t || 6 === t;
         }),
         ie(me(e), "isOutsideMonth", function() {
@@ -1664,7 +1664,7 @@ var ht = ee(
       n
     );
   })(),
-  Dt = (function(e) {
+  wt = (function(e) {
     de(a, t.Component);
     var n = ve(a);
     function a() {
@@ -1937,7 +1937,7 @@ var ht = ee(
       a
     );
   })(),
-  wt = (function(e) {
+  Dt = (function(e) {
     de(n, t.Component);
     var r = ve(n);
     function n() {
@@ -1962,7 +1962,7 @@ var ht = ee(
           ];
           return (
             e.props.selected &&
-              r === D(t) &&
+              r === w(t) &&
               n === y(t) &&
               a.push("react-datepicker__time-list-item--selected"),
             (((e.props.minTime || e.props.maxTime) && Ge(t, e.props)) ||
@@ -1970,7 +1970,7 @@ var ht = ee(
               (e.props.includeTimes && !ze(t, e.props.includeTimes))) &&
               a.push("react-datepicker__time-list-item--disabled"),
             e.props.injectTimes &&
-              (60 * D(t) + y(t)) % e.props.intervals != 0 &&
+              (60 * w(t) + y(t)) % e.props.intervals != 0 &&
               a.push("react-datepicker__time-list-item--injected"),
             a.join(" ")
           );
@@ -1981,7 +1981,7 @@ var ht = ee(
               n = e.props.format ? e.props.format : "p",
               a = e.props.intervals,
               o = e.props.selected || e.props.openToDate || ge(),
-              i = D(o),
+              i = w(o),
               p = y(o),
               c = Pe(ge()),
               l = 1440 / a,
@@ -2000,7 +2000,7 @@ var ht = ee(
               var f = ot(c, m, h, a, d);
               r = r.concat(f);
             }
-            i === D(m) && u.push(m);
+            i === w(m) && u.push(m);
           }
           return r.map(function(r, a) {
             return t.createElement(
@@ -2010,7 +2010,7 @@ var ht = ee(
                 onClick: e.handleClick.bind(me(e), r),
                 className: e.liClasses(r, i, p),
                 ref: function(t) {
-                  i === D(r) &&
+                  i === w(r) &&
                     (p >= y(r)
                       ? (e.centerLi = t)
                       : e.centerLi ||
@@ -2116,7 +2116,7 @@ var ht = ee(
       n
     );
   })();
-ie(wt, "calcCenterPosition", function(e, t) {
+ie(Dt, "calcCenterPosition", function(e, t) {
   return t.offsetTop - (e / 2 - t.clientHeight / 2);
 });
 var kt = (function(e) {
@@ -2224,8 +2224,6 @@ var kt = (function(e) {
                 e && e.classList.add("d-none");
               }
             }),
-            console.log("not valid", n),
-            console.log("from handleInputTime"),
             n
               ? a.props.onTimeChange("InvalidDate")
               : a.props.onTimeChange(e.target.value);
@@ -2245,28 +2243,45 @@ var kt = (function(e) {
           });
         }),
         ie(me(a), "setTimeValue", function() {
-          var e = a.state.time,
-            t = a.state.notValid;
-          if ((console.log("return from setTimeValue"), t))
-            a.props.onTimeChange("InvalidDate");
+          var e = a.state.time;
+          if (a.state.notValid) a.props.onTimeChange("InvalidDate");
           else {
-            var r = e.split(":")[0] || "00",
-              n = e.split(":")[1] || "00";
+            var t = e.split(":")[0] || "00",
+              r = e.split(":")[1] || "00";
             "12" === a.props.timeFormat &&
-              (0 === parseInt(r, 10) && (r = 12),
-              parseInt(r, 10) < 12 &&
+              (0 === parseInt(t, 10) && (t = 12),
+              parseInt(t, 10) < 12 &&
                 "PM" === a.state.activeState &&
-                (r = parseInt(r, 10) + 12),
-              parseInt(r, 10) >= 12 &&
+                (t = parseInt(t, 10) + 12),
+              parseInt(t, 10) >= 12 &&
                 "AM" === a.state.activeState &&
-                (r = parseInt(r, 10) - 12));
-            var o = "".concat(st(parseInt(r, 10)), ":").concat(st(parseInt(n)));
-            a.setState({ time: o }, function() {
+                (t = parseInt(t, 10) - 12));
+            var n = "".concat(st(parseInt(t, 10)), ":").concat(st(parseInt(r)));
+            a.setState({ time: n }, function() {
               a.props.onTimeChange(
-                "".concat(st(parseInt(r, 10)), ":").concat(n)
+                "".concat(st(parseInt(t, 10)), ":").concat(r)
               );
             });
           }
+        }),
+        ie(me(a), "handleFocus", function(e) {
+          var t,
+            r,
+            n,
+            o = a.state.time;
+          (t = o),
+            (r = ""
+              .concat(parseFloat(t.replace(":", ".")) + 0.3)
+              .replace(".", ":")),
+            (n = document.getElementById(r)) ||
+              (n = document.getElementById(t)),
+            n &&
+              n.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "start"
+              }),
+            e.stopPropagation();
         }),
         ie(me(a), "renderTimeInput", function() {
           for (
@@ -2299,6 +2314,7 @@ var kt = (function(e) {
                 value: r,
                 id: "datepicker-time-input-".concat(i),
                 key: "datepicker-time-input-".concat(i),
+                onFocus: a.handleFocus,
                 className: "react-datepicker-time-inputbox",
                 maxLength: 5,
                 onClick: function() {
@@ -2332,6 +2348,7 @@ var kt = (function(e) {
                           "li",
                           {
                             key: r,
+                            id: _e(e, "HH:mm"),
                             onClick: a.handleTimeSelectionClick.bind(me(a), e),
                             className: "time-section-item"
                           },
@@ -2343,6 +2360,7 @@ var kt = (function(e) {
                           "li",
                           {
                             key: r,
+                            id: _e(e, "HH:mm"),
                             onClick: a.handleTimeSelectionClick.bind(me(a), e),
                             className: "time-section-item"
                           },
@@ -3159,7 +3177,7 @@ var bt = (function(e) {
                     className: "react-datepicker__month-container"
                   },
                   o.renderHeader({ monthDate: i, i: a }),
-                  t.createElement(Dt, {
+                  t.createElement(wt, {
                     chooseDayAriaLabelPrefix: o.props.chooseDayAriaLabelPrefix,
                     disabledDayAriaLabelPrefix:
                       o.props.disabledDayAriaLabelPrefix,
@@ -3233,7 +3251,7 @@ var bt = (function(e) {
             o.props.showTimeSelect &&
             (o.state.monthContainer || o.props.showTimeSelectOnly)
           )
-            return t.createElement(wt, {
+            return t.createElement(Dt, {
               selected: o.props.selected,
               openToDate: o.props.openToDate,
               onChange: o.props.onTimeChange,
@@ -3709,7 +3727,7 @@ var It = (function(e) {
                       s.props.showTimeSelectOnly ||
                       s.props.showTimeInput)) ||
                   (a = Se(a, {
-                    hour: D(s.props.selected),
+                    hour: w(s.props.selected),
                     minute: y(s.props.selected),
                     second: v(s.props.selected)
                   })),
@@ -3734,7 +3752,7 @@ var It = (function(e) {
         ie(me(s), "handleTimeChange", function(e) {
           var t = Se(
             s.props.selected ? s.props.selected : s.getPreSelection(),
-            { hour: D(e), minute: y(e) }
+            { hour: w(e), minute: y(e) }
           );
           s.setState({ preSelection: t }),
             s.props.onChange(t),
