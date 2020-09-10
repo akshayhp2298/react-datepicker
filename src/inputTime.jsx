@@ -81,7 +81,6 @@ export default class inputTime extends React.Component {
     const { timeFormat } = this.props;
     let notValid = this.state.notValid;
     timeValue = timeValue.replace(":", "");
-    console.log(timeValue, "asdfasdf");
     if (timeValue && !timeValue.match("^[0-9]*$")) {
       notValid = true;
     } else if (timeValue && timeValue.length > 4) {
@@ -90,7 +89,10 @@ export default class inputTime extends React.Component {
       if (timeFormat === "12") {
         notValid = parseInt(timeValue, 10) > 12 ? true : false;
       } else {
-        notValid = parseInt(timeValue, 10) > 23 ? true : false;
+        notValid =
+          parseInt(timeValue, 10) > 23 && parseInt(timeValue, 10) < 0
+            ? true
+            : false;
       }
     } else if (timeValue && timeValue.length === 2) {
       if (timeFormat === "12") {
@@ -141,6 +143,7 @@ export default class inputTime extends React.Component {
         }
       }
     );
+    console.log("not valid", notValid);
     if (!notValid) {
       this.props.onTimeChange(event.target.value);
     }
@@ -172,6 +175,11 @@ export default class inputTime extends React.Component {
 
   setTimeValue = () => {
     let timeValue = this.state.time;
+    const notValid = this.state;
+    if (notValid) {
+      this.props.onTimeChange("NaN");
+      return;
+    }
     if (timeValue.toString().length === 1) {
       timeValue = `0${timeValue}:00`;
     } else if (timeValue.toString().length === 2) {
