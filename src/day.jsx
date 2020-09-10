@@ -122,7 +122,7 @@ export default class Day extends React.Component {
       return false;
     }
 
-    if(isEqual(selectingDate, endDate) || isEqual(selectingDate, startDate)){
+    if (isEqual(selectingDate, endDate) || isEqual(selectingDate, startDate)) {
       return false;
     }
 
@@ -152,7 +152,9 @@ export default class Day extends React.Component {
 
     const { day, selectingDate, startDate, selectsStart } = this.props;
     if (selectsStart) {
-      return isSameDay(day, selectingDate) && isBefore(selectingDate, startDate);
+      return (
+        isSameDay(day, selectingDate) && isBefore(selectingDate, startDate)
+      );
     } else {
       return isSameDay(day, startDate);
     }
@@ -188,12 +190,12 @@ export default class Day extends React.Component {
   };
 
   checkOverLapping = () => {
-    const { day, endDate, selectsEnd, startDate , selectsStart} = this.props;
+    const { day, endDate, selectsEnd, startDate, selectsStart } = this.props;
     if (selectsEnd) {
       return isSameDay(endDate, day);
     }
 
-    if(selectsStart){
+    if (selectsStart) {
       return isSameDay(startDate, day);
     }
 
@@ -234,7 +236,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
         "react-datepicker__day--today": this.isSameDay(newDate()),
         "react-datepicker__day--weekend": this.isWeekend(),
-        "react-datepicker__day--outside-month": this.isOutsideMonth(),
+        "react-datepicker__day--outside-month": this.isOutsideMonth()
       },
       this.getHighLightedClass("react-datepicker__day--highlighted")
     );
@@ -254,6 +256,8 @@ export default class Day extends React.Component {
 
     return `${prefix} ${formatDate(day, "PPPP")}`;
   };
+
+  // testing comment
 
   getTabIndex = (selected, preSelection) => {
     const selectedDay = selected || this.props.selected;
@@ -311,9 +315,12 @@ export default class Day extends React.Component {
       aria-disabled={this.isDisabled()}
     >
       <span>
-      {this.props.renderDayContents
-        ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
-        : getDate(this.props.day)}
+        {this.props.renderDayContents
+          ? this.props.renderDayContents(
+              getDate(this.props.day),
+              this.props.day
+            )
+          : getDate(this.props.day)}
       </span>
     </div>
   );

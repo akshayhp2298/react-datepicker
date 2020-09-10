@@ -14,6 +14,22 @@ import {
 import TimeArrowDown from "./Icons/time-arrow-down";
 import TimeArrowUp from "./Icons/time-arrow-up";
 
+const scrollINtoViewById = liID => {
+  const id = `${parseFloat(liID.replace(":", ".")) + 0.3}`.replace(".", ":");
+  let targetLi = document.getElementById(id); // id tag of the <li> element
+  if (!targetLi) {
+    targetLi = document.getElementById(liID);
+  }
+
+  if (targetLi) {
+    targetLi.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start"
+    });
+  }
+};
+
 export default class inputTime extends React.Component {
   static propTypes = {
     onTimeChange: PropTypes.func,
@@ -158,8 +174,6 @@ export default class inputTime extends React.Component {
         }
       }
     );
-    console.log("not valid", notValid);
-    console.log("from handleInputTime");
     if (!notValid) {
       this.props.onTimeChange(event.target.value);
     } else {
@@ -194,7 +208,6 @@ export default class inputTime extends React.Component {
   setTimeValue = () => {
     let timeValue = this.state.time;
     const { notValid } = this.state;
-    console.log("return from setTimeValue");
     if (notValid) {
       this.props.onTimeChange("InvalidDate");
       return;
@@ -225,6 +238,12 @@ export default class inputTime extends React.Component {
     );
   };
 
+  handleFocus = e => {
+    const { time } = this.state;
+    scrollINtoViewById(time);
+    e.stopPropagation();
+  };
+
   renderTimeInput = () => {
     const { time, notValid } = this.state;
     const { id, timeFormat } = this.props;
@@ -251,6 +270,7 @@ export default class inputTime extends React.Component {
             value={time}
             id={`datepicker-time-input-${id}`}
             key={`datepicker-time-input-${id}`}
+            onFocus={this.handleFocus}
             className="react-datepicker-time-inputbox"
             maxLength={5}
             onClick={() => {
@@ -274,6 +294,7 @@ export default class inputTime extends React.Component {
                 ? times.map((timeValue, i) => (
                     <li
                       key={i}
+                      id={formatDate(timeValue, "HH:mm")}
                       onClick={this.handleTimeSelectionClick.bind(
                         this,
                         timeValue
@@ -286,6 +307,7 @@ export default class inputTime extends React.Component {
                 : times.map((timeValue, i) => (
                     <li
                       key={i}
+                      id={formatDate(timeValue, "HH:mm")}
                       onClick={this.handleTimeSelectionClick.bind(
                         this,
                         timeValue
