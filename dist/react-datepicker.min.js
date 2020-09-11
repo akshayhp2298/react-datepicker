@@ -2633,10 +2633,8 @@
               var n = ""
                 .concat(ht(parseInt(t, 10)), ":")
                 .concat(ht(parseInt(r)));
-              a.setState({ time: n }, function() {
-                a.props.onTimeChange(
-                  "".concat(ht(parseInt(t, 10)), ":").concat(r)
-                );
+              a.setState({ time: e }, function() {
+                a.props.onTimeChange(n);
               });
             }
           }),

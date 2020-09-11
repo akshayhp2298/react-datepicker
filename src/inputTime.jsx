@@ -228,12 +228,10 @@ export default class inputTime extends React.Component {
     )}`;
     this.setState(
       {
-        time
+        time: timeValue
       },
       () => {
-        this.props.onTimeChange(
-          `${addZero(parseInt(hourValue, 10))}:${minsValue}`
-        );
+        this.props.onTimeChange(time);
       }
     );
   };

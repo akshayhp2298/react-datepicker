@@ -2257,10 +2257,8 @@ var kt = (function(e) {
                 "AM" === a.state.activeState &&
                 (t = parseInt(t, 10) - 12));
             var n = "".concat(st(parseInt(t, 10)), ":").concat(st(parseInt(r)));
-            a.setState({ time: n }, function() {
-              a.props.onTimeChange(
-                "".concat(st(parseInt(t, 10)), ":").concat(r)
-              );
+            a.setState({ time: e }, function() {
+              a.props.onTimeChange(n);
             });
           }
         }),
